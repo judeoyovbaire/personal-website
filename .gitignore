@@ -23,6 +23,7 @@
 # misc
 .DS_Store
 *.pem
+Thumbs.db
 
 # debug
 npm-debug.log*
@@ -41,3 +42,7 @@ yarn-error.log*
 next-env.d.ts
 
 .idea/
+
+# Environment variables
+.env.local
+.env.production
