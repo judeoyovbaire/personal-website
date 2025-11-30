@@ -35,7 +35,7 @@ export const projects: Project[] = [
     },
     description:
       'Architected multi-region Azure Databricks platform processing 50TB+ daily data. Implemented Pulumi and Crossplane for infrastructure automation.',
-    technologies: ['Azure', 'Databricks', 'Pulumi', 'Crossplane', 'Python'],
+    technologies: ['Azure', 'Kubernetes', 'Databricks', 'Pulumi', 'Crossplane', 'Python'],
     highlights: [
       'Designed auto-scaling clusters reducing compute costs by 35%',
       'Implemented medallion architecture for data lake',
@@ -53,7 +53,7 @@ export const projects: Project[] = [
     },
     description:
       'Led migration of 200+ microservices from VMs to Kubernetes, transforming deployment frequency from weekly to 50+ times daily.',
-    technologies: ['Kubernetes', 'EKS', 'Terraform', 'ArgoCD', 'Prometheus'],
+    technologies: ['AWS', 'Kubernetes', 'Ansible', 'Terraform', 'ELK', 'OpenSearch', 'Python'],
     highlights: [
       'Migrated 200+ services with zero customer impact',
       'Reduced deployment time from 2 hours to 15 minutes',
