@@ -23,7 +23,7 @@ export default function About() {
           <section className="mb-10">
             <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">The Journey</h2>
             <p className="text-lg text-gray-700 dark:text-gray-200 leading-relaxed">
-              Growing up in Nigeria, frequent power outages weren&apos;t just inconveniences—they were
+              Growing up in Nigeria, frequent power outages weren&apos;t just inconveniences - they were
               lessons in resilience and reliability. This early experience shaped my obsession with
               building systems that never go down. Today, I architect platforms that achieve 99.99%
               uptime, turning infrastructure from a cost center into a competitive advantage.
@@ -33,8 +33,8 @@ export default function About() {
           <section className="mb-10">
             <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">The Evolution</h2>
             <p className="text-lg text-gray-700 dark:text-gray-200 leading-relaxed">
-              My career mirrors the industry&apos;s transformation. Starting as a SAP BASIS administrator
-              at the Nigerian National Petroleum Corporation, I&apos;ve evolved alongside technology—from
+              My career mirrors the industry&apos;s transformation. Starting as a SAP Technical Administrator
+              at the Nigerian National Petroleum Corporation, I&apos;ve evolved alongside technology - from
               managing on-premise servers to orchestrating cloud-native architectures processing
               terabytes of data across multiple continents.
             </p>

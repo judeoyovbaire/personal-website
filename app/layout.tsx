@@ -6,13 +6,13 @@ import { Footer } from '@/components/Footer'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'Jude - Senior DevOps Engineer | Engineering Manager',
-  description: 'Engineering Manager and Platform Architect with 10+ years experience. €2.5M+ saved through intelligent automation. 11x certified across AWS, Azure, GCP.',
-  keywords: 'DevOps, Engineering Manager, Platform Engineer, Kubernetes, AWS, Azure, GCP, Amsterdam, Infrastructure',
+  title: 'Jude - Senior DevOps Engineer | Platform Architect',
+  description: 'Senior DevOps Engineer and Platform Architect with 10+ years experience. €2.5M+ saved through intelligent automation. 10x certified across AWS, Azure, GCP.',
+  keywords: 'DevOps Engineer, Platform Achitect, Kubernetes, AWS, Azure, GCP, Amsterdam, Infrastructure',
   authors: [{ name: 'Jude' }],
   openGraph: {
     title: 'Jude - DevOps & Platform Engineering',
-    description: 'From SAP BASIS to Kubernetes: 10 Years of Cloud Evolution',
+    description: 'From SAP Technology to Cloud-Native Architecture: 10+ Years of Cloud Evolution',
     type: 'website',
     locale: 'en_US',
     siteName: 'Jude Portfolio',

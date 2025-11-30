@@ -35,7 +35,7 @@ export default function Home() {
             </div>
             <div className="flex items-center gap-2">
               <Building size={16} />
-              <span>Datenna B.V. | NubesCode Ltd.</span>
+              <span>Datenna B.V. | Ratio Labs</span>
             </div>
           </div>
 
