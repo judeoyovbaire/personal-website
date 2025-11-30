@@ -13,6 +13,16 @@ export interface Project {
   highlights: string[]
 }
 
+export interface SideProject {
+  title: string
+  status: 'in_progress' | 'planned' | 'completed'
+  description: string
+  technologies: string[]
+  goals: string[]
+  github?: string
+  demo?: string
+}
+
 export const projects: Project[] = [
   {
     title: 'Multi-Region Azure Databricks Platform',
@@ -48,6 +58,48 @@ export const projects: Project[] = [
       'Migrated 200+ services with zero customer impact',
       'Reduced deployment time from 2 hours to 15 minutes',
       'Built comprehensive observability with Prometheus stack',
+    ],
+  },
+]
+
+export const sideProjects: SideProject[] = [
+  {
+    title: 'MLOps Platform on Kubernetes',
+    status: 'in_progress',
+    description:
+      'Building an end-to-end MLOps platform for model training, versioning, and deployment. Enables data science teams to go from experiment to production with self-service workflows.',
+    technologies: ['Kubeflow', 'MLflow', 'Seldon Core', 'ArgoCD', 'Kubernetes', 'Python'],
+    goals: [
+      'Automated ML pipeline from data ingestion to model serving',
+      'Model versioning and experiment tracking with MLflow',
+      'A/B testing and canary deployments for ML models',
+      'GPU scheduling and resource optimization',
+    ],
+  },
+  {
+    title: 'Self-hosted LLM Infrastructure',
+    status: 'planned',
+    description:
+      'Designing infrastructure for running large language models at scale. Focus on cost optimization, GPU scheduling, and high availability for AI workloads.',
+    technologies: ['vLLM', 'Ollama', 'Kubernetes', 'NVIDIA GPU Operator', 'Prometheus', 'Go'],
+    goals: [
+      'Multi-model serving with intelligent routing',
+      'Auto-scaling based on inference queue depth',
+      'Cost monitoring and optimization for GPU workloads',
+      'RAG pipeline integration with vector databases',
+    ],
+  },
+  {
+    title: 'Kubernetes Operator for Database Backups',
+    status: 'planned',
+    description:
+      'Custom Kubernetes operator written in Go that automates database backup workflows. Handles scheduling, retention policies, and disaster recovery across multiple database types.',
+    technologies: ['Go', 'Kubebuilder', 'Kubernetes', 'PostgreSQL', 'S3', 'Prometheus'],
+    goals: [
+      'CRD-based configuration for backup policies',
+      'Support for PostgreSQL, MySQL, and MongoDB',
+      'Automated restore testing and validation',
+      'Alerting integration with PagerDuty/Slack',
     ],
   },
 ]
