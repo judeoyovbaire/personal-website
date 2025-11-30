@@ -12,53 +12,62 @@ export default function About() {
           Back to Home
         </Link>
 
-        <article className="prose prose-lg dark:prose-invert max-w-none">
-          <h1>About Me</h1>
+        <article className="max-w-none">
+          <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-6">About Me</h1>
 
-          <p className="lead">
-            I'm Jude, a Senior DevOps Engineer originally from Nigeria 🇳🇬, now building the future
+          <p className="text-xl text-gray-700 dark:text-gray-200 mb-10 leading-relaxed">
+            I&apos;m Jude, a Senior DevOps Engineer originally from Nigeria 🇳🇬, now building the future
             of cloud infrastructure from Amsterdam 🇳🇱.
           </p>
 
-          <h2>The Journey</h2>
-          <p>
-            Growing up in Nigeria, frequent power outages weren't just inconveniences—they were
-            lessons in resilience and reliability. This early experience shaped my obsession with
-            building systems that never go down. Today, I architect platforms that achieve 99.99%
-            uptime, turning infrastructure from a cost center into a competitive advantage.
-          </p>
+          <section className="mb-10">
+            <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">The Journey</h2>
+            <p className="text-lg text-gray-700 dark:text-gray-200 leading-relaxed">
+              Growing up in Nigeria, frequent power outages weren&apos;t just inconveniences—they were
+              lessons in resilience and reliability. This early experience shaped my obsession with
+              building systems that never go down. Today, I architect platforms that achieve 99.99%
+              uptime, turning infrastructure from a cost center into a competitive advantage.
+            </p>
+          </section>
 
-          <h2>The Evolution</h2>
-          <p>
-            My career mirrors the industry's transformation. Starting as a SAP BASIS administrator
-            at the Nigerian National Petroleum Corporation, I've evolved alongside technology—from
-            managing on-premise servers to orchestrating cloud-native architectures processing
-            terabytes of data across multiple continents.
-          </p>
+          <section className="mb-10">
+            <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">The Evolution</h2>
+            <p className="text-lg text-gray-700 dark:text-gray-200 leading-relaxed">
+              My career mirrors the industry&apos;s transformation. Starting as a SAP BASIS administrator
+              at the Nigerian National Petroleum Corporation, I&apos;ve evolved alongside technology—from
+              managing on-premise servers to orchestrating cloud-native architectures processing
+              terabytes of data across multiple continents.
+            </p>
+          </section>
 
-          <h2>The Impact</h2>
-          <p>
-            Over 10 years, I've saved companies over €2.5 million through intelligent automation
-            and right-sizing. But numbers only tell part of the story. I've mentored 20+ engineers,
-            watching them grow from writing their first Terraform module to architecting entire platforms.
-            Their success is my greatest achievement.
-          </p>
+          <section className="mb-10">
+            <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">The Impact</h2>
+            <p className="text-lg text-gray-700 dark:text-gray-200 leading-relaxed">
+              Over 10 years, I&apos;ve saved companies over €2.5 million through intelligent automation
+              and right-sizing. But numbers only tell part of the story. I&apos;ve mentored 20+ engineers,
+              watching them grow from writing their first Terraform module to architecting entire platforms.
+              Their success is my greatest achievement.
+            </p>
+          </section>
 
-          <h2>Beyond the Terminal</h2>
-          <p>
-            When I'm not architecting systems or exploring AI/ML infrastructure, I write poetry for
-            the love of my life—we're getting married soon! 💕 This creative outlet surprisingly enhances
-            my technical work; the clarity required for a perfect verse often illuminates elegant
-            solutions to complex problems.
-          </p>
+          <section className="mb-10">
+            <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">Beyond the Terminal</h2>
+            <p className="text-lg text-gray-700 dark:text-gray-200 leading-relaxed">
+              When I&apos;m not architecting systems or exploring AI/ML infrastructure, I play chess,
+              and this surprisingly enhances my technical work;
+              the clarity, observation and patience for a piece move often illuminates elegant
+              solutions to complex problems.
+            </p>
+          </section>
 
-          <h2>What's Next</h2>
-          <p>
-            I'm actively seeking Engineering Manager or Staff+ positions where I can combine my
-            technical depth with my passion for growing teams. My ideal role involves building
-            platforms that scale, mentoring engineers who'll surpass me, and solving problems
-            that matter.
-          </p>
+          <section className="mb-10">
+            <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">What&apos;s Next</h2>
+            <p className="text-lg text-gray-700 dark:text-gray-200 leading-relaxed">
+              I&apos;m focused on building platforms that scale, mentoring engineers, and solving problems
+              that matter. My ideal role combines technical depth with my passion for growing teams
+              and driving impactful transformations.
+            </p>
+          </section>
         </article>
       </main>
     </>

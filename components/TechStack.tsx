@@ -1,17 +1,8 @@
 'use client'
 
-export function TechStack() {
-  const technologies = {
-    "Cloud Platforms": ["AWS", "Azure", "GCP", "DigitalOcean", "Linode"],
-    "Orchestration": ["Kubernetes", "Docker", "OpenShift", "EKS", "AKS", "GKE"],
-    "IaC": ["Terraform", "Pulumi", "Crossplane", "CloudFormation", "ARM Templates"],
-    "CI/CD": ["Jenkins", "GitLab CI", "GitHub Actions", "ArgoCD", "Flux", "Azure DevOps"],
-    "Monitoring": ["Prometheus", "Grafana", "DataDog", "New Relic", "ELK Stack"],
-    "Languages": ["Python", "Go", "Bash", "TypeScript", "YAML", "HCL"],
-    "Databases": ["PostgreSQL", "MongoDB", "Redis", "Cassandra", "DynamoDB"],
-    "Messaging": ["Kafka", "RabbitMQ", "SQS", "EventBridge", "Service Bus"]
-  }
+import { technologies } from '@/data/techstack'
 
+export function TechStack() {
   return (
     <section className="my-12">
       <h2 className="text-2xl font-bold mb-6 text-gray-900 dark:text-white">
