@@ -75,6 +75,7 @@ export const sideProjects: SideProject[] = [
       'A/B testing and canary deployments for ML models',
       'GPU scheduling and resource optimization',
     ],
+    github: 'https://github.com/judeoyovbaire/mlops-platform',
   },
   {
     title: 'Self-hosted LLM Infrastructure',
