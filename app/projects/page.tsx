@@ -1,7 +1,8 @@
 import { Navigation } from '@/components/Navigation'
-import { ArrowLeft, TrendingUp, Github, ExternalLink, Clock, Rocket, CheckCircle } from 'lucide-react'
+import { ArrowLeft, Github, ExternalLink, Clock, Rocket, CheckCircle, Server, Database, Brain, Cpu } from 'lucide-react'
 import Link from 'next/link'
-import { projects, sideProjects, type SideProject } from '@/data/projects'
+import { sideProjects, type SideProject } from '@/data/projects'
+import { caseStudies, pillarLabels } from '@/data/casestudies'
 
 const statusConfig: Record<SideProject['status'], { label: string; icon: typeof Clock; color: string }> = {
   in_progress: { label: 'In Progress', icon: Rocket, color: 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200' },
@@ -9,73 +10,118 @@ const statusConfig: Record<SideProject['status'], { label: string; icon: typeof 
   completed: { label: 'Completed', icon: CheckCircle, color: 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200' },
 }
 
+const pillarIcons = {
+  core: Server,
+  data: Database,
+  ml: Brain,
+  ai: Cpu,
+} as const
+
+const pillarColorClasses = {
+  core: 'bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300',
+  data: 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300',
+  ml: 'bg-purple-100 text-purple-800 dark:bg-purple-900/30 dark:text-purple-300',
+  ai: 'bg-orange-100 text-orange-800 dark:bg-orange-900/30 dark:text-orange-300',
+} as const
+
 export default function Projects() {
   return (
     <>
       <Navigation />
       <main className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <Link href="/" className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 mb-8">
+        <Link href="/" className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 mb-4">
           <ArrowLeft size={16} />
           Back to Home
         </Link>
 
-        <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">
+        <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-3">
           Projects & Impact
         </h1>
-        <p className="text-gray-600 dark:text-gray-400 mb-12 max-w-2xl">
+        <p className="text-gray-600 dark:text-gray-400 mb-8 max-w-2xl">
           A showcase of professional work and personal projects exploring platform engineering, MLOps, and cloud-native technologies.
         </p>
 
-        {/* Work Projects */}
+        {/* Featured Case Studies */}
         <section className="mb-16">
-          <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">
-            Professional Work
+          <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
+            Featured Case Studies
           </h2>
-          <div className="space-y-8">
-            {projects.map((project) => (
-              <div
-                key={project.title}
-                className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6"
-              >
-                <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">
-                  {project.title}
-                </h3>
-                <div className="text-sm text-gray-600 dark:text-gray-400 mb-4">
-                  {project.company} • {project.period}
-                </div>
-
-                <p className="text-gray-700 dark:text-gray-300 mb-6">
-                  {project.description}
-                </p>
-
-                <div className="grid md:grid-cols-3 gap-4 mb-6">
-                  {Object.entries(project.impact).map(([key, value]) => (
-                    <div key={key} className="bg-gray-50 dark:bg-gray-900 p-3 rounded-lg">
-                      <div className="flex items-center gap-2 mb-1">
-                        <TrendingUp size={16} className="text-green-600" />
-                        <span className="text-xs text-gray-600 dark:text-gray-400 capitalize">
-                          {key}
-                        </span>
-                      </div>
-                      <div className="font-semibold text-gray-900 dark:text-white text-sm">
-                        {value}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-
-                <div className="flex flex-wrap gap-2">
-                  {project.technologies.map((tech) => (
-                    <span
-                      key={tech}
-                      className="px-3 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-full text-sm"
-                    >
-                      {tech}
+          <p className="text-gray-600 dark:text-gray-400 mb-6">
+            In-depth looks at platform challenges, approaches, and outcomes.
+          </p>
+          <div className="space-y-6">
+            {caseStudies.map((study) => {
+              const PillarIcon = pillarIcons[study.pillar]
+              return (
+                <div
+                  key={study.id}
+                  className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6"
+                >
+                  <div className="flex flex-wrap items-start gap-3 mb-4">
+                    <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium ${pillarColorClasses[study.pillar]}`}>
+                      <PillarIcon size={12} />
+                      {pillarLabels[study.pillar]}
                     </span>
-                  ))}
+                    <span className="text-sm text-gray-500 dark:text-gray-400">
+                      {study.company} • {study.period}
+                    </span>
+                  </div>
+
+                  <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3">
+                    {study.title}
+                  </h3>
+
+                  <div className="mb-4">
+                    <h4 className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">Context</h4>
+                    <p className="text-sm text-gray-600 dark:text-gray-400">
+                      {study.context.description}
+                    </p>
+                  </div>
+
+                  <div className="mb-4">
+                    <h4 className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">Problem</h4>
+                    <p className="text-sm text-gray-600 dark:text-gray-400">
+                      {study.problem}
+                    </p>
+                  </div>
+
+                  <div className="mb-4">
+                    <h4 className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">Approach</h4>
+                    <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">
+                      {study.approach.description}
+                    </p>
+                    <div className="grid sm:grid-cols-2 gap-2">
+                      {study.approach.decisions.map((decision) => (
+                        <div key={decision.area} className="text-xs bg-gray-50 dark:bg-gray-900 p-2 rounded">
+                          <span className="font-medium text-gray-700 dark:text-gray-300">{decision.area}:</span>{' '}
+                          <span className="text-gray-600 dark:text-gray-400">{decision.detail}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="grid sm:grid-cols-4 gap-3 mb-4">
+                    {study.impact.map((item) => (
+                      <div key={item.metric} className="bg-gray-50 dark:bg-gray-900 p-3 rounded-lg text-center">
+                        <div className="text-xs text-gray-500 dark:text-gray-400 mb-1">{item.metric}</div>
+                        <div className="font-semibold text-gray-900 dark:text-white text-sm">{item.value}</div>
+                      </div>
+                    ))}
+                  </div>
+
+                  <div className="flex flex-wrap gap-2">
+                    {study.implementation.technologies.map((tech) => (
+                      <span
+                        key={tech}
+                        className="px-2 py-0.5 bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-400 rounded text-xs"
+                      >
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
                 </div>
-              </div>
-            ))}
+              )
+            })}
           </div>
         </section>
 

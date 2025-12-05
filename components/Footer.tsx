@@ -14,7 +14,7 @@ export function Footer() {
               Jude Oyovbaire
             </Link>
             <p className="mt-2 text-gray-600 dark:text-gray-400 text-sm">
-              Senior DevOps Engineer & Platform Architect building scalable cloud infrastructure.
+              Senior Platform & DevOps Engineer building AI-ready cloud platforms.
             </p>
           </div>
 
@@ -28,13 +28,28 @@ export function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/about" className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white text-sm transition-colors">
-                  About
+                <Link href="/platforms" className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white text-sm transition-colors">
+                  Platforms
                 </Link>
               </li>
               <li>
                 <Link href="/projects" className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white text-sm transition-colors">
                   Projects
+                </Link>
+              </li>
+              <li>
+                <Link href="/blog" className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white text-sm transition-colors">
+                  Blog
+                </Link>
+              </li>
+              <li>
+                <Link href="/opensource" className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white text-sm transition-colors">
+                  Open Source
+                </Link>
+              </li>
+              <li>
+                <Link href="/about" className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white text-sm transition-colors">
+                  About
                 </Link>
               </li>
             </ul>

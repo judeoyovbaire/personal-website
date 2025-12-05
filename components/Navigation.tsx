@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
-import { Home, User, Briefcase, Github, Linkedin, FileText, Menu, X } from 'lucide-react'
+import { Home, User, Briefcase, Github, Linkedin, FileText, Menu, X, Layers, BookOpen, Code2 } from 'lucide-react'
 import { ThemeToggle } from './ThemeToggle'
 
 export function Navigation() {
@@ -19,15 +19,21 @@ export function Navigation() {
             <Link href="/" className="font-bold text-xl text-gray-900 dark:text-white hover:text-blue-600 transition-colors">
               Jude
             </Link>
-            <div className="hidden sm:flex space-x-6">
+            <div className="hidden md:flex space-x-5">
               <Link href="/" className="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors flex items-center gap-1">
                 <Home size={16} /> Home
               </Link>
-              <Link href="/about" className="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors flex items-center gap-1">
-                <User size={16} /> About
+              <Link href="/platforms" className="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors flex items-center gap-1">
+                <Layers size={16} /> Platforms
               </Link>
               <Link href="/projects" className="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors flex items-center gap-1">
                 <Briefcase size={16} /> Projects
+              </Link>
+              <Link href="/blog" className="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors flex items-center gap-1">
+                <BookOpen size={16} /> Blog
+              </Link>
+              <Link href="/opensource" className="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors flex items-center gap-1">
+                <Code2 size={16} /> Open Source
               </Link>
             </div>
           </div>
@@ -62,7 +68,7 @@ export function Navigation() {
             </a>
             <button
               onClick={toggleMenu}
-              className="sm:hidden text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors"
+              className="md:hidden text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors"
               aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
               aria-expanded={isMenuOpen}
             >
@@ -74,7 +80,7 @@ export function Navigation() {
 
       {/* Mobile menu */}
       {isMenuOpen && (
-        <div className="sm:hidden border-t border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900">
+        <div className="md:hidden border-t border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900">
           <div className="px-4 py-3 space-y-3">
             <Link
               href="/"
@@ -84,11 +90,11 @@ export function Navigation() {
               <Home size={18} /> Home
             </Link>
             <Link
-              href="/about"
+              href="/platforms"
               onClick={closeMenu}
               className="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors flex items-center gap-2 py-2"
             >
-              <User size={18} /> About
+              <Layers size={18} /> Platforms
             </Link>
             <Link
               href="/projects"
@@ -96,6 +102,27 @@ export function Navigation() {
               className="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors flex items-center gap-2 py-2"
             >
               <Briefcase size={18} /> Projects
+            </Link>
+            <Link
+              href="/blog"
+              onClick={closeMenu}
+              className="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors flex items-center gap-2 py-2"
+            >
+              <BookOpen size={18} /> Blog
+            </Link>
+            <Link
+              href="/opensource"
+              onClick={closeMenu}
+              className="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors flex items-center gap-2 py-2"
+            >
+              <Code2 size={18} /> Open Source
+            </Link>
+            <Link
+              href="/about"
+              onClick={closeMenu}
+              className="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors flex items-center gap-2 py-2"
+            >
+              <User size={18} /> About
             </Link>
           </div>
         </div>
