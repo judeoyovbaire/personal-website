@@ -126,7 +126,7 @@ export default function Projects() {
         </section>
 
         {/* Side Projects */}
-        <section>
+        <section id="side-projects">
           <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
             Side Projects
           </h2>

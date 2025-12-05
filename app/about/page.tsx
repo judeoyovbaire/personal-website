@@ -16,8 +16,8 @@ export default function About() {
           <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">About Me</h1>
 
           <p className="text-xl text-gray-700 dark:text-gray-200 mb-10 leading-relaxed">
-            I&apos;m Jude, a Senior DevOps Engineer originally from Nigeria 🇳🇬, now building the future
-            of cloud infrastructure from Amsterdam 🇳🇱.
+            I&apos;m Jude, a Senior Platform &amp; DevOps Engineer originally from Nigeria 🇳🇬, now building
+            AI-ready cloud platforms from Amsterdam 🇳🇱.
           </p>
 
           <section className="mb-10">
@@ -63,9 +63,10 @@ export default function About() {
           <section className="mb-10">
             <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">What&apos;s Next</h2>
             <p className="text-lg text-gray-700 dark:text-gray-200 leading-relaxed">
-              I&apos;m focused on building platforms that scale, mentoring engineers, and solving problems
-              that matter. My ideal role combines technical depth with my passion for growing teams
-              and driving impactful transformations.
+              I&apos;m deepening my expertise in ML platforms and AI infrastructure—building GPU-ready
+              clusters, ML pipelines, and applying SRE practices to model serving. My ideal role
+              combines this technical depth with my passion for mentoring engineers and driving
+              platform transformations that unlock business value.
             </p>
           </section>
         </article>
