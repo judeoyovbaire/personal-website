@@ -96,7 +96,7 @@ export const sideProjects: SideProject[] = [
     title: 'Kubernetes Model Lifecycle Operator',
     status: 'planned',
     description:
-      'Custom Kubernetes operator written in Go that automates ML model lifecycle management—from training completion through deployment, A/B testing, and retirement—using declarative CRDs.',
+      'Custom Kubernetes operator written in Go that automates ML model lifecycle management, from training completion through deployment, A/B testing, and retirement using declarative CRDs.',
     technologies: ['Go', 'Kubebuilder', 'Kubernetes', 'KServe', 'MLflow', 'Prometheus'],
     goals: [
       'CRD-based model promotion workflows (dev → staging → production)',
