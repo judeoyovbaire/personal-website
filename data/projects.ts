@@ -91,6 +91,7 @@ export const sideProjects: SideProject[] = [
       'Chargeback dashboards for team and project cost allocation',
       'Right-sizing recommendations based on actual workload patterns',
     ],
+    github: 'https://github.com/judeoyovbaire/ai-finops-platform',
   },
   {
     title: 'Kubernetes Model Lifecycle Operator',
@@ -105,5 +106,6 @@ export const sideProjects: SideProject[] = [
       'Integration with MLflow model registry for version tracking',
       'Rollback automation based on latency and error rate thresholds',
     ],
+    github: 'https://github.com/judeoyovbaire/model-lifecycle-operator',
   },
 ]
