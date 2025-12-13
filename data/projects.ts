@@ -13,12 +13,19 @@ export interface Project {
   highlights: string[]
 }
 
+export interface Milestone {
+  name: string
+  completed: boolean
+}
+
 export interface SideProject {
   title: string
   status: 'in_progress' | 'planned' | 'completed'
   description: string
   technologies: string[]
   goals: string[]
+  milestones?: Milestone[]
+  featured?: boolean
   github?: string
   demo?: string
 }
@@ -67,45 +74,73 @@ export const sideProjects: SideProject[] = [
     title: 'MLOps Platform on Kubernetes',
     status: 'in_progress',
     description:
-      'End-to-end MLOps platform for model training, versioning, and deployment on AWS EKS. Enables data science teams to go from experiment to production with self-service workflows, including LLM inference on GPU nodes.',
-    technologies: ['Kubeflow', 'MLflow 3.x', 'KServe', 'ArgoCD', 'vLLM', 'Terraform', 'Prometheus'],
+      'Production-ready MLOps platform enabling data science teams to deploy ML models from experimentation to production in 15 minutes with self-service workflows. Features GPU node autoscaling and cost-optimized SPOT instances.',
+    technologies: ['Argo Workflows', 'MLflow 3.x', 'KServe', 'ArgoCD 3.x', 'Karpenter', 'Terraform', 'Prometheus'],
     goals: [
-      'Automated ML pipelines with experiment tracking and caching',
-      'Model versioning with aliases and lineage (MLflow 3.x)',
+      'Self-service model deployment reducing time from 2-3 days to 15 minutes',
+      'Model versioning with aliases and GenAI support (MLflow 3.x)',
       'Production serving with canary deployments and autoscaling (KServe)',
-      'LLM inference with vLLM on GPU nodes (Mistral-7B, CodeLlama)',
-      'Multi-cloud ready (AWS EKS production, GCP GKE and Azure AKS planned)',
+      'Dynamic GPU node provisioning with scale-to-zero (Karpenter 1.8.0)',
+      'GitOps-based deployment automation with security scanning',
+    ],
+    milestones: [
+      { name: 'Core', completed: true },
+      { name: 'MLflow', completed: true },
+      { name: 'KServe', completed: true },
+      { name: 'CI/CD', completed: true },
+      { name: 'GPU', completed: false },
+      { name: 'Docs', completed: false },
     ],
     github: 'https://github.com/judeoyovbaire/mlops-platform',
+    demo: '#demo-coming-soon',
   },
   {
     title: 'AI Infrastructure FinOps Platform',
-    status: 'planned',
+    status: 'in_progress',
+    featured: true,
     description:
-      'Cost optimization platform for AI/ML workloads providing visibility into GPU utilization, inference costs per model, and actionable recommendations for reducing cloud spend on training and serving infrastructure.',
-    technologies: ['Prometheus', 'Grafana', 'NVIDIA DCGM', 'OpenCost', 'Python', 'Kubernetes'],
+      'Cost optimization platform for AI/ML workloads with GPU utilization monitoring, cost-per-inference tracking, and actionable recommendations. MVP complete with Phase 2 budget forecasting in development.',
+    technologies: ['NVIDIA DCGM', 'OpenCost', 'Prometheus', 'Grafana', 'Python/Flask', 'Thanos'],
     goals: [
-      'Real-time GPU utilization monitoring with idle resource detection',
-      'Cost-per-inference tracking and attribution by model and team',
-      'Spot instance optimization with automated fallback strategies',
-      'Chargeback dashboards for team and project cost allocation',
-      'Right-sizing recommendations based on actual workload patterns',
+      'Real-time GPU utilization monitoring with idle resource alerts',
+      'Cost-per-inference tracking with team/project attribution',
+      'Budget forecasting with trend analysis and alert system',
+      'Multi-cluster cost aggregation with Thanos',
+      'ML-based anomaly detection and right-sizing recommendations',
+    ],
+    milestones: [
+      { name: 'GPU Metrics', completed: true },
+      { name: 'OpenCost', completed: true },
+      { name: 'Dashboards', completed: true },
+      { name: 'API', completed: true },
+      { name: 'Alerts', completed: true },
+      { name: 'Forecasting', completed: false },
     ],
     github: 'https://github.com/judeoyovbaire/ai-finops-platform',
+    demo: '#demo-coming-soon',
   },
   {
     title: 'Kubernetes Model Lifecycle Operator',
-    status: 'planned',
+    status: 'in_progress',
     description:
-      'Custom Kubernetes operator written in Go that automates ML model lifecycle management, from training completion through deployment, A/B testing, and retirement using declarative CRDs.',
-    technologies: ['Go', 'Kubebuilder', 'Kubernetes', 'KServe', 'MLflow', 'Prometheus'],
+      'Custom Kubernetes operator built with Kubebuilder that manages ML model lifecycle from deployment through canary analysis to retirement. Features declarative CRDs with MLflow and KServe integration.',
+    technologies: ['Go 1.23', 'Kubebuilder', 'Kubernetes', 'KServe', 'MLflow', 'Prometheus'],
     goals: [
-      'CRD-based model promotion workflows (dev → staging → production)',
-      'Automated canary rollouts with metric-based progression',
-      'Model deprecation policies with graceful traffic shifting',
-      'Integration with MLflow model registry for version tracking',
-      'Rollback automation based on latency and error rate thresholds',
+      'Declarative ModelDeployment CRD with phase-based state machine',
+      'Automated canary rollouts with Prometheus metric analysis',
+      'Automatic rollback on error rate or latency threshold breaches',
+      'MLflow model URI resolution with version/alias support',
+      'Admission webhooks for validation and event recording',
+    ],
+    milestones: [
+      { name: 'CRD', completed: true },
+      { name: 'KServe', completed: true },
+      { name: 'MLflow', completed: true },
+      { name: 'Webhooks', completed: true },
+      { name: 'Tests', completed: true },
+      { name: 'A/B Testing', completed: false },
     ],
     github: 'https://github.com/judeoyovbaire/model-lifecycle-operator',
+    demo: '#demo-coming-soon',
   },
 ]

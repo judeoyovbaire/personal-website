@@ -1,5 +1,5 @@
 import { Navigation } from '@/components/Navigation'
-import { ArrowLeft, Github, ExternalLink, Clock, Rocket, CheckCircle, Server, Database, Brain, Cpu } from 'lucide-react'
+import { ArrowLeft, Github, ExternalLink, Clock, Rocket, CheckCircle, Server, Database, Brain, Cpu, Star, Check } from 'lucide-react'
 import Link from 'next/link'
 import { sideProjects, type SideProject } from '@/data/projects'
 import { caseStudies, pillarLabels } from '@/data/casestudies'
@@ -140,13 +140,23 @@ export default function Projects() {
               return (
                 <div
                   key={project.title}
-                  className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6 flex flex-col"
+                  className={`bg-white dark:bg-gray-800 rounded-xl border p-6 flex flex-col ${
+                    project.featured
+                      ? 'border-purple-300 dark:border-purple-700 ring-1 ring-purple-200 dark:ring-purple-800'
+                      : 'border-gray-200 dark:border-gray-700'
+                  }`}
                 >
-                  <div className="flex items-start justify-between mb-3">
+                  <div className="flex items-start justify-between gap-2 mb-3">
                     <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium ${status.color}`}>
                       <StatusIcon size={12} />
                       {status.label}
                     </span>
+                    {project.featured && (
+                      <span className="inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200">
+                        <Star size={10} />
+                        Featured
+                      </span>
+                    )}
                   </div>
 
                   <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-2">
@@ -156,6 +166,30 @@ export default function Projects() {
                   <p className="text-sm text-gray-600 dark:text-gray-400 mb-4 flex-grow">
                     {project.description}
                   </p>
+
+                  {/* Milestone Chips */}
+                  {project.milestones && (
+                    <div className="mb-4">
+                      <h4 className="text-xs font-semibold text-gray-500 dark:text-gray-500 uppercase tracking-wide mb-2">
+                        Progress
+                      </h4>
+                      <div className="flex flex-wrap gap-1.5">
+                        {project.milestones.map((milestone) => (
+                          <span
+                            key={milestone.name}
+                            className={`inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs ${
+                              milestone.completed
+                                ? 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400'
+                                : 'bg-gray-100 text-gray-500 dark:bg-gray-700 dark:text-gray-400'
+                            }`}
+                          >
+                            {milestone.completed && <Check size={10} />}
+                            {milestone.name}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  )}
 
                   <div className="mb-4">
                     <h4 className="text-xs font-semibold text-gray-500 dark:text-gray-500 uppercase tracking-wide mb-2">
@@ -204,7 +238,7 @@ export default function Projects() {
                         Coming Soon
                       </span>
                     )}
-                    {project.demo && (
+                    {project.demo && project.demo !== '#demo-coming-soon' ? (
                       <a
                         href={project.demo}
                         target="_blank"
@@ -214,7 +248,12 @@ export default function Projects() {
                         <ExternalLink size={14} />
                         Demo
                       </a>
-                    )}
+                    ) : project.demo === '#demo-coming-soon' ? (
+                      <span className="inline-flex items-center gap-1.5 text-sm text-gray-400 dark:text-gray-500">
+                        <ExternalLink size={14} />
+                        Demo Soon
+                      </span>
+                    ) : null}
                   </div>
                 </div>
               )
