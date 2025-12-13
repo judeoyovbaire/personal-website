@@ -33,7 +33,7 @@ export function Navigation() {
                 <BookOpen size={16} /> Blog <span className="text-[10px] text-blue-600 dark:text-blue-400 font-medium ml-0.5">Soon</span>
               </Link>
               <Link href="/opensource" className="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors flex items-center gap-1">
-                <Code2 size={16} /> Open Source <span className="text-[10px] text-blue-600 dark:text-blue-400 font-medium ml-0.5">Soon</span>
+                <Code2 size={16} /> Open Source
               </Link>
             </div>
           </div>
@@ -115,7 +115,7 @@ export function Navigation() {
               onClick={closeMenu}
               className="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors flex items-center gap-2 py-2"
             >
-              <Code2 size={18} /> Open Source <span className="text-[10px] text-blue-600 dark:text-blue-400 font-medium">Soon</span>
+              <Code2 size={18} /> Open Source
             </Link>
             <Link
               href="/about"
