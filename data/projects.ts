@@ -72,11 +72,11 @@ export const projects: Project[] = [
 export const sideProjects: SideProject[] = [
   {
     title: 'AI Inference Gateway',
-    status: 'planned',
+    status: 'in_progress',
     featured: true,
     description:
-      'Kubernetes-native inference gateway for multi-model routing, A/B testing, and fallback chains. Routes requests across LLM providers (OpenAI, Claude, local models) with cost tracking and intelligent failover.',
-    technologies: ['Go', 'Kubebuilder', 'Gateway API', 'KServe', 'Prometheus', 'OpenTelemetry'],
+      'Kubernetes-native inference gateway for multi-model routing, A/B testing, and fallback chains. Routes requests across LLM providers (OpenAI, Claude, local models) with cost tracking and intelligent failover. Targeting CNCF Sandbox.',
+    technologies: ['Go 1.24', 'Kubebuilder', 'K8s 1.34', 'KServe 0.15', 'Prometheus', 'OpenTelemetry'],
     goals: [
       'Multi-model routing with header/prompt-based rules',
       'A/B testing with statistical significance analysis',
@@ -85,7 +85,7 @@ export const sideProjects: SideProject[] = [
       'Semantic caching for repeated queries',
     ],
     milestones: [
-      { name: 'CRDs', completed: false },
+      { name: 'CRDs', completed: true },
       { name: 'Routing', completed: false },
       { name: 'A/B Testing', completed: false },
       { name: 'Fallbacks', completed: false },
