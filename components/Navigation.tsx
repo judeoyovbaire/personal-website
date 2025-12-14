@@ -35,6 +35,9 @@ export function Navigation() {
               <Link href="/opensource" className="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors flex items-center gap-1">
                 <Code2 size={16} /> Open Source
               </Link>
+              <Link href="/about" className="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors flex items-center gap-1">
+                <User size={16} /> About
+              </Link>
             </div>
           </div>
           <div className="flex items-center space-x-4">
@@ -58,7 +61,7 @@ export function Navigation() {
               <Linkedin size={20} />
             </a>
             <a
-              href="/JudeOyovbaire-DevOps-CV.pdf"
+              href="/JudeOyovbaire-Platform-CV.pdf"
               className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm font-medium flex items-center gap-2"
               download
               aria-label="Download CV"

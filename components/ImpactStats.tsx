@@ -10,10 +10,10 @@ export function ImpactStats() {
   }, [])
 
   const stats = [
-    { label: "Cost Saved", value: "€2.5M+", prefix: "€", numerical: 2500000 },
-    { label: "Platform Reliability", value: "99.99%", numerical: 99.99 },
-    { label: "Engineers Mentored", value: "20+", numerical: 20 },
-    { label: "Certifications", value: "11", numerical: 11 }
+    { label: "Cost Saved", value: "€2.5M+" },
+    { label: "Platform Reliability", value: "99.99%" },
+    { label: "Engineers Mentored", value: "20+" },
+    { label: "Certifications", value: "11" }
   ]
 
   return (
