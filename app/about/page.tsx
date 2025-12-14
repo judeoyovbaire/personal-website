@@ -63,7 +63,7 @@ export default function About() {
           <section className="mb-10">
             <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">What&apos;s Next</h2>
             <p className="text-lg text-gray-700 dark:text-gray-200 leading-relaxed">
-              I&apos;m deepening my expertise in ML platforms and AI infrastructure—building GPU-ready
+              I&apos;m deepening my expertise in ML platforms and AI infrastructure - building GPU-ready
               clusters, ML pipelines, and applying SRE practices to model serving. My ideal role
               combines this technical depth with my passion for mentoring engineers and driving
               platform transformations that unlock business value.
