@@ -16,7 +16,6 @@ export const metadata: Metadata = {
 
 export default function Blog() {
   const publishedPosts = posts.filter((post) => post.published)
-  const plannedPosts = posts.filter((post) => !post.published)
 
   return (
     <>
@@ -106,7 +105,7 @@ export default function Blog() {
         )}
 
         {/* Content Themes */}
-        <section className="mb-12">
+        <section>
           <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-6">Content Themes</h2>
           <div className="grid md:grid-cols-3 gap-4">
             <div className="p-4 border border-gray-200 dark:border-gray-700 rounded-lg">
@@ -129,36 +128,6 @@ export default function Blog() {
             </div>
           </div>
         </section>
-
-        {/* Planned Posts */}
-        {plannedPosts.length > 0 && (
-          <section>
-            <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-6">Coming Soon</h2>
-            <div className="space-y-4">
-              {plannedPosts.map((post) => (
-                <article
-                  key={post.slug}
-                  className="bg-gray-50 dark:bg-gray-800/50 rounded-xl border border-gray-200 dark:border-gray-700 p-5 opacity-75"
-                >
-                  <div className="flex flex-wrap items-center gap-3 mb-2">
-                    <span className="px-2.5 py-1 bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-400 rounded-full text-xs font-medium">
-                      {post.category}
-                    </span>
-                    <span className="text-sm text-gray-500 dark:text-gray-400">
-                      {post.date}
-                    </span>
-                  </div>
-                  <h3 className="text-lg font-semibold text-gray-700 dark:text-gray-300 mb-2">
-                    {post.title.replace('Coming Soon: ', '')}
-                  </h3>
-                  <p className="text-gray-500 dark:text-gray-400 text-sm">
-                    {post.description}
-                  </p>
-                </article>
-              ))}
-            </div>
-          </section>
-        )}
       </main>
     </>
   )

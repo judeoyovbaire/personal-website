@@ -245,39 +245,6 @@ The gateway is open source and designed for CNCF contribution. If you're dealing
 *This post is part of my series on building production AI infrastructure. Next up: merging OpenCost and NVIDIA DCGM for GPU cost optimization.*
     `,
   },
-  {
-    slug: 'ai-ready-platform-design',
-    title: 'Coming Soon: AI-Ready Platform Design',
-    description: 'Exploring architectural patterns for platforms that serve both traditional workloads and AI/ML teams.',
-    category: 'Platform Design',
-    date: 'Coming Soon',
-    readTime: '',
-    published: false,
-    technologies: [],
-    content: '',
-  },
-  {
-    slug: 'mlops-in-real-companies',
-    title: 'Coming Soon: MLOps in Real Companies',
-    description: 'Lessons from implementing ML platforms in production environments, not just labs.',
-    category: 'MLOps',
-    date: 'Coming Soon',
-    readTime: '',
-    published: false,
-    technologies: [],
-    content: '',
-  },
-  {
-    slug: 'sre-for-data-ml-systems',
-    title: 'Coming Soon: SRE for Data and ML Systems',
-    description: 'Applying SRE principles to data pipelines and ML inference workloads.',
-    category: 'SRE',
-    date: 'Coming Soon',
-    readTime: '',
-    published: false,
-    technologies: [],
-    content: '',
-  },
 ]
 
 export const categories = ['All', 'Platform Design', 'MLOps', 'SRE', 'Kubernetes', 'Data Platforms']

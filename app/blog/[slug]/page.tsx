@@ -40,6 +40,140 @@ export async function generateStaticParams() {
     }))
 }
 
+// Simple markdown parser that handles our content format
+function parseMarkdown(content: string): React.ReactNode[] {
+  const elements: React.ReactNode[] = []
+  const lines = content.split('\n')
+  let i = 0
+  let key = 0
+
+  while (i < lines.length) {
+    const line = lines[i]
+
+    // Handle code blocks
+    if (line.startsWith('```')) {
+      const lang = line.slice(3).trim()
+      const codeLines: string[] = []
+      i++
+      while (i < lines.length && !lines[i].startsWith('```')) {
+        codeLines.push(lines[i])
+        i++
+      }
+      elements.push(
+        <pre
+          key={key++}
+          className="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto my-6 text-sm border border-gray-700"
+        >
+          <code className="font-mono">{codeLines.join('\n')}</code>
+        </pre>
+      )
+      i++
+      continue
+    }
+
+    // Handle headings
+    if (line.startsWith('## ')) {
+      elements.push(
+        <h2 key={key++} className="text-2xl font-bold text-gray-900 dark:text-white mt-10 mb-4">
+          {line.slice(3)}
+        </h2>
+      )
+      i++
+      continue
+    }
+
+    if (line.startsWith('### ')) {
+      elements.push(
+        <h3 key={key++} className="text-xl font-bold text-gray-900 dark:text-white mt-8 mb-3">
+          {line.slice(4)}
+        </h3>
+      )
+      i++
+      continue
+    }
+
+    // Handle horizontal rules
+    if (line.trim() === '---') {
+      elements.push(
+        <hr key={key++} className="my-8 border-gray-200 dark:border-gray-700" />
+      )
+      i++
+      continue
+    }
+
+    // Handle unordered lists
+    if (line.startsWith('- ')) {
+      const listItems: string[] = []
+      while (i < lines.length && lines[i].startsWith('- ')) {
+        listItems.push(lines[i].slice(2))
+        i++
+      }
+      elements.push(
+        <ul key={key++} className="list-disc list-inside space-y-2 my-4 text-gray-700 dark:text-gray-300">
+          {listItems.map((item, idx) => (
+            <li key={idx} dangerouslySetInnerHTML={{ __html: formatInline(item) }} />
+          ))}
+        </ul>
+      )
+      continue
+    }
+
+    // Handle numbered lists
+    if (/^\d+\.\s/.test(line)) {
+      const listItems: string[] = []
+      while (i < lines.length && /^\d+\.\s/.test(lines[i])) {
+        listItems.push(lines[i].replace(/^\d+\.\s/, ''))
+        i++
+      }
+      elements.push(
+        <ol key={key++} className="list-decimal list-inside space-y-2 my-4 text-gray-700 dark:text-gray-300">
+          {listItems.map((item, idx) => (
+            <li key={idx} dangerouslySetInnerHTML={{ __html: formatInline(item) }} />
+          ))}
+        </ol>
+      )
+      continue
+    }
+
+    // Handle empty lines
+    if (line.trim() === '') {
+      i++
+      continue
+    }
+
+    // Handle italic text (standalone lines starting and ending with single *)
+    if (line.startsWith('*') && line.endsWith('*') && !line.startsWith('**')) {
+      elements.push(
+        <p key={key++} className="italic text-gray-600 dark:text-gray-400 my-4">
+          {line.slice(1, -1)}
+        </p>
+      )
+      i++
+      continue
+    }
+
+    // Regular paragraphs
+    elements.push(
+      <p
+        key={key++}
+        className="text-gray-700 dark:text-gray-300 leading-relaxed my-4"
+        dangerouslySetInnerHTML={{ __html: formatInline(line) }}
+      />
+    )
+    i++
+  }
+
+  return elements
+}
+
+// Format inline elements (bold, code, links)
+function formatInline(text: string): string {
+  return text
+    .replace(/\*\*(.*?)\*\*/g, '<strong class="font-semibold text-gray-900 dark:text-white">$1</strong>')
+    .replace(/`([^`]+)`/g, '<code class="bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded text-sm font-mono">$1</code>')
+    .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" class="text-blue-600 dark:text-blue-400 hover:underline" target="_blank" rel="noopener noreferrer">$1</a>')
+}
+
 export default async function BlogPost({ params }: Props) {
   const { slug } = await params
   const post = posts.find((p) => p.slug === slug && p.published)
@@ -47,6 +181,8 @@ export default async function BlogPost({ params }: Props) {
   if (!post) {
     notFound()
   }
+
+  const contentElements = parseMarkdown(post.content.trim())
 
   return (
     <>
@@ -99,112 +235,8 @@ export default async function BlogPost({ params }: Props) {
             )}
           </header>
 
-          <div className="prose prose-lg dark:prose-invert max-w-none prose-headings:font-bold prose-h2:text-2xl prose-h2:mt-10 prose-h2:mb-4 prose-h3:text-xl prose-h3:mt-8 prose-h3:mb-3 prose-p:text-gray-700 dark:prose-p:text-gray-300 prose-p:leading-relaxed prose-li:text-gray-700 dark:prose-li:text-gray-300 prose-strong:text-gray-900 dark:prose-strong:text-white prose-code:bg-gray-100 dark:prose-code:bg-gray-800 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:text-sm prose-code:before:content-none prose-code:after:content-none prose-pre:bg-gray-900 prose-pre:border prose-pre:border-gray-700 prose-a:text-blue-600 dark:prose-a:text-blue-400 prose-a:no-underline hover:prose-a:underline">
-            {post.content.split('\n').map((line, index) => {
-              // Handle code blocks
-              if (line.startsWith('```')) {
-                return null // We'll handle this differently
-              }
-
-              // Handle headings
-              if (line.startsWith('## ')) {
-                return (
-                  <h2 key={index} className="text-2xl font-bold text-gray-900 dark:text-white mt-10 mb-4">
-                    {line.replace('## ', '')}
-                  </h2>
-                )
-              }
-              if (line.startsWith('### ')) {
-                return (
-                  <h3 key={index} className="text-xl font-bold text-gray-900 dark:text-white mt-8 mb-3">
-                    {line.replace('### ', '')}
-                  </h3>
-                )
-              }
-
-              // Handle bold text and inline code
-              if (line.startsWith('**') && line.endsWith('**')) {
-                return (
-                  <p key={index} className="font-semibold text-gray-900 dark:text-white mt-4">
-                    {line.replace(/\*\*/g, '')}
-                  </p>
-                )
-              }
-
-              // Handle list items
-              if (line.startsWith('- ')) {
-                return (
-                  <li key={index} className="text-gray-700 dark:text-gray-300 ml-4">
-                    {line.replace('- ', '')}
-                  </li>
-                )
-              }
-
-              // Handle numbered lists
-              if (/^\d+\.\s/.test(line)) {
-                return (
-                  <li key={index} className="text-gray-700 dark:text-gray-300 ml-4 list-decimal">
-                    {line.replace(/^\d+\.\s/, '')}
-                  </li>
-                )
-              }
-
-              // Handle empty lines
-              if (line.trim() === '') {
-                return <div key={index} className="h-4" />
-              }
-
-              // Handle horizontal rules
-              if (line.trim() === '---') {
-                return <hr key={index} className="my-8 border-gray-200 dark:border-gray-700" />
-              }
-
-              // Handle italic text (for notes/emphasis)
-              if (line.startsWith('*') && line.endsWith('*') && !line.startsWith('**')) {
-                return (
-                  <p key={index} className="italic text-gray-600 dark:text-gray-400 mt-4">
-                    {line.replace(/^\*|\*$/g, '')}
-                  </p>
-                )
-              }
-
-              // Regular paragraphs - handle inline formatting
-              const formattedLine = line
-                .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-                .replace(/`([^`]+)`/g, '<code class="bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded text-sm">$1</code>')
-                .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" class="text-blue-600 dark:text-blue-400 hover:underline" target="_blank" rel="noopener noreferrer">$1</a>')
-
-              return (
-                <p
-                  key={index}
-                  className="text-gray-700 dark:text-gray-300 leading-relaxed mt-4"
-                  dangerouslySetInnerHTML={{ __html: formattedLine }}
-                />
-              )
-            })}
-
-            {/* Render code blocks separately */}
-            {post.content.includes('```') && (
-              <>
-                {post.content.split('```').map((block, index) => {
-                  if (index % 2 === 1) {
-                    // This is a code block
-                    const lines = block.split('\n')
-                    const language = lines[0] || ''
-                    const code = lines.slice(1).join('\n')
-                    return (
-                      <pre
-                        key={`code-${index}`}
-                        className="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto my-6 text-sm border border-gray-700"
-                      >
-                        <code>{code}</code>
-                      </pre>
-                    )
-                  }
-                  return null
-                })}
-              </>
-            )}
+          <div className="prose-content">
+            {contentElements}
           </div>
         </article>
 
