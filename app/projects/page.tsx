@@ -3,6 +3,17 @@ import { ArrowLeft, Github, ExternalLink, Clock, Rocket, CheckCircle, Server, Da
 import Link from 'next/link'
 import { sideProjects, type SideProject } from '@/data/projects'
 import { caseStudies, pillarLabels } from '@/data/casestudies'
+import type { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'Projects & Case Studies | Jude - Senior Platform Engineer',
+  description: 'Platform engineering case studies with measurable impact: Databricks migrations, Kubernetes modernization, MLOps implementations. Side projects in AI infrastructure and FinOps.',
+  openGraph: {
+    title: 'Projects & Case Studies | Jude',
+    description: 'Real-world platform engineering case studies and open source AI infrastructure projects.',
+    url: '/projects',
+  },
+}
 
 const statusConfig: Record<SideProject['status'], { label: string; icon: typeof Clock; color: string }> = {
   in_progress: { label: 'In Progress', icon: Rocket, color: 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200' },

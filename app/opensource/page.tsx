@@ -2,6 +2,17 @@ import { Navigation } from '@/components/Navigation'
 import { ArrowLeft, Github, ExternalLink, Star, Rocket, Clock, Check } from 'lucide-react'
 import Link from 'next/link'
 import { sideProjects } from '@/data/projects'
+import type { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'Open Source | Jude - Senior Platform Engineer',
+  description: 'Open source AI infrastructure tools: Kubernetes operators for LLM inference, GPU cost optimization with FinOps, and MLOps reference architectures.',
+  openGraph: {
+    title: 'Open Source Projects | Jude',
+    description: 'Building AI infrastructure tools in the open, designed for CNCF contribution.',
+    url: '/opensource',
+  },
+}
 
 export default function OpenSource() {
   const featuredProjects = sideProjects.filter(p => p.featured)

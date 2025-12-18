@@ -1,6 +1,17 @@
 import { Navigation } from '@/components/Navigation'
 import { ArrowLeft } from 'lucide-react'
 import Link from 'next/link'
+import type { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'About | Jude - Senior Platform Engineer',
+  description: 'Senior Platform & DevOps Engineer from Nigeria, based in Amsterdam. 10+ years building AI-ready cloud platforms with 99.99% uptime and €2.5M+ in cost savings.',
+  openGraph: {
+    title: 'About Jude | Platform Engineer',
+    description: 'The journey from Nigeria to Amsterdam, building resilient platforms that transform infrastructure into competitive advantage.',
+    url: '/about',
+  },
+}
 
 export default function About() {
   return (

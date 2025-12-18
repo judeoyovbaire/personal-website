@@ -1,6 +1,17 @@
 import { Navigation } from '@/components/Navigation'
 import { ArrowLeft, FileText, Calendar } from 'lucide-react'
 import Link from 'next/link'
+import type { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'Blog | Jude - Senior Platform Engineer',
+  description: 'Technical blog on platform engineering, MLOps, and SRE practices for AI systems. Deep dives into Kubernetes, data platforms, and ML infrastructure.',
+  openGraph: {
+    title: 'Blog | Jude',
+    description: 'Thoughts on platform engineering, MLOps, and building reliable systems at scale.',
+    url: '/blog',
+  },
+}
 
 // Placeholder posts - replace with actual blog data when ready
 const posts = [

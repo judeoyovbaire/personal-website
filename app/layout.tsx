@@ -6,6 +6,7 @@ import { Footer } from '@/components/Footer'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://judaire.io'),
   title: 'Jude - Senior Platform & DevOps Engineer | AI-Ready Cloud Platforms',
   description: 'Senior Platform & DevOps Engineer building AI-ready cloud platforms across Core, Data, ML, and GPU infrastructure. 10+ years architecting systems with 99.99% reliability.',
   keywords: 'Platform Engineer, DevOps Engineer, MLOps, AI Infrastructure, Kubernetes, AWS, Azure, GCP, Databricks, GPU, Amsterdam',
@@ -16,6 +17,12 @@ export const metadata: Metadata = {
     type: 'website',
     locale: 'en_US',
     siteName: 'Jude Portfolio',
+    url: '/',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Jude - Senior Platform & DevOps Engineer',
+    description: 'Building AI-ready cloud platforms across Core, Data, ML, and GPU infrastructure.',
   },
 }
 

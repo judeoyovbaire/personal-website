@@ -1,6 +1,17 @@
 import { Navigation } from '@/components/Navigation'
 import { ArrowLeft, Server, Database, Brain, Cpu, ArrowRight } from 'lucide-react'
 import Link from 'next/link'
+import type { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'Platform Capabilities | Jude - Senior Platform Engineer',
+  description: 'AI-ready platform capabilities across Core (Kubernetes, IaC, GitOps), Data (Lakehouse, Streaming), ML (Pipelines, Serving), and AI Infrastructure (GPU clusters, LLM serving).',
+  openGraph: {
+    title: 'Platform Capabilities | Jude',
+    description: 'Building AI-ready platforms as stacked capabilities: Core, Data, ML, and AI Infrastructure layers.',
+    url: '/platforms',
+  },
+}
 
 export default function Platforms() {
   return (
