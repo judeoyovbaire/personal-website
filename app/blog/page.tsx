@@ -1,7 +1,8 @@
 import { Navigation } from '@/components/Navigation'
-import { ArrowLeft, FileText, Calendar } from 'lucide-react'
+import { ArrowLeft, ArrowRight, Calendar, Clock } from 'lucide-react'
 import Link from 'next/link'
 import type { Metadata } from 'next'
+import { posts, categories } from '@/data/posts'
 
 export const metadata: Metadata = {
   title: 'Blog | Jude - Senior Platform Engineer',
@@ -13,34 +14,10 @@ export const metadata: Metadata = {
   },
 }
 
-// Placeholder posts - replace with actual blog data when ready
-const posts = [
-  {
-    title: 'Coming Soon: AI-Ready Platform Design',
-    description: 'Exploring architectural patterns for platforms that serve both traditional workloads and AI/ML teams.',
-    category: 'Platform Design',
-    date: 'Coming Soon',
-    slug: '#',
-  },
-  {
-    title: 'Coming Soon: MLOps in Real Companies',
-    description: 'Lessons from implementing ML platforms in production environments, not just labs.',
-    category: 'MLOps',
-    date: 'Coming Soon',
-    slug: '#',
-  },
-  {
-    title: 'Coming Soon: SRE for Data and ML Systems',
-    description: 'Applying SRE principles to data pipelines and ML inference workloads.',
-    category: 'SRE',
-    date: 'Coming Soon',
-    slug: '#',
-  },
-]
-
-const categories = ['All', 'Platform Design', 'MLOps', 'SRE', 'Kubernetes', 'Data Platforms']
-
 export default function Blog() {
+  const publishedPosts = posts.filter((post) => post.published)
+  const plannedPosts = posts.filter((post) => !post.published)
+
   return (
     <>
       <Navigation />
@@ -71,51 +48,65 @@ export default function Blog() {
           ))}
         </div>
 
-        {/* Coming Soon Notice */}
-        <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-xl p-6 mb-8">
-          <div className="flex items-start gap-3">
-            <FileText className="text-blue-600 mt-0.5" size={20} />
-            <div>
-              <h3 className="font-semibold text-gray-900 dark:text-white mb-1">Content Coming Soon</h3>
-              <p className="text-sm text-gray-600 dark:text-gray-400">
-                I&apos;m working on detailed posts about AI-ready platform design, MLOps implementation,
-                and SRE practices for data systems. Subscribe to get notified when new content is published.
-              </p>
+        {/* Published Posts */}
+        {publishedPosts.length > 0 && (
+          <section className="mb-12">
+            <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-6">Latest Posts</h2>
+            <div className="space-y-6">
+              {publishedPosts.map((post) => (
+                <Link
+                  key={post.slug}
+                  href={`/blog/${post.slug}`}
+                  className="block bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6 hover:border-blue-300 dark:hover:border-blue-700 hover:shadow-md transition-all"
+                >
+                  <article>
+                    <div className="flex flex-wrap items-center gap-3 mb-3">
+                      <span className="px-2.5 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded-full text-xs font-medium">
+                        {post.category}
+                      </span>
+                      <span className="flex items-center gap-1 text-sm text-gray-500 dark:text-gray-400">
+                        <Calendar size={14} />
+                        {new Date(post.date).toLocaleDateString('en-US', {
+                          year: 'numeric',
+                          month: 'short',
+                          day: 'numeric',
+                        })}
+                      </span>
+                      <span className="flex items-center gap-1 text-sm text-gray-500 dark:text-gray-400">
+                        <Clock size={14} />
+                        {post.readTime}
+                      </span>
+                    </div>
+                    <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2 group-hover:text-blue-600">
+                      {post.title}
+                    </h3>
+                    <p className="text-gray-600 dark:text-gray-400 mb-4">
+                      {post.description}
+                    </p>
+                    <div className="flex flex-wrap items-center justify-between gap-4">
+                      <div className="flex flex-wrap gap-2">
+                        {post.technologies.slice(0, 4).map((tech) => (
+                          <span
+                            key={tech}
+                            className="px-2 py-0.5 bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-400 rounded text-xs"
+                          >
+                            {tech}
+                          </span>
+                        ))}
+                      </div>
+                      <span className="inline-flex items-center gap-1 text-blue-600 dark:text-blue-400 text-sm font-medium">
+                        Read more <ArrowRight size={14} />
+                      </span>
+                    </div>
+                  </article>
+                </Link>
+              ))}
             </div>
-          </div>
-        </div>
-
-        {/* Planned Posts */}
-        <section>
-          <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-6">Planned Posts</h2>
-          <div className="space-y-4">
-            {posts.map((post) => (
-              <article
-                key={post.title}
-                className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6 opacity-75"
-              >
-                <div className="flex flex-wrap items-center gap-3 mb-2">
-                  <span className="px-2.5 py-1 bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-400 rounded-full text-xs font-medium">
-                    {post.category}
-                  </span>
-                  <span className="flex items-center gap-1 text-sm text-gray-500 dark:text-gray-400">
-                    <Calendar size={14} />
-                    {post.date}
-                  </span>
-                </div>
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
-                  {post.title}
-                </h3>
-                <p className="text-gray-600 dark:text-gray-400 text-sm">
-                  {post.description}
-                </p>
-              </article>
-            ))}
-          </div>
-        </section>
+          </section>
+        )}
 
         {/* Content Themes */}
-        <section className="mt-12">
+        <section className="mb-12">
           <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-6">Content Themes</h2>
           <div className="grid md:grid-cols-3 gap-4">
             <div className="p-4 border border-gray-200 dark:border-gray-700 rounded-lg">
@@ -138,6 +129,36 @@ export default function Blog() {
             </div>
           </div>
         </section>
+
+        {/* Planned Posts */}
+        {plannedPosts.length > 0 && (
+          <section>
+            <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-6">Coming Soon</h2>
+            <div className="space-y-4">
+              {plannedPosts.map((post) => (
+                <article
+                  key={post.slug}
+                  className="bg-gray-50 dark:bg-gray-800/50 rounded-xl border border-gray-200 dark:border-gray-700 p-5 opacity-75"
+                >
+                  <div className="flex flex-wrap items-center gap-3 mb-2">
+                    <span className="px-2.5 py-1 bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-400 rounded-full text-xs font-medium">
+                      {post.category}
+                    </span>
+                    <span className="text-sm text-gray-500 dark:text-gray-400">
+                      {post.date}
+                    </span>
+                  </div>
+                  <h3 className="text-lg font-semibold text-gray-700 dark:text-gray-300 mb-2">
+                    {post.title.replace('Coming Soon: ', '')}
+                  </h3>
+                  <p className="text-gray-500 dark:text-gray-400 text-sm">
+                    {post.description}
+                  </p>
+                </article>
+              ))}
+            </div>
+          </section>
+        )}
       </main>
     </>
   )

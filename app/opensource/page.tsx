@@ -1,8 +1,26 @@
 import { Navigation } from '@/components/Navigation'
-import { ArrowLeft, Github, ExternalLink, Star, Rocket, Clock, Check } from 'lucide-react'
+import { ArrowLeft, Github, ExternalLink, Star, Rocket, Clock, Check, GitPullRequest } from 'lucide-react'
 import Link from 'next/link'
 import { sideProjects } from '@/data/projects'
 import type { Metadata } from 'next'
+
+// Contributions to external projects - update this when you have PRs/issues to showcase
+const contributions: Array<{
+  project: string
+  type: 'pr' | 'issue' | 'docs'
+  title: string
+  url: string
+  status: 'merged' | 'open' | 'closed'
+}> = [
+  // Example format - uncomment and add your contributions:
+  // {
+  //   project: 'kserve/kserve',
+  //   type: 'docs',
+  //   title: 'Fix installation docs for GPU support',
+  //   url: 'https://github.com/kserve/kserve/pull/123',
+  //   status: 'merged',
+  // },
+]
 
 export const metadata: Metadata = {
   title: 'Open Source | Jude - Senior Platform Engineer',
@@ -124,6 +142,54 @@ export default function OpenSource() {
               </div>
             ))}
           </div>
+        </section>
+
+        {/* Contributions Section */}
+        <section className="mb-12">
+          <div className="flex items-center gap-2 mb-6">
+            <GitPullRequest className="text-green-600" size={20} />
+            <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Contributions</h2>
+          </div>
+
+          {contributions.length > 0 ? (
+            <div className="space-y-3">
+              {contributions.map((contribution, index) => (
+                <a
+                  key={index}
+                  href={contribution.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-3 p-4 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 hover:border-green-300 dark:hover:border-green-700 transition-colors"
+                >
+                  <span className={`px-2 py-1 rounded text-xs font-medium ${
+                    contribution.status === 'merged'
+                      ? 'bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-300'
+                      : contribution.status === 'open'
+                      ? 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-300'
+                      : 'bg-gray-100 text-gray-600 dark:bg-gray-700 dark:text-gray-400'
+                  }`}>
+                    {contribution.status}
+                  </span>
+                  <span className="text-sm text-gray-500 dark:text-gray-400 font-mono">
+                    {contribution.project}
+                  </span>
+                  <span className="text-sm text-gray-900 dark:text-white flex-1">
+                    {contribution.title}
+                  </span>
+                  <ExternalLink size={14} className="text-gray-400" />
+                </a>
+              ))}
+            </div>
+          ) : (
+            <div className="p-6 bg-gray-50 dark:bg-gray-800/50 rounded-xl border border-dashed border-gray-300 dark:border-gray-600">
+              <p className="text-gray-600 dark:text-gray-400 text-sm mb-2">
+                Contributions to CNCF and other open source projects coming soon.
+              </p>
+              <p className="text-gray-500 dark:text-gray-500 text-xs">
+                Currently focused on building these projects to production-ready status before contributing upstream.
+              </p>
+            </div>
+          )}
         </section>
 
         {/* Reference Architecture */}
