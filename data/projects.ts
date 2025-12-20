@@ -110,9 +110,9 @@ export const sideProjects: SideProject[] = [
       'Automated right-sizing with multi-cloud instance recommendations',
     ],
     milestones: [
-      { name: 'Phase 1: MVP', completed: true },
-      { name: 'Phase 2: Budget & Alerts', completed: true },
-      { name: 'Phase 3: ML Analytics', completed: true },
+      { name: 'MVP', completed: true },
+      { name: 'Budget & Alerts', completed: true },
+      { name: 'ML Analytics', completed: true },
       { name: 'Chargeback Reports', completed: true },
       { name: 'AWS Billing API', completed: true },
       { name: 'Right-Sizing Engine', completed: true },
