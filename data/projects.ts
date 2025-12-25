@@ -71,18 +71,18 @@ export const projects: Project[] = [
 
 export const sideProjects: SideProject[] = [
   {
-    title: 'AI Inference Gateway',
+    title: 'Kortex',
     status: 'in_progress',
     featured: true,
     description:
-      'Kubernetes-native inference gateway for multi-model routing, A/B testing, and fallback chains. Routes requests across LLM providers (OpenAI, Claude, local models) with cost tracking, rate limiting, and intelligent failover. 107 tests, production-ready core.',
-    technologies: ['Go', 'Kubebuilder', 'Kubernetes', 'KServe', 'Prometheus', 'Grafana'],
+      'Kubernetes-native AI inference gateway for multi-model routing, A/B testing, and intelligent failover. Features circuit breakers with exponential backoff, OpenTelemetry tracing, smart routing (cost/latency/context-length), and configuration hot-reload. CNCF Sandbox candidate.',
+    technologies: ['Go', 'Kubebuilder', 'Kubernetes', 'KServe', 'OpenTelemetry', 'Prometheus'],
     goals: [
       'Multi-model routing with header/path/model-based rules',
       'A/B testing with consistent hashing for experiment assignment',
-      'Fallback chains across providers (GPT-4 → Claude → Mistral)',
-      'Cost-per-request tracking with token usage aggregation',
-      'Token bucket rate limiting (per-route and per-user)',
+      'Circuit breakers with exponential backoff and jitter',
+      'Smart routing based on token count, cost, and latency',
+      'OpenTelemetry (OTLP) distributed tracing',
     ],
     milestones: [
       { name: 'CRDs', completed: true },
@@ -92,12 +92,13 @@ export const sideProjects: SideProject[] = [
       { name: 'Metrics', completed: true },
       { name: 'Rate Limiting', completed: true },
       { name: 'Cost Tracking', completed: true },
-      { name: 'Health Checks', completed: true },
-      { name: 'Docs', completed: true },
+      { name: 'OpenTelemetry', completed: true },
+      { name: 'Smart Routing', completed: true },
+      { name: 'Circuit Breakers', completed: true },
+      { name: 'E2E Tests', completed: true },
       { name: 'Helm Chart', completed: false },
-      { name: 'E2E Tests', completed: false },
     ],
-    github: 'https://github.com/judeoyovbaire/inference-gateway',
+    github: 'https://github.com/judeoyovbaire/kortex',
     demo: '#demo-coming-soon',
   },
   {

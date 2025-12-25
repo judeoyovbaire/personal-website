@@ -13,8 +13,8 @@ export interface BlogPost {
 export const posts: BlogPost[] = [
   {
     slug: 'building-kubernetes-native-inference-gateway',
-    title: 'Building a Kubernetes-Native AI Inference Gateway',
-    description: 'A technical deep dive into designing a multi-provider inference gateway with intelligent routing, failover chains, and cost tracking.',
+    title: 'Building Kortex: A Kubernetes-Native AI Inference Gateway',
+    description: 'A technical deep dive into designing Kortex, a multi-provider inference gateway with intelligent routing, circuit breakers, OpenTelemetry tracing, and cost tracking.',
     category: 'Platform Design',
     date: '2024-12-18',
     readTime: '8 min read',
@@ -35,7 +35,7 @@ As organizations scale their AI/ML deployments, they encounter a common set of i
 
 **Routing Complexity**: Different request types (simple queries vs. complex reasoning) should route to different models, but this logic gets scattered across applications.
 
-I built the AI Inference Gateway to solve these problems with a Kubernetes-native approach.
+I built **Kortex** to solve these problems with a Kubernetes-native approach.
 
 ## The Solution: A Unified Control Plane
 
@@ -43,7 +43,7 @@ The gateway acts as a control plane for inference traffic, sitting between your 
 
 \`\`\`
 ┌─────────────────────────────────────────────────────────────┐
-│                     AI Inference Gateway                     │
+│                         Kortex Gateway                       │
 ├─────────────────────────────────────────────────────────────┤
 │  ┌─────────────┐  ┌─────────────┐  ┌─────────────────────┐  │
 │  │   Routing   │  │  A/B Test   │  │   Cost Tracking     │  │
@@ -75,7 +75,7 @@ The gateway follows a classic Kubernetes operator pattern with two distinct comp
 The control plane manages Custom Resource Definitions (CRDs) that define routing rules, backends, and experiments:
 
 \`\`\`yaml
-apiVersion: inference.gateway.io/v1alpha1
+apiVersion: gateway.kortex.io/v1alpha1
 kind: InferenceRoute
 metadata:
   name: production-router
@@ -169,7 +169,7 @@ When GPT-4 hits rate limits, requests automatically route to Claude. If Claude i
 Run experiments without changing application code:
 
 \`\`\`yaml
-apiVersion: inference.gateway.io/v1alpha1
+apiVersion: gateway.kortex.io/v1alpha1
 kind: InferenceExperiment
 metadata:
   name: model-comparison
@@ -227,18 +227,18 @@ Building this as a Kubernetes operator (rather than a standalone service) provid
 
 ## Current Status & Roadmap
 
-The project is in active development:
+Kortex has completed three major phases and is targeting CNCF Sandbox submission:
 
-**Phase 1 (Current)**: Core routing, CRD design, basic failover
-**Phase 2**: A/B testing, statistical analysis, experiment lifecycle
-**Phase 3**: Cost tracking, rate limiting, budget enforcement
-**Phase 4**: Semantic caching, multi-cluster support, CNCF Sandbox submission
+**Phase 1 (Complete)**: Core routing, CRD design, basic failover, Prometheus metrics
+**Phase 2 (Complete)**: A/B testing, per-user rate limiting, cost tracking, health checks
+**Phase 3 (Complete)**: OpenTelemetry tracing, smart routing, circuit breakers with exponential backoff, configuration hot-reload
+**Phase 4 (In Progress)**: Multi-tenancy, semantic caching, multi-cluster federation, CNCF Sandbox submission
 
 ## Get Involved
 
-The gateway is open source and designed for CNCF contribution. If you're dealing with multi-model inference challenges, I'd love to hear your use cases.
+Kortex is open source and designed for CNCF contribution. If you're dealing with multi-model inference challenges, I'd love to hear your use cases.
 
-**GitHub**: [github.com/judeoyovbaire/inference-gateway](https://github.com/judeoyovbaire/inference-gateway)
+**GitHub**: [github.com/judeoyovbaire/kortex](https://github.com/judeoyovbaire/kortex)
 
 ---
 
