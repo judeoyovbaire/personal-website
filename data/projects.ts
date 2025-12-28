@@ -164,4 +164,27 @@ export const sideProjects: SideProject[] = [
     github: 'https://github.com/judeoyovbaire/mlops-platform',
     demo: '#demo-coming-soon',
   },
+  {
+    title: 'SpotTensor',
+    status: 'planned',
+    featured: true,
+    description:
+      'GPU compute price aggregator — "Trivago for ML training". Arbitrages spot pricing across AWS, RunPod, and Lambda Labs to find the cheapest GPU instances for batch training jobs.',
+    technologies: ['Go', 'AWS Price List API', 'REST APIs', 'CLI', 'PostgreSQL'],
+    goals: [
+      'Unified pricing API across cloud GPU providers (AWS Spot, RunPod, Lambda Labs)',
+      'Normalization of inconsistent GPU naming conventions to standard schema',
+      'Cost-optimal provider recommendation based on GPU type, duration, and availability',
+      'CLI tool for instant price comparison: spottensor price --gpu a100 --hours 4',
+    ],
+    milestones: [
+      { name: 'AWS Spot Connector', completed: false },
+      { name: 'RunPod Integration', completed: false },
+      { name: 'Lambda Labs Integration', completed: false },
+      { name: 'GPU Normalization Schema', completed: false },
+      { name: 'Price Comparison CLI', completed: false },
+      { name: 'Recommendation Engine', completed: false },
+    ],
+    github: 'https://github.com/judeoyovbaire/spottensor',
+  },
 ]
