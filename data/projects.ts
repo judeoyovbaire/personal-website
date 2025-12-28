@@ -187,4 +187,27 @@ export const sideProjects: SideProject[] = [
     ],
     github: 'https://github.com/judeoyovbaire/spottensor',
   },
+  {
+    title: 'AgentFile',
+    status: 'planned',
+    featured: true,
+    description:
+      'Docker Compose for AI Agents — Declarative spec that deploys AI agent stacks to Kubernetes. GitOps-native with Kortex integration for inference governance. Transparent abstraction: generates readable K8s manifests you own.',
+    technologies: ['Go', 'Kubernetes', 'Kustomize', 'Helm', 'KServe', 'Qdrant', 'Ollama'],
+    goals: [
+      'Simple YAML spec (agentfile.yaml) that abstracts complex K8s deployment',
+      'Pre-built stacks for common patterns: RAG, Vision, Code, Multi-Agent',
+      'GitOps-native: generates ArgoCD/Flux-compatible manifests',
+      'Kortex integration for automatic inference routing and cost governance',
+    ],
+    milestones: [
+      { name: 'Schema Parser', completed: false },
+      { name: 'CLI Scaffold', completed: false },
+      { name: 'RAG Stack', completed: false },
+      { name: 'Manifest Generator', completed: false },
+      { name: 'Kind Support', completed: false },
+      { name: 'Kortex Integration', completed: false },
+    ],
+    github: 'https://github.com/judeoyovbaire/agentfile',
+  },
 ]
