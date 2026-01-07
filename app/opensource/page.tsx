@@ -1,8 +1,14 @@
 import { Navigation } from '@/components/Navigation'
-import { ArrowLeft, Github, ExternalLink, Star, Rocket, Clock, Check, GitPullRequest } from 'lucide-react'
+import { ArrowLeft, Github, ExternalLink, Star, Rocket, Clock, Check, CheckCircle, GitPullRequest } from 'lucide-react'
 import Link from 'next/link'
-import { sideProjects } from '@/data/projects'
+import { sideProjects, type SideProject } from '@/data/projects'
 import type { Metadata } from 'next'
+
+const statusConfig: Record<SideProject['status'], { label: string; icon: typeof Clock; color: string }> = {
+  in_progress: { label: 'In Progress', icon: Rocket, color: 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200' },
+  planned: { label: 'Planned', icon: Clock, color: 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200' },
+  completed: { label: 'Completed', icon: CheckCircle, color: 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200' },
+}
 
 // Contributions to external projects - update this when you have PRs/issues to showcase
 const contributions: Array<{
@@ -64,14 +70,16 @@ export default function OpenSource() {
                 className="bg-white dark:bg-gray-800 rounded-xl border border-purple-200 dark:border-purple-800 ring-1 ring-purple-100 dark:ring-purple-900 p-6"
               >
                 <div className="flex items-start justify-between gap-2 mb-3">
-                  <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium ${
-                    project.status === 'in_progress'
-                      ? 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200'
-                      : 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200'
-                  }`}>
-                    {project.status === 'in_progress' ? <Rocket size={12} /> : <Clock size={12} />}
-                    {project.status === 'in_progress' ? 'In Progress' : 'Planned'}
-                  </span>
+                  {(() => {
+                    const status = statusConfig[project.status]
+                    const StatusIcon = status.icon
+                    return (
+                      <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium ${status.color}`}>
+                        <StatusIcon size={12} />
+                        {status.label}
+                      </span>
+                    )
+                  })()}
                   <span className="inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200">
                     <Star size={10} />
                     Featured
@@ -208,8 +216,8 @@ export default function OpenSource() {
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2 mb-2">
                       <h3 className="font-semibold text-gray-900 dark:text-white">{project.title}</h3>
-                      <span className="px-2 py-0.5 bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-300 rounded text-xs">
-                        In Progress
+                      <span className={`px-2 py-0.5 rounded text-xs ${statusConfig[project.status].color}`}>
+                        {statusConfig[project.status].label}
                       </span>
                     </div>
                     <p className="text-sm text-gray-600 dark:text-gray-400 mb-3">
