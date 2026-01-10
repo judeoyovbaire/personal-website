@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { Analytics } from "@vercel/analytics/react"
 import './globals.css'
 import { Footer } from '@/components/Footer'
 
@@ -29,12 +30,15 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
+    // suppressHydrationWarning is required for the ThemeToggle to work correctly
+    // as it modifies the HTML class on the client side
     <html lang="en" suppressHydrationWarning>
       <body className="antialiased min-h-screen bg-white dark:bg-gray-900 flex flex-col">
         <main className="flex-1">
           {children}
         </main>
         <Footer />
+        <Analytics />
       </body>
     </html>
   )
