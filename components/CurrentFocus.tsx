@@ -17,7 +17,7 @@ export function CurrentFocus() {
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span>
             </span>
             <span className="font-medium">Hacking on:</span>
-            <span className="opacity-80">RAG Pipelines with LangChain</span>
+            <span className="opacity-80">AI Infrastructure & MLOps</span>
         </motion.div>
     )
 }

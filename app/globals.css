@@ -5,6 +5,8 @@
 @theme {
   --color-background: hsl(0 0% 100%);
   --color-foreground: hsl(222.2 84% 4.9%);
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-space-grotesk), ui-sans-serif, system-ui, sans-serif;
 }
 
 :root {
@@ -22,7 +24,17 @@
 body {
   background-color: var(--color-background);
   color: var(--color-foreground);
+  font-family: var(--font-sans);
   font-feature-settings: "rlig" 1, "calt" 1;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-display);
 }
 
 .glass {
