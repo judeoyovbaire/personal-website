@@ -20,9 +20,6 @@ export function Navigation() {
               Jude
             </Link>
             <div className="hidden md:flex space-x-5">
-              <Link href="/" className="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors flex items-center gap-1">
-                <Home size={16} /> Home
-              </Link>
               <Link href="/platforms" className="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors flex items-center gap-1">
                 <Layers size={16} /> Platforms
               </Link>
@@ -85,13 +82,6 @@ export function Navigation() {
       {isMenuOpen && (
         <div className="md:hidden border-t border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900">
           <div className="px-4 py-3 space-y-3">
-            <Link
-              href="/"
-              onClick={closeMenu}
-              className="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors flex items-center gap-2 py-2"
-            >
-              <Home size={18} /> Home
-            </Link>
             <Link
               href="/platforms"
               onClick={closeMenu}
