@@ -26,7 +26,7 @@ export function ImpactStats() {
   }
 
   return (
-    <motion.div 
+    <motion.div
       className="grid grid-cols-2 md:grid-cols-4 gap-4 my-12"
       variants={container}
       initial="hidden"
@@ -37,7 +37,7 @@ export function ImpactStats() {
         <motion.div
           key={stat.label}
           variants={item}
-          className="text-center p-6 bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-900 rounded-xl transition-all duration-700 transform hover:scale-105"
+          className="text-center p-6 rounded-xl transition-all duration-700 transform hover:scale-105 border border-gray-200 dark:border-gray-800 bg-white/10 dark:bg-gray-900/20 backdrop-blur-md"
         >
           <div className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
             {stat.value}

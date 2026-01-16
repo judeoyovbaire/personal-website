@@ -1,16 +1,38 @@
 'use client'
 
 import { technologies } from '@/data/techstack'
+import { motion } from 'framer-motion'
 
 export function TechStack() {
+  const container = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1
+      }
+    }
+  }
+
+  const item = {
+    hidden: { opacity: 0, y: 10 },
+    show: { opacity: 1, y: 0 }
+  }
+
   return (
-    <section className="my-12">
-      <h2 className="text-2xl font-bold mb-6 text-gray-900 dark:text-white">
+    <motion.section
+      className="my-12"
+      variants={container}
+      initial="hidden"
+      whileInView="show"
+      viewport={{ once: true, margin: "-50px" }}
+    >
+      <motion.h2 variants={item} className="text-2xl font-bold mb-6 text-gray-900 dark:text-white">
         Technical Expertise
-      </h2>
+      </motion.h2>
       <div className="space-y-4">
         {Object.entries(technologies).map(([category, techs]) => (
-          <div key={category} className="pb-4 border-b border-gray-200 dark:border-gray-800 last:border-0">
+          <motion.div key={category} variants={item} className="pb-4 border-b border-gray-200 dark:border-gray-800 last:border-0">
             <h3 className="text-sm font-semibold text-gray-600 dark:text-gray-400 mb-3 uppercase tracking-wide">
               {category}
             </h3>
@@ -24,9 +46,9 @@ export function TechStack() {
                 </span>
               ))}
             </div>
-          </div>
+          </motion.div>
         ))}
       </div>
-    </section>
+    </motion.section>
   )
 }

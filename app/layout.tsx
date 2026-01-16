@@ -1,7 +1,10 @@
 import type { Metadata } from 'next'
 import { Analytics } from "@vercel/analytics/react"
+import { Space_Grotesk } from 'next/font/google'
 import './globals.css'
 import { Footer } from '@/components/Footer'
+
+const spaceGrotesk = Space_Grotesk({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://judaire.io'),
@@ -33,7 +36,8 @@ export default function RootLayout({
     // suppressHydrationWarning is required for the ThemeToggle to work correctly
     // as it modifies the HTML class on the client side
     <html lang="en" suppressHydrationWarning>
-      <body className="antialiased min-h-screen bg-white dark:bg-gray-900 flex flex-col">
+      <body className={`${spaceGrotesk.className} antialiased min-h-screen bg-white dark:bg-gray-900 flex flex-col selection:bg-blue-100 dark:selection:bg-blue-900`}>
+        <div className="fixed inset-0 -z-10 h-full w-full bg-white dark:bg-gray-950 [background:radial-gradient(125%_125%_at_50%_10%,#fff_40%,#63e_100%)] dark:[background:radial-gradient(125%_125%_at_50%_10%,#000_40%,#63e_100%)] opacity-20"></div>
         <main className="flex-1">
           {children}
         </main>
