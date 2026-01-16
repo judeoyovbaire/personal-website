@@ -75,10 +75,13 @@ export default function About() {
           Back to Home
         </Link>
 
-        <article>
-          <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">About Me</h1>
+        <article className="relative">
+          {/* Ambient Background Glow */}
+          <div className="absolute -top-20 -left-20 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl -z-10 pointer-events-none"></div>
 
-          <p className="text-xl text-gray-600 dark:text-gray-300 mb-10 leading-relaxed">
+          <h1 className="text-5xl md:text-6xl font-bold text-gray-900 dark:text-white mb-6">About Me</h1>
+
+          <p className="text-xl md:text-2xl text-gray-600 dark:text-gray-300 mb-12 leading-relaxed max-w-4xl">
             I&apos;m Jude, a Senior Platform &amp; DevOps Engineer originally from Nigeria 🇳🇬, now building
             AI-ready cloud platforms from Amsterdam 🇳🇱.
           </p>
@@ -151,7 +154,7 @@ export default function About() {
                   return (
                     <div
                       key={tool.name}
-                      className="flex flex-col items-center p-4 bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-900 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-blue-300 dark:hover:border-blue-700 transition-colors"
+                      className="flex flex-col items-center p-4 bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-900 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-blue-400 dark:hover:border-blue-600 hover:shadow-lg hover:shadow-blue-500/10 transition-all duration-300"
                     >
                       <IconComponent className="text-blue-600 dark:text-blue-400 mb-2" size={28} />
                       <span className="font-semibold text-gray-900 dark:text-white text-sm">{tool.name}</span>

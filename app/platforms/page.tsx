@@ -17,13 +17,16 @@ export default function Platforms() {
   return (
     <>
       <Navigation />
-      <main className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <main className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 relative">
+        {/* Ambient Background Glow */}
+        <div className="absolute -top-20 -left-20 w-96 h-96 bg-orange-500/10 rounded-full blur-3xl -z-10 pointer-events-none"></div>
+
         <Link href="/" className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 mb-4">
           <ArrowLeft size={16} />
           Back to Home
         </Link>
 
-        <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-3">Platform Capabilities</h1>
+        <h1 className="text-5xl md:text-6xl font-bold text-gray-900 dark:text-white mb-6">Platform Capabilities</h1>
         <p className="text-xl text-gray-600 dark:text-gray-300 mb-8 max-w-3xl">
           I build AI-ready platforms as stacked capabilities: each layer builds on the one below,
           creating a foundation that serves both analytics and ML teams.
@@ -32,22 +35,22 @@ export default function Platforms() {
         {/* Platform Stack Visualization */}
         <div className="mb-10 p-6 bg-gradient-to-r from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-900 rounded-xl">
           <div className="flex flex-col gap-2">
-            <div className="flex items-center gap-3 p-4 bg-orange-100 dark:bg-orange-900/30 rounded-lg border-l-4 border-orange-500">
+            <div className="flex items-center gap-3 p-4 bg-orange-100 dark:bg-orange-900/30 rounded-lg border-l-4 border-orange-500 shadow-sm hover:shadow-md transition-all">
               <Cpu className="text-orange-600" size={24} />
               <span className="font-semibold text-gray-900 dark:text-white">AI Infrastructure</span>
               <span className="text-sm text-gray-600 dark:text-gray-400 ml-auto hidden sm:block">GPU clusters, inference, training</span>
             </div>
-            <div className="flex items-center gap-3 p-4 bg-purple-100 dark:bg-purple-900/30 rounded-lg border-l-4 border-purple-500">
+            <div className="flex items-center gap-3 p-4 bg-purple-100 dark:bg-purple-900/30 rounded-lg border-l-4 border-purple-500 shadow-sm hover:shadow-md transition-all">
               <Brain className="text-purple-600" size={24} />
               <span className="font-semibold text-gray-900 dark:text-white">ML Platform</span>
               <span className="text-sm text-gray-600 dark:text-gray-400 ml-auto hidden sm:block">Pipelines, registries, serving</span>
             </div>
-            <div className="flex items-center gap-3 p-4 bg-green-100 dark:bg-green-900/30 rounded-lg border-l-4 border-green-500">
+            <div className="flex items-center gap-3 p-4 bg-green-100 dark:bg-green-900/30 rounded-lg border-l-4 border-green-500 shadow-sm hover:shadow-md transition-all">
               <Database className="text-green-600" size={24} />
               <span className="font-semibold text-gray-900 dark:text-white">Data Platform</span>
               <span className="text-sm text-gray-600 dark:text-gray-400 ml-auto hidden sm:block">Lakehouse, streaming, governance</span>
             </div>
-            <div className="flex items-center gap-3 p-4 bg-blue-100 dark:bg-blue-900/30 rounded-lg border-l-4 border-blue-500">
+            <div className="flex items-center gap-3 p-4 bg-blue-100 dark:bg-blue-900/30 rounded-lg border-l-4 border-blue-500 shadow-sm hover:shadow-md transition-all">
               <Server className="text-blue-600" size={24} />
               <span className="font-semibold text-gray-900 dark:text-white">Core Platform</span>
               <span className="text-sm text-gray-600 dark:text-gray-400 ml-auto hidden sm:block">Kubernetes, IaC, observability</span>
@@ -68,19 +71,19 @@ export default function Platforms() {
             security baselines, and golden paths that enable teams to ship with confidence.
           </p>
           <div className="grid md:grid-cols-2 gap-4 mb-6">
-            <div className="p-4 border border-gray-200 dark:border-gray-700 rounded-lg">
+            <div className="p-4 border border-gray-200 dark:border-gray-700 rounded-lg hover:border-blue-400 dark:hover:border-blue-600 hover:shadow-lg hover:shadow-blue-500/5 transition-all duration-300">
               <h3 className="font-semibold text-gray-900 dark:text-white mb-2">Container Orchestration</h3>
               <p className="text-sm text-gray-600 dark:text-gray-400">EKS, AKS, GKE clusters with auto-scaling, security policies, and multi-tenancy</p>
             </div>
-            <div className="p-4 border border-gray-200 dark:border-gray-700 rounded-lg">
+            <div className="p-4 border border-gray-200 dark:border-gray-700 rounded-lg hover:border-blue-400 dark:hover:border-blue-600 hover:shadow-lg hover:shadow-blue-500/5 transition-all duration-300">
               <h3 className="font-semibold text-gray-900 dark:text-white mb-2">Infrastructure as Code</h3>
               <p className="text-sm text-gray-600 dark:text-gray-400">Terraform, Pulumi, Crossplane for declarative, version-controlled infrastructure</p>
             </div>
-            <div className="p-4 border border-gray-200 dark:border-gray-700 rounded-lg">
+            <div className="p-4 border border-gray-200 dark:border-gray-700 rounded-lg hover:border-blue-400 dark:hover:border-blue-600 hover:shadow-lg hover:shadow-blue-500/5 transition-all duration-300">
               <h3 className="font-semibold text-gray-900 dark:text-white mb-2">GitOps & CI/CD</h3>
               <p className="text-sm text-gray-600 dark:text-gray-400">ArgoCD, Flux, GitHub Actions for automated, auditable deployments</p>
             </div>
-            <div className="p-4 border border-gray-200 dark:border-gray-700 rounded-lg">
+            <div className="p-4 border border-gray-200 dark:border-gray-700 rounded-lg hover:border-blue-400 dark:hover:border-blue-600 hover:shadow-lg hover:shadow-blue-500/5 transition-all duration-300">
               <h3 className="font-semibold text-gray-900 dark:text-white mb-2">Observability</h3>
               <p className="text-sm text-gray-600 dark:text-gray-400">Prometheus, Grafana, OpenSearch for metrics, logs, traces, and alerting</p>
             </div>
@@ -103,19 +106,19 @@ export default function Platforms() {
             data quality, governance, and cost-efficient storage/compute for analytics and ML.
           </p>
           <div className="grid md:grid-cols-2 gap-4 mb-6">
-            <div className="p-4 border border-gray-200 dark:border-gray-700 rounded-lg">
+            <div className="p-4 border border-gray-200 dark:border-gray-700 rounded-lg hover:border-green-400 dark:hover:border-green-600 hover:shadow-lg hover:shadow-green-500/5 transition-all duration-300">
               <h3 className="font-semibold text-gray-900 dark:text-white mb-2">Lakehouse Architecture</h3>
               <p className="text-sm text-gray-600 dark:text-gray-400">Databricks, Delta Lake, medallion architecture for unified analytics</p>
             </div>
-            <div className="p-4 border border-gray-200 dark:border-gray-700 rounded-lg">
+            <div className="p-4 border border-gray-200 dark:border-gray-700 rounded-lg hover:border-green-400 dark:hover:border-green-600 hover:shadow-lg hover:shadow-green-500/5 transition-all duration-300">
               <h3 className="font-semibold text-gray-900 dark:text-white mb-2">Search & Analytics</h3>
               <p className="text-sm text-gray-600 dark:text-gray-400">OpenSearch, Elasticsearch clusters with optimized indexing and query performance</p>
             </div>
-            <div className="p-4 border border-gray-200 dark:border-gray-700 rounded-lg">
+            <div className="p-4 border border-gray-200 dark:border-gray-700 rounded-lg hover:border-green-400 dark:hover:border-green-600 hover:shadow-lg hover:shadow-green-500/5 transition-all duration-300">
               <h3 className="font-semibold text-gray-900 dark:text-white mb-2">Streaming & ETL</h3>
               <p className="text-sm text-gray-600 dark:text-gray-400">Kafka, Spark Streaming, real-time data ingestion and transformation</p>
             </div>
-            <div className="p-4 border border-gray-200 dark:border-gray-700 rounded-lg">
+            <div className="p-4 border border-gray-200 dark:border-gray-700 rounded-lg hover:border-green-400 dark:hover:border-green-600 hover:shadow-lg hover:shadow-green-500/5 transition-all duration-300">
               <h3 className="font-semibold text-gray-900 dark:text-white mb-2">Data Governance</h3>
               <p className="text-sm text-gray-600 dark:text-gray-400">Unity Catalog, access controls, lineage tracking, compliance</p>
             </div>
@@ -138,19 +141,19 @@ export default function Platforms() {
             model registry, and production deployment with monitoring and safe rollouts.
           </p>
           <div className="grid md:grid-cols-2 gap-4 mb-6">
-            <div className="p-4 border border-gray-200 dark:border-gray-700 rounded-lg">
+            <div className="p-4 border border-gray-200 dark:border-gray-700 rounded-lg hover:border-purple-400 dark:hover:border-purple-600 hover:shadow-lg hover:shadow-purple-500/5 transition-all duration-300">
               <h3 className="font-semibold text-gray-900 dark:text-white mb-2">ML Pipelines</h3>
               <p className="text-sm text-gray-600 dark:text-gray-400">Kubeflow, Argo Workflows for reproducible training and feature engineering</p>
             </div>
-            <div className="p-4 border border-gray-200 dark:border-gray-700 rounded-lg">
+            <div className="p-4 border border-gray-200 dark:border-gray-700 rounded-lg hover:border-purple-400 dark:hover:border-purple-600 hover:shadow-lg hover:shadow-purple-500/5 transition-all duration-300">
               <h3 className="font-semibold text-gray-900 dark:text-white mb-2">Experiment Tracking</h3>
               <p className="text-sm text-gray-600 dark:text-gray-400">MLflow, model versioning, hyperparameter tracking, artifact management</p>
             </div>
-            <div className="p-4 border border-gray-200 dark:border-gray-700 rounded-lg">
+            <div className="p-4 border border-gray-200 dark:border-gray-700 rounded-lg hover:border-purple-400 dark:hover:border-purple-600 hover:shadow-lg hover:shadow-purple-500/5 transition-all duration-300">
               <h3 className="font-semibold text-gray-900 dark:text-white mb-2">Model Serving</h3>
               <p className="text-sm text-gray-600 dark:text-gray-400">Seldon Core, KServe for A/B testing, canary deployments, autoscaling</p>
             </div>
-            <div className="p-4 border border-gray-200 dark:border-gray-700 rounded-lg">
+            <div className="p-4 border border-gray-200 dark:border-gray-700 rounded-lg hover:border-purple-400 dark:hover:border-purple-600 hover:shadow-lg hover:shadow-purple-500/5 transition-all duration-300">
               <h3 className="font-semibold text-gray-900 dark:text-white mb-2">ML Observability</h3>
               <p className="text-sm text-gray-600 dark:text-gray-400">Model performance monitoring, drift detection, SLO-driven operations</p>
             </div>
@@ -173,19 +176,19 @@ export default function Platforms() {
             and aggressive optimization for performance and cost at scale.
           </p>
           <div className="grid md:grid-cols-2 gap-4 mb-6">
-            <div className="p-4 border border-gray-200 dark:border-gray-700 rounded-lg">
+            <div className="p-4 border border-gray-200 dark:border-gray-700 rounded-lg hover:border-orange-400 dark:hover:border-orange-600 hover:shadow-lg hover:shadow-orange-500/5 transition-all duration-300">
               <h3 className="font-semibold text-gray-900 dark:text-white mb-2">GPU Clusters</h3>
               <p className="text-sm text-gray-600 dark:text-gray-400">NVIDIA GPU Operator, node pools, scheduling for training and inference</p>
             </div>
-            <div className="p-4 border border-gray-200 dark:border-gray-700 rounded-lg">
+            <div className="p-4 border border-gray-200 dark:border-gray-700 rounded-lg hover:border-orange-400 dark:hover:border-orange-600 hover:shadow-lg hover:shadow-orange-500/5 transition-all duration-300">
               <h3 className="font-semibold text-gray-900 dark:text-white mb-2">LLM Infrastructure</h3>
               <p className="text-sm text-gray-600 dark:text-gray-400">vLLM, Ollama, multi-model serving with intelligent routing</p>
             </div>
-            <div className="p-4 border border-gray-200 dark:border-gray-700 rounded-lg">
+            <div className="p-4 border border-gray-200 dark:border-gray-700 rounded-lg hover:border-orange-400 dark:hover:border-orange-600 hover:shadow-lg hover:shadow-orange-500/5 transition-all duration-300">
               <h3 className="font-semibold text-gray-900 dark:text-white mb-2">Cost Optimization</h3>
               <p className="text-sm text-gray-600 dark:text-gray-400">Spot instances, autoscaling, GPU utilization monitoring, right-sizing</p>
             </div>
-            <div className="p-4 border border-gray-200 dark:border-gray-700 rounded-lg">
+            <div className="p-4 border border-gray-200 dark:border-gray-700 rounded-lg hover:border-orange-400 dark:hover:border-orange-600 hover:shadow-lg hover:shadow-orange-500/5 transition-all duration-300">
               <h3 className="font-semibold text-gray-900 dark:text-white mb-2">AI Observability</h3>
               <p className="text-sm text-gray-600 dark:text-gray-400">Inference latency, queue depth, GPU metrics, training job monitoring</p>
             </div>

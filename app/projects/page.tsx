@@ -39,16 +39,19 @@ export default function Projects() {
   return (
     <>
       <Navigation />
-      <main className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <Link href="/" className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 mb-4">
+      <main className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 relative">
+        {/* Ambient Background Glow */}
+        <div className="absolute top-0 -left-20 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl -z-10 pointer-events-none"></div>
+
+        <Link href="/" className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 mb-6">
           <ArrowLeft size={16} />
           Back to Home
         </Link>
 
-        <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-3">
+        <h1 className="text-5xl md:text-6xl font-bold text-gray-900 dark:text-white mb-6">
           Projects & Impact
         </h1>
-        <p className="text-gray-600 dark:text-gray-400 mb-8 max-w-2xl">
+        <p className="text-xl text-gray-600 dark:text-gray-400 mb-12 max-w-2xl">
           A showcase of professional work and personal projects exploring platform engineering, MLOps, and cloud-native technologies.
         </p>
 
@@ -66,7 +69,7 @@ export default function Projects() {
               return (
                 <div
                   key={study.id}
-                  className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6"
+                  className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6 hover:shadow-xl hover:shadow-blue-500/5 hover:border-blue-400/50 dark:hover:border-blue-500/50 transition-all duration-300"
                 >
                   <div className="flex flex-wrap items-start gap-3 mb-4">
                     <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium ${pillarColorClasses[study.pillar]}`}>
@@ -151,11 +154,10 @@ export default function Projects() {
               return (
                 <div
                   key={project.title}
-                  className={`bg-white dark:bg-gray-800 rounded-xl border p-6 flex flex-col ${
-                    project.featured
-                      ? 'border-purple-300 dark:border-purple-700 ring-1 ring-purple-200 dark:ring-purple-800'
-                      : 'border-gray-200 dark:border-gray-700'
-                  }`}
+                  className={`bg-white dark:bg-gray-800 rounded-xl border p-6 flex flex-col hover:shadow-lg hover:shadow-purple-500/10 transition-all duration-300 ${project.featured
+                    ? 'border-purple-300 dark:border-purple-700 ring-1 ring-purple-200 dark:ring-purple-800'
+                    : 'border-gray-200 dark:border-gray-700 hover:border-purple-400/50 dark:hover:border-purple-500/50'
+                    }`}
                 >
                   <div className="flex items-start justify-between gap-2 mb-3">
                     <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium ${status.color}`}>
@@ -188,11 +190,10 @@ export default function Projects() {
                         {project.milestones.map((milestone) => (
                           <span
                             key={milestone.name}
-                            className={`inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs ${
-                              milestone.completed
-                                ? 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400'
-                                : 'bg-gray-100 text-gray-500 dark:bg-gray-700 dark:text-gray-400'
-                            }`}
+                            className={`inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs ${milestone.completed
+                              ? 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400'
+                              : 'bg-gray-100 text-gray-500 dark:bg-gray-700 dark:text-gray-400'
+                              }`}
                           >
                             {milestone.completed && <Check size={10} />}
                             {milestone.name}
