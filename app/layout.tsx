@@ -3,6 +3,7 @@ import { Analytics } from "@vercel/analytics/react"
 import { Space_Grotesk, Inter } from 'next/font/google'
 import './globals.css'
 import { Footer } from '@/components/Footer'
+import { Analytics } from '@vercel/analytics/next'
 
 const spaceGrotesk = Space_Grotesk({
   subsets: ['latin'],
