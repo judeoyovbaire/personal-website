@@ -5,7 +5,7 @@ import type { Metadata } from 'next'
 import { posts, categories } from '@/data/posts'
 
 export const metadata: Metadata = {
-  title: 'Blog | Jude - Senior Platform Engineer',
+  title: 'Blog | Jude - Platform & AI Infrastructure Engineer',
   description: 'Technical blog on platform engineering, MLOps, and SRE practices for AI systems. Deep dives into Kubernetes, data platforms, and ML infrastructure.',
   openGraph: {
     title: 'Blog | Jude',

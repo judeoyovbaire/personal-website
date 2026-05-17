@@ -6,7 +6,7 @@ import { caseStudies, pillarLabels } from '@/data/casestudies'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Projects & Case Studies | Jude - Senior Platform Engineer',
+  title: 'Projects & Case Studies | Jude - Platform & AI Infrastructure Engineer',
   description: 'Platform engineering case studies with measurable impact: Databricks migrations, Kubernetes modernization, MLOps implementations. Side projects in AI infrastructure and FinOps.',
   openGraph: {
     title: 'Projects & Case Studies | Jude',
@@ -104,17 +104,22 @@ export default function Projects() {
                     <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">
                       {study.approach.description}
                     </p>
-                    <div className="grid sm:grid-cols-2 gap-2">
+                    <div className="grid sm:grid-cols-2 gap-3">
                       {study.approach.decisions.map((decision) => (
-                        <div key={decision.area} className="text-xs bg-gray-50 dark:bg-gray-900 p-2 rounded">
-                          <span className="font-medium text-gray-700 dark:text-gray-300">{decision.area}:</span>{' '}
-                          <span className="text-gray-600 dark:text-gray-400">{decision.detail}</span>
+                        <div key={decision.area} className="text-xs bg-gray-50 dark:bg-gray-900 p-3 rounded-lg">
+                          <div className="font-medium text-gray-700 dark:text-gray-300 mb-1">{decision.area}</div>
+                          <div className="text-gray-600 dark:text-gray-400 mb-2">{decision.detail}</div>
+                          <div className="text-gray-500 dark:text-gray-500 border-t border-gray-200 dark:border-gray-700 pt-2 mt-2">
+                            <span className="font-medium">Over:</span> {decision.alternative}
+                            <br />
+                            <span className="font-medium">Why:</span> {decision.tradeoff}
+                          </div>
                         </div>
                       ))}
                     </div>
                   </div>
 
-                  <div className="grid sm:grid-cols-4 gap-3 mb-4">
+                  <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 mb-4">
                     {study.impact.map((item) => (
                       <div key={item.metric} className="bg-gray-50 dark:bg-gray-900 p-3 rounded-lg text-center">
                         <div className="text-xs text-gray-500 dark:text-gray-400 mb-1">{item.metric}</div>

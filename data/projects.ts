@@ -34,7 +34,7 @@ export const projects: Project[] = [
   {
     title: 'Multi-Region Azure Databricks Platform',
     company: 'Datenna B.V.',
-    period: '2025 - Present',
+    period: 'Jan 2025 - Jan 2026',
     impact: {
       cost: '35% reduction (€420K/year)',
       performance: '3x faster processing',

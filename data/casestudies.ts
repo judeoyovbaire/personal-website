@@ -14,6 +14,8 @@ export interface CaseStudy {
     decisions: {
       area: string
       detail: string
+      alternative: string
+      tradeoff: string
     }[]
   }
   implementation: {
@@ -31,7 +33,7 @@ export const caseStudies: CaseStudy[] = [
     id: 'azure-databricks-platform',
     title: 'Multi-Region Azure Databricks Platform',
     company: 'Datenna B.V.',
-    period: '2025 - Present',
+    period: 'Jan 2025 - Jan 2026',
     pillar: 'data',
     context: {
       description: 'Data-intensive analytics company processing intelligence data across multiple regions, requiring a modern data platform to handle 50TB+ daily data with strict governance requirements.',
@@ -49,18 +51,26 @@ export const caseStudies: CaseStudy[] = [
         {
           area: 'Infrastructure',
           detail: 'Pulumi + Crossplane for declarative infrastructure, enabling GitOps workflows and environment consistency',
+          alternative: 'Terraform + OpenTofu',
+          tradeoff: 'Programming language expressiveness for complex multi-region logic; accepted smaller module ecosystem and steeper onboarding curve',
         },
         {
           area: 'Data Architecture',
           detail: 'Medallion architecture (Bronze/Silver/Gold) with Delta Lake for ACID transactions and time travel',
+          alternative: 'Snowflake as a standalone warehouse',
+          tradeoff: 'ACID transactions and time travel without a separate vendor; accepted tighter coupling to the Databricks ecosystem',
         },
         {
           area: 'Cost Control',
           detail: 'Auto-scaling clusters with spot instances, job clusters for batch workloads, interactive clusters with auto-termination',
+          alternative: 'Reserved instances with fixed capacity',
+          tradeoff: '60-70% compute savings on batch workloads; accepted cold start latency and occasional spot evictions requiring retry logic',
         },
         {
           area: 'CI/CD',
           detail: 'Azure DevOps + ArgoCD for infrastructure, Databricks Asset Bundles for notebook/job deployments',
+          alternative: 'GitHub Actions + Terraform Cloud',
+          tradeoff: 'Enterprise constraint mandated Azure DevOps; ArgoCD adds drift detection and self-healing that Terraform Cloud lacks natively',
         },
       ],
     },
@@ -97,18 +107,26 @@ export const caseStudies: CaseStudy[] = [
         {
           area: 'Platform',
           detail: 'AWS EKS with managed node groups, Karpenter for intelligent autoscaling based on workload requirements',
+          alternative: 'Self-managed Kubernetes or ECS Fargate',
+          tradeoff: 'Managed control plane reduces operational burden; Karpenter provides pod-level resource bin-packing that Fargate and Cluster Autoscaler cannot match',
         },
         {
           area: 'Deployment',
           detail: 'ArgoCD for GitOps, progressive rollouts with Argo Rollouts, standardized Helm charts as golden paths',
+          alternative: 'Spinnaker',
+          tradeoff: 'Git-native declarative model with lower operational overhead; accepted less mature multi-cloud support compared to Spinnaker',
         },
         {
           area: 'Observability',
           detail: 'Prometheus + Grafana for metrics, OpenSearch for logs, distributed tracing with custom dashboards per team',
+          alternative: 'Datadog',
+          tradeoff: 'Avoids per-host pricing that explodes at 200+ services scale; accepted higher operational overhead for self-managed stack',
         },
         {
           area: 'Migration Strategy',
           detail: 'Strangler fig pattern - new services on K8s, gradual migration of existing services with parallel running',
+          alternative: 'Big-bang cutover',
+          tradeoff: 'Near-zero risk for revenue-critical e-commerce services; accepted a longer migration timeline and cost of running parallel environments',
         },
       ],
     },
@@ -121,6 +139,9 @@ export const caseStudies: CaseStudy[] = [
       { metric: 'Deployment Time', value: '2 hours → 15 min (85% faster)' },
       { metric: 'Deployment Frequency', value: 'Weekly → 50+/day' },
       { metric: 'Platform Uptime', value: '99.99%' },
+      { metric: 'Self-Service Adoption', value: '85% of teams' },
+      { metric: 'Team Onboarding', value: '< 2 days' },
+      { metric: 'Golden Path Coverage', value: '90%+ services' },
     ],
   },
   {
@@ -140,35 +161,99 @@ export const caseStudies: CaseStudy[] = [
     },
     problem: 'Elasticsearch licensing costs were escalating rapidly. Cluster management was manual and error-prone. Index lifecycle management was inconsistent, leading to storage bloat. Teams lacked self-service capabilities for creating dashboards and alerts.',
     approach: {
-      description: 'Migrated to OpenSearch with a focus on operational efficiency, implementing automated index lifecycle management and self-service patterns for development teams.',
+      description: 'Migrated from the ELK stack to AWS Managed OpenSearch with a focus on cost reduction and operational efficiency, implementing automated index lifecycle management and self-service patterns for development teams.',
       decisions: [
         {
           area: 'Platform',
-          detail: 'Self-managed OpenSearch on Kubernetes with dedicated node pools for hot/warm/cold tiers',
+          detail: 'AWS Managed OpenSearch Service with UltraWarm and cold storage tiers for cost-efficient data lifecycle',
+          alternative: 'Self-managed OpenSearch on Kubernetes',
+          tradeoff: 'Eliminated operational burden of cluster upgrades, patching, and backup management; accepted less granular tiering control and higher per-node cost in exchange for managed reliability',
         },
         {
           area: 'Data Management',
-          detail: 'Automated ILM policies, index templates with optimized mappings, snapshot lifecycle management to S3',
+          detail: 'Automated ISM policies, index templates with optimized mappings, snapshot lifecycle management to S3',
+          alternative: 'Manual curator scripts',
+          tradeoff: 'Consistent lifecycle management across all indices; requires per-index tuning for retention and rollover thresholds',
         },
         {
           area: 'Self-Service',
           detail: 'Terraform modules for teams to provision their own index patterns, dashboards as code with version control',
+          alternative: 'Centralized platform team management',
+          tradeoff: 'Reduces platform team as bottleneck; mitigated risk of poor mappings with sensible defaults and validation in the modules',
         },
         {
           area: 'Performance',
           detail: 'Query optimization, shard sizing based on data patterns, caching strategies for common queries',
+          alternative: 'Vertical scaling with larger instance types',
+          tradeoff: '40% query performance improvement without upsizing instances; required deeper investment in understanding per-index access patterns',
         },
       ],
     },
     implementation: {
-      technologies: ['OpenSearch', 'Kubernetes', 'Terraform', 'Fluent Bit', 'S3', 'Prometheus', 'Python'],
-      myRole: 'Designed and executed the migration strategy. Built the Kubernetes-based OpenSearch platform, implemented ILM automation, and created the self-service Terraform modules. Trained teams on OpenSearch best practices.',
+      technologies: ['AWS OpenSearch', 'Terraform', 'Fluent Bit', 'S3', 'Prometheus', 'Python'],
+      myRole: 'Designed and executed the migration strategy from ELK to AWS Managed OpenSearch. Configured tiering policies, implemented ISM automation, and created the self-service Terraform modules. Trained teams on OpenSearch best practices.',
     },
     impact: [
       { metric: 'License Cost Savings', value: '60%+' },
       { metric: 'Query Performance', value: '40% faster' },
       { metric: 'Storage Efficiency', value: '50% reduction' },
       { metric: 'Time to Dashboard', value: 'Days → Hours' },
+    ],
+  },
+  {
+    id: 'mlops-platform-kubernetes',
+    title: 'Multi-Cloud MLOps Platform on Kubernetes',
+    company: 'Personal Project (Production-Grade)',
+    period: '2024 - 2025',
+    pillar: 'ml',
+    context: {
+      description: 'Multi-cloud MLOps reference architecture enabling self-service model deployment across AWS EKS, Azure AKS, and GCP GKE with defense-in-depth security and full-stack observability.',
+      constraints: [
+        'Multi-cloud parity across AWS, Azure, and GCP',
+        'Self-service model deployment for data science teams',
+        'GPU cost optimization with spot/preemptible instances',
+        'Production-grade security and auditability',
+      ],
+    },
+    problem: 'Data science teams were spending 2-3 days per model deployment with no standardized process. Security reviews were ad-hoc, GPU spend was invisible, and there was no consistent path from experimentation to production across clouds.',
+    approach: {
+      description: 'Built a production-grade MLOps platform with GitOps-driven infrastructure, self-service model serving, and defense-in-depth security across three cloud providers.',
+      decisions: [
+        {
+          area: 'Inference Engine',
+          detail: 'vLLM for high-throughput LLM serving with OpenAI-compatible API and continuous batching',
+          alternative: 'TGI (Text Generation Inference) or Triton Inference Server',
+          tradeoff: 'Best-in-class throughput with PagedAttention and continuous batching; accepted narrower model format support compared to Triton',
+        },
+        {
+          area: 'Model Serving',
+          detail: 'KServe for production model serving with canary deployments, traffic splitting, and scale-to-zero',
+          alternative: 'Seldon Core or BentoML',
+          tradeoff: 'Native Kubernetes integration with Knative-based autoscaling and scale-to-zero; accepted more complex initial setup vs BentoML simplicity',
+        },
+        {
+          area: 'Security',
+          detail: 'Defense-in-depth with Pod Security Admission, Kyverno policies, and Tetragon eBPF runtime security',
+          alternative: 'OPA/Gatekeeper as a single policy layer',
+          tradeoff: 'Multiple enforcement points catch different threat vectors; accepted higher configuration complexity for stronger security posture',
+        },
+        {
+          area: 'GPU Cost',
+          detail: 'SPOT/Preemptible GPU instances with Karpenter for intelligent bin-packing and auto-scaling',
+          alternative: 'Reserved GPU instances',
+          tradeoff: '60% GPU cost savings; accepted the need for checkpointing and graceful preemption handling in training workloads',
+        },
+      ],
+    },
+    implementation: {
+      technologies: ['Kubernetes', 'KServe', 'vLLM', 'MLflow', 'ArgoCD', 'Karpenter', 'Kyverno', 'Tetragon', 'Terraform', 'Prometheus', 'Grafana'],
+      myRole: 'Designed and built the entire platform end-to-end. Created multi-cloud Terraform modules, implemented the model serving pipeline with KServe and vLLM, built the security layer, and documented the architecture for community use.',
+    },
+    impact: [
+      { metric: 'Deployment Time', value: '2-3 days → 15 min' },
+      { metric: 'GPU Cost Savings', value: '60%' },
+      { metric: 'Cloud Coverage', value: '3 clouds (AWS, Azure, GCP)' },
+      { metric: 'Pipeline Automation', value: '100%' },
     ],
   },
 ]

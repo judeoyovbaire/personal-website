@@ -36,15 +36,16 @@ export function Hero() {
             </motion.div>
 
             <motion.h1 variants={item} className="text-4xl md:text-6xl font-bold text-gray-900 dark:text-white mb-6">
-                Senior Platform &<br />
+                Platform &<br />
                 <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-                    DevOps Engineer
+                    AI Infrastructure Engineer
                 </span>
             </motion.h1>
 
             <motion.p variants={item} className="text-xl text-gray-600 dark:text-gray-300 mb-6 max-w-3xl">
-                Building AI-ready cloud platforms across Core, Data, ML, and GPU infrastructure.
-                10+ years architecting systems that save millions while achieving 99.99% reliability.
+                I design the platform decisions behind AI-ready infrastructure: which trade-offs to make,
+                which abstractions to build, and how to make GPU clusters, inference gateways, and data
+                platforms work as a coherent system.
             </motion.p>
 
             {/* Brand Proof Points */}
@@ -63,7 +64,7 @@ export function Hero() {
                 </div>
                 <div className="flex items-start gap-2">
                     <CheckCircle2 size={18} className="text-blue-600 mt-0.5 flex-shrink-0" />
-                    <span className="text-sm text-gray-700 dark:text-gray-300">ML platforms & AI infrastructure: GPU clusters, pipelines, SRE</span>
+                    <span className="text-sm text-gray-700 dark:text-gray-300">AI infrastructure & MLOps: inference gateways, GPU optimization, model serving</span>
                 </div>
             </motion.div>
 
@@ -74,7 +75,7 @@ export function Hero() {
                 </div>
                 <div className="flex items-center gap-2">
                     <Building size={16} />
-                    <span>Datenna B.V.</span>
+                    <span>myTomorrows</span>
                 </div>
             </motion.div>
 

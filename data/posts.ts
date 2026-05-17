@@ -245,6 +245,195 @@ Kortex is open source and designed for CNCF contribution. If you're dealing with
 *This post is part of my series on building production AI infrastructure. Next up: merging OpenCost and NVIDIA DCGM for GPU cost optimization.*
     `,
   },
+  {
+    slug: 'migrating-elk-to-aws-opensearch-lessons',
+    title: 'Migrating from ELK to AWS Managed OpenSearch: What I Learned at PVH',
+    description: 'An opinionated take on migrating a TB-scale observability platform from the ELK stack to AWS Managed OpenSearch for 200+ microservices at PVH Europe, and when managed beats self-managed.',
+    category: 'Data Platforms',
+    date: '2025-03-15',
+    readTime: '12 min read',
+    published: true,
+    technologies: ['OpenSearch', 'AWS', 'Terraform', 'Fluent Bit', 'Prometheus'],
+    content: `
+## The Decision That Shaped Two Years of My Work
+
+In 2023, I faced a decision that would define the next two years of platform work at PVH Europe: should we migrate our ELK stack to self-managed OpenSearch on Kubernetes, or go with AWS Managed OpenSearch?
+
+We chose managed. It was the right call for us. It might be the wrong call for you. This post explains how I think about that decision.
+
+## Context: What We Were Dealing With
+
+PVH Europe runs Calvin Klein and Tommy Hilfiger's e-commerce platforms. That means 200+ microservices generating terabytes of logs per day, with sub-second search latency requirements for incident response during peak events like Black Friday.
+
+Our existing Elasticsearch clusters were expensive and getting more so with licensing changes. We needed to move, and the question was where.
+
+## The Decision Matrix
+
+Here is how I evaluated the two options across the dimensions that actually mattered:
+
+**Operational overhead**: This is where managed services win, and win hard. Self-managed means you own upgrades, security patches, backup verification, and cluster health monitoring. Our platform team was already stretched across Kubernetes, CI/CD, and observability. Adding another stateful system to operate would have been a serious drag on velocity.
+
+**Cost at scale**: AWS Managed OpenSearch pricing is per-instance-hour, and at TB-scale the per-node cost is higher than running equivalent EC2 instances yourself. But the total cost of ownership includes engineering time for upgrades, patching, and incident response. When we modeled the full TCO including operational labor, managed came out ahead.
+
+**Tiering control**: We needed hot/warm/cold data tiering with ISM (Index State Management) policies that moved indices based on age and access patterns. AWS Managed OpenSearch supports UltraWarm and cold storage natively. The tiering granularity is less flexible than what you can do with dedicated Kubernetes node pools, but it was sufficient for our retention requirements.
+
+**Reliability during peak events**: Black Friday and seasonal sales are non-negotiable. AWS manages the underlying infrastructure availability, patching, and automated backups. For a revenue-critical e-commerce platform, offloading that responsibility was worth the cost premium.
+
+## What We Gained by Going Managed
+
+**Zero-downtime upgrades**: AWS handles rolling upgrades across the cluster. With self-managed, every minor version upgrade would have required testing in staging, coordinating rolling restarts, and checking plugin compatibility. Major versions would need a dedicated sprint. We got that time back.
+
+**Automated backups and recovery**: Automated snapshots to S3 with configurable retention, managed by AWS. No need to build restore drill pipelines or verify backup integrity manually. The managed service handles this transparently.
+
+**Reduced on-call burden**: OpenSearch is not part of our on-call rotation for infrastructure incidents. AWS handles shard allocation failures, JVM pressure, and node health. Our team monitors application-level OpenSearch dashboards, not cluster internals.
+
+**Faster time to value**: We were productive within weeks rather than spending months building out a self-managed deployment pipeline, monitoring stack, and runbooks.
+
+## What We Built on Top
+
+Going managed did not mean going passive. We still had significant platform work to do.
+
+**Terraform modules for self-service**: We built Terraform modules that let application teams provision their own index patterns with sensible defaults (optimized mappings, appropriate shard counts, ISM policies attached automatically). This reduced the platform team from a bottleneck to a guardrail.
+
+**Index lifecycle automation**: Automated ISM policies moved indices from hot to UltraWarm to cold to deleted based on configurable retention. Combined with index templates that enforced mapping best practices, this kept storage growth predictable.
+
+**Cost visibility**: We tagged OpenSearch domains and correlated costs with team ownership through AWS Cost Explorer and custom dashboards. This drove behavioral change: teams that could see their log volume started being more thoughtful about what they logged.
+
+**Performance tuning**: Query optimization and shard right-sizing delivered a 40% performance improvement without upsizing instances. This required understanding per-index access patterns, but the work is the same whether you run managed or self-managed.
+
+## What I Would Do Differently
+
+**Invest in index mapping governance earlier**: Self-service is great, but we underestimated how many teams would create indices with dynamic mappings that exploded field counts. Our Terraform modules now enforce explicit mappings with a maximum field count.
+
+**Right-size instance types from day one**: We initially over-provisioned to be safe during migration. It took three months of load analysis before we right-sized. Starting with a structured capacity test during migration would have saved cost from the start.
+
+**Define ISM policies before migration, not after**: We migrated data first and applied lifecycle policies later. This meant a period of storage bloat while we tuned retention. Defining the target ISM policies as part of the migration plan would have been cleaner.
+
+## My Position
+
+AWS Managed OpenSearch wins when these conditions are met:
+
+1. **Your platform team is already stretched**: If your team is operating Kubernetes, CI/CD, and other infrastructure, adding a complex stateful system to self-manage is a serious operational tax. Managed lets you focus on the platform work that differentiates your organization.
+
+2. **You value reliability during peak events**: For revenue-critical workloads where observability downtime during Black Friday is not an option, offloading infrastructure reliability to AWS reduces risk.
+
+3. **TCO includes engineering time**: The per-node cost of managed is higher, but if you factor in the engineering hours for upgrades, patching, incident response, and backup verification, managed often wins on total cost.
+
+Self-managed OpenSearch on Kubernetes wins when you have a dedicated platform team with deep distributed systems expertise, you operate at massive scale where the per-node cost delta compounds significantly, and you need integration depth with a Kubernetes-native observability stack that would make a managed service an operational island.
+
+The worst outcome is choosing self-managed for cost reasons alone, without the team maturity to operate it. You will spend more on engineering time than you save on infrastructure.
+
+## The Results
+
+For PVH, managed was the right call:
+
+- **60%+ reduction in licensing costs** compared to the ELK stack
+- **40% faster query performance** through shard optimization and caching
+- **50% storage reduction** via ISM automation and mapping optimization
+- **Self-service adoption by 85% of teams** within six months
+
+These results came from the platform engineering work we built on top of the managed service, not from the managed service itself. The decision to go managed freed up the engineering capacity to focus on self-service tooling, performance tuning, and cost visibility rather than cluster operations.
+
+---
+
+*If you are evaluating this decision for your organization, I would start by honestly assessing your team's operational bandwidth. The technology choice is secondary to the team's ability to sustain it alongside everything else they are responsible for.*
+    `,
+  },
+  {
+    slug: 'cost-attribution-ai-agents-finops',
+    title: 'Cost Attribution for AI Agents: Why Tool-Call-Level FinOps Is the Missing Layer',
+    description: 'A thought leadership piece on why AI cost attribution needs to happen at the protocol level, not as an afterthought. References MCP, Kagenti, and the emerging need for agent-aware FinOps.',
+    category: 'AI Infrastructure',
+    date: '2025-04-22',
+    readTime: '10 min read',
+    published: true,
+    technologies: ['FinOps', 'OpenCost', 'Prometheus', 'MCP', 'Kubernetes'],
+    content: `
+## The Cost Visibility Gap in AI Infrastructure
+
+Cloud FinOps solved the cost attribution problem for traditional infrastructure. Tools like OpenCost can tell you exactly how much a Kubernetes namespace costs per hour. AWS Cost Explorer breaks down spending by service, tag, and account. We have mature frameworks for attributing compute, storage, and network costs to teams and products.
+
+AI agents break all of this.
+
+When an AI agent makes a tool call through MCP (Model Context Protocol) that triggers a chain of LLM inference, vector database queries, and API calls across multiple services, the cost of that single user interaction is invisible. It is spread across inference endpoints, embedding services, retrieval systems, and orchestration layers with no unified attribution.
+
+This is not a theoretical problem. Organizations deploying AI agents today are discovering that their AI infrastructure costs are growing faster than their ability to understand them.
+
+## Why Existing FinOps Tools Fall Short
+
+Traditional FinOps operates at the infrastructure layer: how much compute does this pod use, how much storage does this PVC consume, how many API calls does this service make. This works when the relationship between infrastructure usage and business value is relatively direct.
+
+AI agents introduce a new abstraction layer that breaks this relationship:
+
+**Multi-hop cost chains**: A single agent action might involve an LLM call ($0.03), a vector search ($0.001), a web search API call ($0.005), another LLM call to synthesize results ($0.02), and a tool execution. The total cost of that action is the sum of all hops, but no existing tool tracks it end-to-end.
+
+**Non-deterministic resource usage**: The same prompt can generate wildly different costs depending on output token count, tool call decisions, and retry behavior. Traditional capacity planning assumes relatively predictable resource consumption patterns.
+
+**Nested agent delegation**: With frameworks like Kagenti and multi-agent systems, one agent can delegate work to sub-agents, each consuming their own inference and tool-call budgets. The cost tree can be arbitrarily deep.
+
+**Protocol-level routing decisions**: When an inference gateway like Kortex routes a request from GPT-4 to Claude based on cost optimization rules, the actual cost depends on runtime routing decisions that are invisible to infrastructure-level monitoring.
+
+## What Tool-Call-Level Attribution Looks Like
+
+The right answer is attribution at the protocol level, not the infrastructure level. Every tool call, every LLM invocation, every retrieval query should carry cost metadata that propagates through the call chain.
+
+Here is what this looks like concretely:
+
+**Request-scoped cost tracking**: When an agent receives a user request, it creates a cost context that follows every downstream call. Each LLM invocation, tool call, and sub-agent delegation appends its cost to this context. When the request completes, the total cost is the sum of the entire tree.
+
+**MCP-aware cost headers**: The Model Context Protocol defines how agents interact with tools. Cost attribution should be a first-class concept in this protocol. Every tool call response should include a cost field, and every MCP server should report the cost of fulfilling a request.
+
+**Team and feature attribution**: Cost contexts should carry attribution metadata (team ID, feature ID, user segment) that enables chargeback at the business level. This is the same pattern that works for traditional cloud costs, extended to the agent layer.
+
+**Budget enforcement at the agent level**: Rather than setting infrastructure-level quotas (which are too coarse), budgets should be enforced per agent, per user, or per conversation. An agent that has exhausted its budget should gracefully degrade rather than silently running up costs.
+
+## The Architecture I Am Building Toward
+
+My work on Kortex (inference gateway) and the AI FinOps Platform converges on this problem. Here is how the pieces fit together:
+
+**Kortex** sits at the inference layer, tracking per-request costs with team and feature attribution. It knows the cost of every LLM call because it mediates between applications and inference backends. This is the data plane for cost tracking.
+
+**The AI FinOps Platform** aggregates cost data from Kortex, OpenCost (for infrastructure-level costs), and NVIDIA DCGM (for GPU utilization). It provides the analytics layer: cost-per-inference, cost-per-team, anomaly detection, and budget forecasting.
+
+**The missing piece** is the agent orchestration layer. When an agent framework like Kagenti or LangGraph orchestrates a multi-step workflow, it needs to propagate cost context through every step and report the total cost of the workflow back to the FinOps platform.
+
+This is not a single tool problem. It is an ecosystem problem that requires cost awareness at every layer of the stack.
+
+## Why This Should Be Protocol-Level
+
+Some will argue that cost tracking can be added as an observability concern, bolted on via OpenTelemetry spans or custom middleware. I disagree, for three reasons:
+
+**Accuracy requires provider participation**: The cost of an LLM call depends on input tokens, output tokens, and model-specific pricing. Only the provider (or a gateway that intercepts the response) can calculate this accurately. Estimating costs from the outside based on request size is unreliable.
+
+**Budget enforcement requires synchronous awareness**: If cost tracking is asynchronous (collect data, analyze later), you cannot enforce budgets in real-time. An agent needs to know its remaining budget before deciding whether to make another expensive tool call.
+
+**Multi-agent systems need cost propagation**: When Agent A delegates to Agent B, which delegates to Agent C, the cost of B and C should roll up to A's budget. This requires a cost context that is part of the agent communication protocol, not a sidecar concern.
+
+## Practical Steps for Today
+
+While the ecosystem matures, here is what you can do now:
+
+1. **Instrument your inference gateway**: If you are running an inference proxy (Kortex, LiteLLM, or custom), add per-request cost tracking with attribution headers. This gives you the data plane.
+
+2. **Add cost metadata to your agent framework**: Whatever agent framework you use, add a cost accumulator to the agent's execution context. Log the total cost of each agent invocation alongside the result.
+
+3. **Build cost dashboards that show agent-level spending**: Not just infrastructure costs, but cost-per-agent-action, cost-per-user-session, and cost-per-feature. This is what drives optimization decisions.
+
+4. **Set budget alerts, not just spending alerts**: An alert that fires when total AI spend exceeds $10K/month is too late. Alert when a single agent conversation exceeds $5, or when a team's daily agent spend is trending 2x above baseline.
+
+## The Bet
+
+I am betting that cost attribution will become a first-class concern in AI agent protocols within the next 18 months. The MCP specification will likely add cost reporting. Agent frameworks will add budget-aware execution. Inference gateways will standardize cost headers.
+
+The organizations that instrument their AI infrastructure for cost visibility now will have a significant advantage when this happens. They will have the data, the dashboards, and the organizational muscle to optimize AI spending as it scales.
+
+The organizations that treat AI costs as an undifferentiated cloud bill will find themselves in the same position that many companies were in 2015 with cloud spending: growing fast, with no visibility into what is driving the growth.
+
+---
+
+*This post reflects my work building Kortex and the AI FinOps Platform. If you are tackling similar problems, I would like to compare notes on approaches to agent-level cost tracking.*
+    `,
+  },
 ]
 
-export const categories = ['All', 'Platform Design', 'MLOps', 'SRE', 'Kubernetes', 'Data Platforms']
+export const categories = ['All', 'Platform Design', 'MLOps', 'SRE', 'Kubernetes', 'Data Platforms', 'AI Infrastructure']

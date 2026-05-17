@@ -56,8 +56,8 @@ const colorClasses: Record<string, string> = {
 }
 
 export const metadata: Metadata = {
-  title: 'About | Jude - Senior Platform Engineer',
-  description: 'Senior Platform & DevOps Engineer from Nigeria, based in Amsterdam. 10+ years building AI-ready cloud platforms with 99.99% uptime and €2.5M+ in cost savings.',
+  title: 'About | Jude - Platform & AI Infrastructure Engineer',
+  description: 'Platform & AI Infrastructure Engineer from Nigeria, based in Amsterdam. 10+ years building AI-ready cloud platforms with 99.99% uptime and €2.5M+ in cost savings.',
   openGraph: {
     title: 'About Jude | Platform Engineer',
     description: 'The journey from Nigeria to Amsterdam, building resilient platforms that transform infrastructure into competitive advantage.',
@@ -82,7 +82,7 @@ export default function About() {
           <h1 className="text-5xl md:text-6xl font-bold text-gray-900 dark:text-white mb-6">About Me</h1>
 
           <p className="text-xl md:text-2xl text-gray-600 dark:text-gray-300 mb-12 leading-relaxed max-w-4xl">
-            I&apos;m Jude, a Senior Platform &amp; DevOps Engineer originally from Nigeria 🇳🇬, now building
+            I&apos;m Jude, a Platform &amp; AI Infrastructure Engineer originally from Nigeria 🇳🇬, now building
             AI-ready cloud platforms from Amsterdam 🇳🇱.
           </p>
 

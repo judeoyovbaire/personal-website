@@ -29,7 +29,7 @@ const contributions: Array<{
 ]
 
 export const metadata: Metadata = {
-  title: 'Open Source | Jude - Senior Platform Engineer',
+  title: 'Open Source | Jude - Platform & AI Infrastructure Engineer',
   description: 'Open source AI infrastructure tools: Kubernetes operators for LLM inference, GPU cost optimization with FinOps, and MLOps reference architectures.',
   openGraph: {
     title: 'Open Source Projects | Jude',

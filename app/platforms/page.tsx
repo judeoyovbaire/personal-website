@@ -4,7 +4,7 @@ import Link from 'next/link'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Platform Capabilities | Jude - Senior Platform Engineer',
+  title: 'Platform Capabilities | Jude - Platform & AI Infrastructure Engineer',
   description: 'AI-ready platform capabilities across Core (Kubernetes, IaC, GitOps), Data (Lakehouse, Streaming), ML (Pipelines, Serving), and AI Infrastructure (GPU clusters, LLM serving).',
   openGraph: {
     title: 'Platform Capabilities | Jude',
