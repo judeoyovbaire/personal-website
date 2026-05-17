@@ -6,7 +6,7 @@ import { caseStudies, pillarLabels } from '@/data/casestudies'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Projects & Case Studies | Jude - Platform & AI Infrastructure Engineer',
+  title: 'Projects & Case Studies | Jude - Principal Platform Architect',
   description: 'Platform engineering case studies with measurable impact: Databricks migrations, Kubernetes modernization, MLOps implementations. Side projects in AI infrastructure and FinOps.',
   openGraph: {
     title: 'Projects & Case Studies | Jude',

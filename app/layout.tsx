@@ -16,12 +16,12 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://judaire.io'),
-  title: 'Jude - Platform & AI Infrastructure Engineer | AI-Ready Cloud Platforms',
-  description: 'Platform & AI Infrastructure Engineer building AI-ready cloud platforms across Core, Data, ML, and GPU infrastructure. 10+ years architecting systems with 99.99% reliability.',
+  title: 'Jude - Principal Platform Architect | AI-Ready Cloud Platforms',
+  description: 'Principal Platform Architect building AI-ready cloud platforms across Core, Data, ML, and GPU infrastructure. 10+ years architecting systems with 99.99% reliability.',
   keywords: 'Platform Engineer, AI Infrastructure, MLOps, DevOps Engineer, Kubernetes, AWS, Azure, GCP, Databricks, GPU, Amsterdam, FinOps, vLLM, KServe, LLM serving',
   authors: [{ name: 'Jude' }],
   openGraph: {
-    title: 'Jude - Platform & AI Infrastructure Engineer',
+    title: 'Jude - Principal Platform Architect',
     description: 'Building AI-ready cloud platforms across Core, Data, ML, and GPU infrastructure.',
     type: 'website',
     locale: 'en_US',
@@ -30,7 +30,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Jude - Platform & AI Infrastructure Engineer',
+    title: 'Jude - Principal Platform Architect',
     description: 'Building AI-ready cloud platforms across Core, Data, ML, and GPU infrastructure.',
   },
 }

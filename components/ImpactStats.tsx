@@ -4,7 +4,7 @@ import { motion } from 'framer-motion'
 
 export function ImpactStats() {
   const stats = [
-    { label: "Cost Saved", value: "€2.5M+" },
+    { label: "Cost Saved", value: "€1M+" },
     { label: "Platform Reliability", value: "99.99%" },
     { label: "Engineers Mentored", value: "20+" },
     { label: "Certifications", value: "11" }

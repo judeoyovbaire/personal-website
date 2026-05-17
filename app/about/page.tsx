@@ -56,10 +56,10 @@ const colorClasses: Record<string, string> = {
 }
 
 export const metadata: Metadata = {
-  title: 'About | Jude - Platform & AI Infrastructure Engineer',
-  description: 'Platform & AI Infrastructure Engineer from Nigeria, based in Amsterdam. 10+ years building AI-ready cloud platforms with 99.99% uptime and €2.5M+ in cost savings.',
+  title: 'About | Jude - Principal Platform Architect',
+  description: 'Principal Platform Architect from Nigeria, based in Amsterdam. 10+ years building AI-ready cloud platforms with 99.99% uptime and €1M+ in documented cost savings.',
   openGraph: {
-    title: 'About Jude | Platform Engineer',
+    title: 'About Jude | Principal Platform Architect',
     description: 'The journey from Nigeria to Amsterdam, building resilient platforms that transform infrastructure into competitive advantage.',
     url: '/about',
   },
@@ -82,7 +82,7 @@ export default function About() {
           <h1 className="text-5xl md:text-6xl font-bold text-gray-900 dark:text-white mb-6">About Me</h1>
 
           <p className="text-xl md:text-2xl text-gray-600 dark:text-gray-300 mb-12 leading-relaxed max-w-4xl">
-            I&apos;m Jude, a Platform &amp; AI Infrastructure Engineer originally from Nigeria 🇳🇬, now building
+            I&apos;m Jude, a Principal Platform Architect originally from Nigeria 🇳🇬, now building
             AI-ready cloud platforms from Amsterdam 🇳🇱.
           </p>
 
@@ -109,8 +109,8 @@ export default function About() {
           <section className="mb-10">
             <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">The Impact</h2>
             <p className="text-lg text-gray-600 dark:text-gray-300 leading-relaxed">
-              Over 10 years, I&apos;ve saved companies over €2.5 million through intelligent automation
-              and right-sizing. But numbers only tell part of the story. I&apos;ve mentored 20+ engineers,
+              Over 10 years, I&apos;ve saved companies over €1 million in documented cost reductions through
+              platform engineering, intelligent automation, and right-sizing. But numbers only tell part of the story. I&apos;ve mentored 20+ engineers,
               watching them grow from writing their first Terraform module to architecting entire platforms.
               Their success is my greatest achievement.
             </p>

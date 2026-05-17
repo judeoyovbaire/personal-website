@@ -30,15 +30,15 @@ export function Hero() {
             <motion.div variants={item} className="flex flex-col items-start gap-4 mb-4">
                 <div className="flex items-center gap-2 text-blue-600 dark:text-blue-400">
                     <div className="w-2 h-2 bg-blue-600 rounded-full animate-pulse"></div>
-                    <span className="text-sm font-medium">Open to collaboration</span>
+                    <span className="text-sm font-medium">Open to Principal Roles</span>
                 </div>
                 <CurrentFocus />
             </motion.div>
 
             <motion.h1 variants={item} className="text-4xl md:text-6xl font-bold text-gray-900 dark:text-white mb-6">
-                Platform &<br />
+                Principal<br />
                 <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-                    AI Infrastructure Engineer
+                    Platform Architect
                 </span>
             </motion.h1>
 
