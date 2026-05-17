@@ -191,10 +191,10 @@ export default function OpenSource() {
           ) : (
             <div className="p-6 bg-gray-50 dark:bg-gray-800/50 rounded-xl border border-dashed border-gray-300 dark:border-gray-600">
               <p className="text-gray-600 dark:text-gray-400 text-sm mb-2">
-                Contributions to CNCF and other open source projects coming soon.
+                Currently focused on shipping Kortex, AI FinOps Platform, and MLOps Platform to production-grade quality.
               </p>
               <p className="text-gray-500 dark:text-gray-500 text-xs">
-                Currently focused on building these projects to production-ready status before contributing upstream.
+                Upstream contributions to CNCF projects (KServe, Karpenter, OpenCost) are planned as these projects mature and generate issues worth contributing back.
               </p>
             </div>
           )}

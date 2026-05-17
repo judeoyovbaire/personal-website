@@ -129,10 +129,14 @@ export default function About() {
           <section className="mb-10">
             <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">What&apos;s Next</h2>
             <p className="text-lg text-gray-600 dark:text-gray-300 leading-relaxed">
-              I&apos;m deepening my expertise in ML platforms and AI infrastructure - building GPU-ready
-              clusters, ML pipelines, and applying SRE practices to model serving. My ideal role
-              combines this technical depth with my passion for mentoring engineers and driving
-              platform transformations that unlock business value.
+              At myTomorrows, I&apos;m building the infrastructure for LLM-powered healthcare products -
+              dedicated EKS clusters with defence-in-depth security for medical data, CloudFront VPC
+              Origins for zero-exposure production APIs, and KEDA-driven autoscaling for batch LLM
+              processing. Outside work, I&apos;m building Kortex (a Kubernetes-native inference gateway
+              targeting CNCF Sandbox) and the AI FinOps Platform, because I believe cost attribution
+              for AI workloads needs to be protocol-level, not an afterthought. The thread connecting
+              all of it: making AI infrastructure observable, governable, and cost-transparent as a
+              platform concern.
             </p>
           </section>
 

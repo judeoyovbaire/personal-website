@@ -201,6 +201,62 @@ export const caseStudies: CaseStudy[] = [
     ],
   },
   {
+    id: 'matching-api-healthcare',
+    title: 'Matching API Platform for Healthcare SaaS',
+    company: 'myTomorrows',
+    period: 'Feb 2026 - Present',
+    pillar: 'core',
+    context: {
+      description: 'Healthcare SaaS needing a secure, EU-compliant platform for an LLM-powered clinical trial matching API. B2B API product processing de-identified medical records through multi-model LLM inference.',
+      constraints: [
+        'No existing infrastructure for the new Matching API product',
+        'Dedicated isolation required for medical data compliance',
+        'LLM inference co-located for zero-latency processing',
+        'Defence-in-depth security for a regulated healthcare environment',
+      ],
+    },
+    problem: 'No existing infrastructure for the new Matching API product. Needed dedicated isolation for medical data compliance, LLM inference co-located for zero-latency, SQS-driven async processing with autoscaling workers, and defence-in-depth security for a regulated healthcare environment.',
+    approach: {
+      description: 'Designed and delivered a dedicated EKS cluster with defence-in-depth security, co-located LLM proxy, CloudFront VPC Origins for zero-exposure production APIs, and KEDA-driven autoscaling for async batch LLM processing.',
+      decisions: [
+        {
+          area: 'Cluster Strategy',
+          detail: 'Dedicated EKS cluster over shared cluster — full control plane isolation for medical data',
+          alternative: 'Shared EKS cluster with namespace isolation',
+          tradeoff: 'Full control plane isolation for medical data; accepted ~$200-400/month overhead and duplicated controller stack',
+        },
+        {
+          area: 'LLM Proxy',
+          detail: 'LiteLLM co-located in dedicated cluster over external API gateway - preserves zero-latency in-cluster DNS',
+          alternative: 'External API gateway or shared LiteLLM instance',
+          tradeoff: 'Preserves zero-latency in-cluster DNS; accepted operational coupling between matching-api and LiteLLM lifecycles',
+        },
+        {
+          area: 'Production Ingress',
+          detail: 'CloudFront + VPC Origins + internal ALB over internet-facing ALB or API Gateway - ALB has no public IP, Shield Standard DDoS, EU geo-restriction at edge',
+          alternative: 'Internet-facing ALB or API Gateway',
+          tradeoff: 'ALB has no public IP, Shield Standard DDoS, EU geo-restriction at edge; accepted debugging complexity across CloudFront + ALB logs',
+        },
+        {
+          area: 'Worker Scaling',
+          detail: 'KEDA with SQS triggers over HPA with CPU metrics - queue-depth-driven scaling matches async batch workload',
+          alternative: 'HPA with CPU-based metrics',
+          tradeoff: 'Queue-depth-driven scaling matches async batch workload; custom scaleOnInFlight=false and 7200s cooldown for long-running LLM tasks',
+        },
+      ],
+    },
+    implementation: {
+      technologies: ['AWS EKS', 'Terraform', 'Terragrunt', 'KEDA', 'Karpenter', 'CloudFront', 'WAFv2', 'LiteLLM', 'SQS', 'RDS PostgreSQL', 'Grafana', 'Prometheus'],
+      myRole: 'Owned the full infrastructure end-to-end — wrote the architectural ADR, provisioned the dedicated EKS cluster and all AWS resources, deployed 10+ platform controllers, configured CloudFront VPC Origins for production, built the observability stack (Grafana dashboard with 18 panels, 8 alert rules), hardened security posture, ran stress tests, and handed over to the developer team.',
+    },
+    impact: [
+      { metric: 'Infrastructure Delivery', value: '~2 weeks (5 phases)' },
+      { metric: 'Stress Test', value: '152 req/s with zero failures' },
+      { metric: 'Security', value: '17 NetworkPolicies, WAF with 7 rules' },
+      { metric: 'Autoscaling', value: 'KEDA workers scale 1→10 in 30s' },
+    ],
+  },
+  {
     id: 'mlops-platform-kubernetes',
     title: 'Multi-Cloud MLOps Platform on Kubernetes',
     company: 'Personal Project (Production-Grade)',

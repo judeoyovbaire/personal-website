@@ -88,6 +88,11 @@ export default function Platforms() {
               <p className="text-sm text-gray-600 dark:text-gray-400">Prometheus, Grafana, OpenSearch for metrics, logs, traces, and alerting</p>
             </div>
           </div>
+          <div className="p-4 bg-blue-50/50 dark:bg-blue-900/10 rounded-lg border border-blue-100 dark:border-blue-900/30 mb-6">
+            <p className="text-sm italic text-gray-700 dark:text-gray-300 leading-relaxed">
+              <span className="font-semibold not-italic">My Defaults:</span> Terraform for IaC unless the logic requires real programming constructs - then Pulumi. I avoid service mesh unless the organization has 3+ teams actively maintaining it; the operational overhead rarely justifies the traffic management gains at smaller scale. For observability, I reach for self-managed Prometheus + Grafana over Datadog at 100+ services because per-host pricing becomes non-linear, but I&apos;ll use Datadog for teams under 50 services where operational simplicity matters more.
+            </p>
+          </div>
           <Link href="/projects" className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 text-sm font-medium">
             View Core Platform case studies <ArrowRight size={16} />
           </Link>
@@ -122,6 +127,11 @@ export default function Platforms() {
               <h3 className="font-semibold text-gray-900 dark:text-white mb-2">Data Governance</h3>
               <p className="text-sm text-gray-600 dark:text-gray-400">Unity Catalog, access controls, lineage tracking, compliance</p>
             </div>
+          </div>
+          <div className="p-4 bg-green-50/50 dark:bg-green-900/10 rounded-lg border border-green-100 dark:border-green-900/30 mb-6">
+            <p className="text-sm italic text-gray-700 dark:text-gray-300 leading-relaxed">
+              <span className="font-semibold not-italic">My Defaults:</span> AWS Managed OpenSearch over self-managed for most organizations - the operational burden of running stateful workloads on Kubernetes is only worth it when you have a dedicated platform team and TB-scale data. For lakehouse architecture, Delta Lake is my first choice when Databricks is already in the stack; the ACID transaction guarantees and time travel are worth the ecosystem lock-in.
+            </p>
           </div>
           <Link href="/projects" className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 text-sm font-medium">
             View Data Platform case studies <ArrowRight size={16} />
@@ -158,6 +168,11 @@ export default function Platforms() {
               <p className="text-sm text-gray-600 dark:text-gray-400">Model performance monitoring, drift detection, SLO-driven operations</p>
             </div>
           </div>
+          <div className="p-4 bg-purple-50/50 dark:bg-purple-900/10 rounded-lg border border-purple-100 dark:border-purple-900/30 mb-6">
+            <p className="text-sm italic text-gray-700 dark:text-gray-300 leading-relaxed">
+              <span className="font-semibold not-italic">My Defaults:</span> KServe is my default for model serving on Kubernetes because of native scale-to-zero and canary deployment support. I avoid Seldon unless the team needs their specific inference graph abstraction. For experiment tracking, MLflow wins on simplicity and open-source portability; I&apos;d only consider Weights &amp; Biases for teams that need collaborative experiment visualization.
+            </p>
+          </div>
           <Link href="/projects" className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 text-sm font-medium">
             View ML Platform projects <ArrowRight size={16} />
           </Link>
@@ -192,6 +207,11 @@ export default function Platforms() {
               <h3 className="font-semibold text-gray-900 dark:text-white mb-2">AI Observability</h3>
               <p className="text-sm text-gray-600 dark:text-gray-400">Inference latency, queue depth, GPU metrics, training job monitoring</p>
             </div>
+          </div>
+          <div className="p-4 bg-orange-50/50 dark:bg-orange-900/10 rounded-lg border border-orange-100 dark:border-orange-900/30 mb-6">
+            <p className="text-sm italic text-gray-700 dark:text-gray-300 leading-relaxed">
+              <span className="font-semibold not-italic">My Defaults:</span> I always start with spot/preemptible instances for training workloads and batch inference - the 60%+ savings justify the checkpointing complexity. For LLM inference, vLLM with continuous batching is my default engine; the throughput from PagedAttention consistently beats TGI in benchmarks I&apos;ve run. Cost attribution should happen at the inference gateway layer, not as an afterthought in billing dashboards.
+            </p>
           </div>
           <Link href="/projects" className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 text-sm font-medium">
             View AI Infrastructure projects <ArrowRight size={16} />

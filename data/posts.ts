@@ -434,6 +434,134 @@ The organizations that treat AI costs as an undifferentiated cloud bill will fin
 *This post reflects my work building Kortex and the AI FinOps Platform. If you are tackling similar problems, I would like to compare notes on approaches to agent-level cost tracking.*
     `,
   },
+  {
+    slug: 'platform-infrastructure-llm-powered-products',
+    title: 'Platform Infrastructure for LLM-Powered Products: Lessons from Building the Matching API at myTomorrows',
+    description: 'An opinionated take on building production infrastructure for LLM-powered healthcare products — dedicated clusters for medical data, CloudFront VPC Origins over API Gateway, and KEDA over HPA for async LLM workloads.',
+    category: 'Platform Design',
+    date: '2025-05-10',
+    readTime: '15 min read',
+    published: true,
+    technologies: ['AWS EKS', 'Terraform', 'KEDA', 'CloudFront', 'LiteLLM', 'Karpenter'],
+    content: `
+## The Problem: Building Infrastructure for a Product That Doesn't Exist Yet
+
+In early 2026, myTomorrows needed infrastructure for a new product: a clinical trial matching API powered by multi-model LLM inference. The product would process de-identified medical records, run them through multiple LLM providers, and return structured clinical trial matches via a B2B API.
+
+There was no existing infrastructure for this. The matching API was a new product line, not an extension of an existing service. This meant every infrastructure decision was greenfield — and every decision would be hard to reverse once medical data started flowing.
+
+This post covers the architectural decisions I made, the alternatives I considered, and what I learned shipping this to production in five phases over two weeks.
+
+## Position 1: Dedicated Clusters for Medical Data, Even When Shared Is "Technically Fine"
+
+The first decision was whether to run the matching API in the existing shared EKS cluster or provision a dedicated one.
+
+The shared cluster argument is compelling: lower cost, shared controller stack, existing observability, and the team already knows how to operate it. Namespace isolation with NetworkPolicies and RBAC is "technically fine" for most compliance requirements.
+
+I chose a dedicated cluster anyway. Here is why:
+
+**Blast radius isolation**: If a noisy neighbor in the shared cluster causes node pressure or API server throttling, the matching API — which processes medical data with strict SLA requirements — is affected. A dedicated cluster means the only workloads competing for resources are matching-api workloads.
+
+**Compliance simplicity**: When auditors ask "where does medical data flow?", the answer is "this cluster, these nodes, this VPC." Not "well, it's in a namespace with network policies that restrict egress to..." Compliance is easier to demonstrate when the boundary is physical, not logical.
+
+**Independent lifecycle management**: The matching API needs different upgrade cadences, different maintenance windows, and different scaling characteristics than the shared platform. A dedicated cluster means we can upgrade the control plane on our schedule without coordinating with other teams.
+
+The cost overhead is real: approximately $200-400/month for the duplicated control plane and controller stack. For a B2B healthcare API product, this is negligible compared to the risk reduction.
+
+**My position**: If your workload processes regulated data (medical, financial, PII) and has strict SLA requirements, default to a dedicated cluster. The cost overhead is almost always worth the blast radius isolation and compliance simplicity. Only share clusters for workloads with similar risk profiles and lifecycle requirements.
+
+## Position 2: CloudFront VPC Origins Over API Gateway for B2B APIs
+
+The production ingress architecture was the most consequential security decision. The options:
+
+1. **Internet-facing ALB**: Simple, but the load balancer has a public IP. Attack surface includes the ALB directly.
+2. **API Gateway + VPC Link**: AWS-native, but adds latency and has throughput limits that require capacity planning.
+3. **CloudFront + VPC Origins + internal ALB**: The ALB has no public IP. All traffic enters through CloudFront, which provides Shield Standard DDoS protection, WAF integration, and geo-restriction at the edge.
+
+I chose option 3. The key insight: with VPC Origins, the ALB is genuinely internal. There is no public IP to attack. Traffic can only reach it through CloudFront, which means:
+
+- DDoS mitigation happens at the edge, not at the VPC
+- WAF rules (7 managed rule groups including known bad inputs, SQL injection, and IP reputation) are evaluated before traffic ever reaches the cluster
+- EU geo-restriction is enforced at CloudFront — requests from outside the EU never reach the origin
+- The ALB security group only allows traffic from CloudFront's managed prefix list
+
+The tradeoff is debugging complexity. When a request fails, you need to correlate CloudFront access logs, WAF logs, and ALB access logs. I mitigated this with a Grafana dashboard that joins these log sources by request ID.
+
+**My position**: For B2B APIs processing sensitive data, CloudFront + VPC Origins is strictly better than an internet-facing ALB. The debugging complexity is a one-time investment in observability tooling. API Gateway is the right choice when you need request transformation, usage plans, or API key management — but for a simple reverse proxy with security at the edge, CloudFront VPC Origins gives you more security with less operational overhead.
+
+## Position 3: KEDA Over HPA for Async LLM Workloads
+
+The matching API uses an SQS-driven async architecture: API requests enqueue work, worker pods process the queue, results are stored and returned via polling or webhook. This pattern is correct for LLM workloads because inference is slow (10-60 seconds per request) and batch processing is more efficient than synchronous request-response.
+
+The scaling question: how do workers scale?
+
+**HPA with CPU metrics** is the default Kubernetes answer. But CPU is the wrong signal for queue-processing workloads. A worker might be at 10% CPU while waiting for an LLM response, but it is fully occupied — it cannot accept more work. CPU-based scaling would leave messages sitting in the queue while workers appear underutilized.
+
+**KEDA with SQS triggers** scales on the right signal: queue depth. When messages accumulate, KEDA adds workers. When the queue drains, KEDA scales down.
+
+The nuance for LLM workloads is in the KEDA configuration:
+
+- \`scaleOnInFlight=false\`: Do not count in-flight messages (messages being processed) toward the scale target. LLM inference is slow — if a worker is processing a message for 60 seconds, we do not want KEDA to think it needs another worker for that message.
+- \`cooldownPeriod=7200s\`: Long-running LLM tasks mean workers should not scale down aggressively. A 2-hour cooldown prevents thrashing during sustained batch workloads.
+- Scale range 1-10: Minimum 1 worker for latency-sensitive requests, maximum 10 for batch processing spikes.
+
+The result: workers scale from 1 to 10 in approximately 30 seconds when a batch lands in the queue, and scale back down gracefully after the batch completes.
+
+**My position**: For any async workload where processing time is variable and CPU is not the bottleneck (LLM inference, video processing, ETL), KEDA with queue-depth triggers is strictly better than HPA with CPU metrics. The configuration requires understanding your workload's timing characteristics, but the scaling behavior is fundamentally more correct.
+
+## The ADR Process: How Decisions Get Made
+
+Every decision above was documented in an Architecture Decision Record before implementation began. The ADR format I use:
+
+1. **Context**: What is the situation? What constraints exist?
+2. **Decision**: What did we choose?
+3. **Alternatives**: What else was considered?
+4. **Consequences**: What are the tradeoffs? What do we gain and lose?
+
+The ADR serves two purposes: it forces me to articulate the reasoning (which often reveals gaps in my thinking), and it provides a record for future engineers who will ask "why was it built this way?"
+
+For the matching API, the ADR was a 15-page document covering cluster strategy, networking, security, observability, and scaling. It was reviewed by the engineering lead before implementation began. This investment in upfront design meant implementation was fast — I was not making architectural decisions while writing Terraform.
+
+## Production Handover: What It Looks Like
+
+Infrastructure is not done when the Terraform applies cleanly. It is done when the development team can operate it independently. The production handover for the matching API included:
+
+- **Grafana dashboard with 18 panels**: Request rates, latency percentiles, error rates, queue depth, worker scaling, pod health, node utilization, and cost tracking.
+- **8 alert rules**: Queue depth exceeding threshold, worker pod restarts, error rate spikes, certificate expiry, node pressure, and budget alerts.
+- **Runbook**: How to deploy, how to scale manually, how to debug common issues, how to handle incidents.
+- **Stress test results**: Documenting the system's behavior under load (152 req/s with zero failures) so the team knows the performance envelope.
+
+The handover document is not a formality. It is the artifact that determines whether the development team can own the infrastructure without calling me at 2am.
+
+## Stress Testing: Validating the Architecture
+
+Before handing over, I ran a comprehensive stress test to validate the architecture under load:
+
+- **Target**: Sustained 150+ requests per second
+- **Result**: 152 req/s with zero failures
+- **KEDA behavior**: Workers scaled from 1 to 10 within 30 seconds of queue depth increasing
+- **Karpenter behavior**: New nodes provisioned within 60 seconds when pod scheduling failed
+- **CloudFront**: No origin errors, WAF passed all legitimate traffic, geo-restriction blocked test requests from outside EU
+
+The stress test validated two things: the architecture handles the expected load, and the autoscaling mechanisms respond correctly to load changes. Without this test, we would be discovering scaling issues in production.
+
+## What I Would Do Differently
+
+**Start with the observability dashboard earlier**: I built the Grafana dashboard after implementation. Building it during implementation would have caught configuration issues sooner — several KEDA tuning parameters were adjusted based on dashboard observations during stress testing.
+
+**Document the CloudFront + ALB log correlation pattern from day one**: The development team spent time debugging a WAF false positive because they did not know how to correlate CloudFront request IDs with ALB access logs. This should have been in the runbook from the start.
+
+## The Thread
+
+This project reinforced my core belief about platform engineering: the infrastructure decisions that matter most are not about which tool to use, but about where to draw boundaries. Dedicated vs. shared clusters is a boundary decision. Internal vs. external ALB is a boundary decision. Queue-depth vs. CPU scaling is about choosing the right signal for the boundary between "needs more capacity" and "has enough."
+
+Good platform engineering is boundary engineering. The tools are interchangeable; the boundaries are architectural.
+
+---
+
+*This post is based on production infrastructure I built and handed over at myTomorrows. If you are building infrastructure for LLM-powered products and want to discuss cluster isolation strategies or async scaling patterns, I am happy to compare notes.*
+    `,
+  },
 ]
 
 export const categories = ['All', 'Platform Design', 'MLOps', 'SRE', 'Kubernetes', 'Data Platforms', 'AI Infrastructure']
