@@ -7,7 +7,7 @@ export function ImpactStats() {
     { label: "Cost Saved", value: "€1M+" },
     { label: "Platform Reliability", value: "99.99%" },
     { label: "Engineers Mentored", value: "20+" },
-    { label: "Certifications", value: "11" }
+    { label: "Clouds in Production", value: "3" }
   ]
 
   const container = {

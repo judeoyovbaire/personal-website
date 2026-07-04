@@ -56,10 +56,10 @@ const colorClasses: Record<string, string> = {
 }
 
 export const metadata: Metadata = {
-  title: 'About | Jude - Principal Platform Architect',
-  description: 'Principal Platform Architect from Nigeria, based in Amsterdam. 10+ years building AI-ready cloud platforms with 99.99% uptime and €1M+ in documented cost savings.',
+  title: 'About | Jude - Platform Architect',
+  description: 'Platform Architect from Nigeria, based in Amsterdam. 10+ years building AI-ready cloud platforms with 99.99% uptime and €1M+ in documented cost savings.',
   openGraph: {
-    title: 'About Jude | Principal Platform Architect',
+    title: 'About Jude | Platform Architect',
     description: 'The journey from Nigeria to Amsterdam, building resilient platforms that transform infrastructure into competitive advantage.',
     url: '/about',
   },
@@ -82,7 +82,7 @@ export default function About() {
           <h1 className="text-5xl md:text-6xl font-bold text-gray-900 dark:text-white mb-6">About Me</h1>
 
           <p className="text-xl md:text-2xl text-gray-600 dark:text-gray-300 mb-12 leading-relaxed max-w-4xl">
-            I&apos;m Jude, a Principal Platform Architect originally from Nigeria 🇳🇬, now building
+            I&apos;m Jude, a Platform Architect originally from Nigeria 🇳🇬, now building
             AI-ready cloud platforms from Amsterdam 🇳🇱.
           </p>
 
@@ -119,10 +119,10 @@ export default function About() {
           <section className="mb-10">
             <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">Beyond the Terminal</h2>
             <p className="text-lg text-gray-600 dark:text-gray-300 leading-relaxed">
-              When I&apos;m not architecting systems or exploring AI/ML infrastructure, I play chess,
-              and this surprisingly enhances my technical work;
-              the clarity, observation and patience for a piece move often illuminates elegant
-              solutions to complex problems.
+              When I&apos;m not architecting systems or exploring AI/ML infrastructure, I play chess -
+              and it sharpens my technical work more than you&apos;d expect. The patience to study a
+              position before committing to a move is the same discipline that finds elegant
+              solutions to complex systems problems.
             </p>
           </section>
 
@@ -132,11 +132,12 @@ export default function About() {
               At myTomorrows, I&apos;m building the infrastructure for LLM-powered healthcare products -
               dedicated EKS clusters with defence-in-depth security for medical data, CloudFront VPC
               Origins for zero-exposure production APIs, and KEDA-driven autoscaling for batch LLM
-              processing. Outside work, I&apos;m building Kortex (a Kubernetes-native inference gateway
-              targeting CNCF Sandbox) and the AI FinOps Platform, because I believe cost attribution
-              for AI workloads needs to be protocol-level, not an afterthought. The thread connecting
-              all of it: making AI infrastructure observable, governable, and cost-transparent as a
-              platform concern.
+              processing. Outside work, I built Kortex (a Kubernetes-native inference gateway) to
+              explore multi-model routing from first principles - learnings I&apos;m now taking upstream
+              to the Gateway API Inference Extension and llm-d communities - and the AI FinOps
+              Platform, because I believe cost attribution for AI workloads needs to be protocol-level,
+              not an afterthought. The thread connecting all of it: making AI infrastructure
+              observable, governable, and cost-transparent as a platform concern.
             </p>
           </section>
 
@@ -147,10 +148,10 @@ export default function About() {
               The tools I reach for most often when building platforms.
             </p>
 
-            {/* Primary Tools - Weapons of Choice */}
+            {/* Primary Tools */}
             <div className="mb-8">
               <h3 className="text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-4">
-                Weapons of Choice
+                Daily Drivers
               </h3>
               <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3">
                 {techStack.primary.map((tool) => {

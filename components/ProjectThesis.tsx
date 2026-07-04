@@ -21,20 +21,8 @@ const projects = [
   {
     name: 'MLOps Platform',
     role: 'Full-stack reference',
-    description: 'Multi-cloud model deployment with defense-in-depth security and GitOps-driven infrastructure.',
+    description: 'Multi-cloud model deployment with defense-in-depth security and self-service workflows.',
     color: 'border-purple-500/30 bg-purple-500/5',
-  },
-  {
-    name: 'SpotTensor',
-    role: 'GPU cost arbitrage',
-    description: 'Cross-provider GPU price aggregation for finding the cheapest spot instances.',
-    color: 'border-orange-500/30 bg-orange-500/5',
-  },
-  {
-    name: 'AgentFile',
-    role: 'Declarative agent deployment',
-    description: 'Docker Compose for AI agents with GitOps-native manifest generation.',
-    color: 'border-pink-500/30 bg-pink-500/5',
   },
 ]
 
