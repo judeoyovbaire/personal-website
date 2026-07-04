@@ -16,7 +16,7 @@ export const posts: BlogPost[] = [
     title: 'Building Kortex: A Kubernetes-Native AI Inference Gateway',
     description: 'A technical deep dive into designing Kortex, a multi-provider inference gateway with intelligent routing, circuit breakers, OpenTelemetry tracing, and cost tracking.',
     category: 'Platform Design',
-    date: '2024-12-18',
+    date: '2025-12-28',
     readTime: '8 min read',
     published: true,
     technologies: ['Go', 'Kubernetes', 'Kubebuilder', 'KServe', 'OpenTelemetry'],
@@ -439,7 +439,7 @@ The organizations that treat AI costs as an undifferentiated cloud bill will fin
     title: 'Platform Infrastructure for LLM-Powered Products: Lessons from Building the Matching API at myTomorrows',
     description: 'An opinionated take on building production infrastructure for LLM-powered healthcare products — dedicated clusters for medical data, CloudFront VPC Origins over API Gateway, and KEDA over HPA for async LLM workloads.',
     category: 'Platform Design',
-    date: '2025-05-10',
+    date: '2026-05-10',
     readTime: '15 min read',
     published: true,
     technologies: ['AWS EKS', 'Terraform', 'KEDA', 'CloudFront', 'LiteLLM', 'Karpenter'],
@@ -564,4 +564,4 @@ Good platform engineering is boundary engineering. The tools are interchangeable
   },
 ]
 
-export const categories = ['All', 'Platform Design', 'MLOps', 'SRE', 'Kubernetes', 'Data Platforms', 'AI Infrastructure']
+export const categories = ['All', 'Platform Design', 'Data Platforms', 'AI Infrastructure']
