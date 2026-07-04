@@ -259,21 +259,21 @@ export const caseStudies: CaseStudy[] = [
   {
     id: 'mlops-platform-kubernetes',
     title: 'Multi-Cloud MLOps Platform on Kubernetes',
-    company: 'Personal Project (Production-Grade)',
+    company: 'Personal Project — Reference Architecture',
     period: '2024 - 2025',
     pillar: 'ml',
     context: {
       description: 'Multi-cloud MLOps reference architecture enabling self-service model deployment across AWS EKS, Azure AKS, and GCP GKE with defense-in-depth security and full-stack observability.',
       constraints: [
         'Multi-cloud parity across AWS, Azure, and GCP',
-        'Self-service model deployment for data science teams',
+        'Self-service model deployment as the core workflow',
         'GPU cost optimization with spot/preemptible instances',
         'Production-grade security and auditability',
       ],
     },
-    problem: 'Data science teams were spending 2-3 days per model deployment with no standardized process. Security reviews were ad-hoc, GPU spend was invisible, and there was no consistent path from experimentation to production across clouds.',
+    problem: 'The problem this architecture addresses: ML teams commonly lose 2-3 days per model deployment to manual processes, ad-hoc security reviews, and invisible GPU spend — with no consistent path from experimentation to production across clouds.',
     approach: {
-      description: 'Built a production-grade MLOps platform with GitOps-driven infrastructure, self-service model serving, and defense-in-depth security across three cloud providers.',
+      description: 'Built a multi-cloud MLOps reference platform with security-first infrastructure, self-service model serving, and per-cloud Terraform modules across three providers.',
       decisions: [
         {
           area: 'Inference Engine',
@@ -285,7 +285,7 @@ export const caseStudies: CaseStudy[] = [
           area: 'Model Serving',
           detail: 'KServe for production model serving with canary deployments, traffic splitting, and scale-to-zero',
           alternative: 'Seldon Core or BentoML',
-          tradeoff: 'Native Kubernetes integration with Knative-based autoscaling and scale-to-zero; accepted more complex initial setup vs BentoML simplicity',
+          tradeoff: 'Native Kubernetes integration with canary traffic splitting; chose RawDeployment mode over Knative for simpler operations — accepted losing scale-to-zero on the serving path',
         },
         {
           area: 'Security',
@@ -297,7 +297,7 @@ export const caseStudies: CaseStudy[] = [
           area: 'GPU Cost',
           detail: 'SPOT/Preemptible GPU instances with Karpenter for intelligent bin-packing and auto-scaling',
           alternative: 'Reserved GPU instances',
-          tradeoff: '60% GPU cost savings; accepted the need for checkpointing and graceful preemption handling in training workloads',
+          tradeoff: 'Spot pricing typically runs ~60% below on-demand for GPU instances; accepted the need for checkpointing and graceful preemption handling in training workloads',
         },
       ],
     },
@@ -306,10 +306,10 @@ export const caseStudies: CaseStudy[] = [
       myRole: 'Designed and built the entire platform end-to-end. Created multi-cloud Terraform modules, implemented the model serving pipeline with KServe and vLLM, built the security layer, and documented the architecture for community use.',
     },
     impact: [
-      { metric: 'Deployment Time', value: '2-3 days → 15 min' },
-      { metric: 'GPU Cost Savings', value: '60%' },
+      { metric: 'Deployment Path', value: '15-min self-service (design target)' },
+      { metric: 'GPU Cost', value: '~60% spot vs on-demand (pricing benchmark)' },
       { metric: 'Cloud Coverage', value: '3 clouds (AWS, Azure, GCP)' },
-      { metric: 'Pipeline Automation', value: '100%' },
+      { metric: 'Security Layers', value: 'PSA + Kyverno + Tetragon + NetworkPolicies' },
     ],
   },
 ]
