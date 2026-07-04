@@ -166,7 +166,6 @@ export const sideProjects: SideProject[] = [
       { name: 'Chaos Testing', completed: true },
       { name: 'Docs', completed: true },
       { name: 'GitOps', completed: false },
-      { name: 'Drift Detection', completed: false },
       { name: 'LLM Inference (GPU-verified)', completed: false },
       { name: 'E2E Verification', completed: false },
     ],
