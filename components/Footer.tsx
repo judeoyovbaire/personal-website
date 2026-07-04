@@ -14,7 +14,7 @@ export function Footer() {
               Jude Oyovbaire
             </Link>
             <p className="mt-2 text-gray-600 dark:text-gray-400 text-sm">
-              Principal Platform Architect building AI-ready cloud platforms.
+              Platform Architect building AI-ready cloud platforms.
             </p>
           </div>
 

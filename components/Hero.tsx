@@ -36,9 +36,9 @@ export function Hero() {
             </motion.div>
 
             <motion.h1 variants={item} className="text-4xl md:text-6xl font-bold text-gray-900 dark:text-white mb-6">
-                Principal<br />
+                Platform Architect<br />
                 <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-                    Platform Architect
+                    for AI Infrastructure
                 </span>
             </motion.h1>
 
