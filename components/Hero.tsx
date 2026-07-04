@@ -52,7 +52,7 @@ export function Hero() {
             <motion.div variants={item} className="grid sm:grid-cols-2 gap-3 mb-8 max-w-3xl">
                 <div className="flex items-start gap-2">
                     <CheckCircle2 size={18} className="text-blue-600 mt-0.5 flex-shrink-0" />
-                    <span className="text-sm text-gray-700 dark:text-gray-300">Multi-cloud Kubernetes platforms for 50+ teams, 200+ services</span>
+                    <span className="text-sm text-gray-700 dark:text-gray-300">Multi-cloud Kubernetes platforms running 200+ production services</span>
                 </div>
                 <div className="flex items-start gap-2">
                     <CheckCircle2 size={18} className="text-blue-600 mt-0.5 flex-shrink-0" />

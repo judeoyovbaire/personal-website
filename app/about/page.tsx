@@ -57,7 +57,7 @@ const colorClasses: Record<string, string> = {
 
 export const metadata: Metadata = {
   title: 'About | Jude - Platform Architect',
-  description: 'Platform Architect from Nigeria, based in Amsterdam. 10+ years building AI-ready cloud platforms with 99.99% uptime and €1M+ in documented cost savings.',
+  description: 'Platform Architect from Nigeria, based in Amsterdam. 10+ years building AI-ready cloud platforms with 99.99% uptime and €900K+ in annual cost savings.',
   openGraph: {
     title: 'About Jude | Platform Architect',
     description: 'The journey from Nigeria to Amsterdam, building resilient platforms that transform infrastructure into competitive advantage.',
@@ -109,8 +109,9 @@ export default function About() {
           <section className="mb-10">
             <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">The Impact</h2>
             <p className="text-lg text-gray-600 dark:text-gray-300 leading-relaxed">
-              Over 10 years, I&apos;ve saved companies over €1 million in documented cost reductions through
-              platform engineering, intelligent automation, and right-sizing. But numbers only tell part of the story. I&apos;ve mentored 20+ engineers,
+              Over 10 years, I&apos;ve delivered €900K+ in annual cost savings across two platform
+              programs (detailed in my case studies) through platform engineering, intelligent
+              automation, and right-sizing. But numbers only tell part of the story. I&apos;ve mentored 20+ engineers,
               watching them grow from writing their first Terraform module to architecting entire platforms.
               Their success is my greatest achievement.
             </p>
