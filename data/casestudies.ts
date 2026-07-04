@@ -265,7 +265,7 @@ export const caseStudies: CaseStudy[] = [
     context: {
       description: 'Multi-cloud MLOps reference architecture enabling self-service model deployment across AWS EKS, Azure AKS, and GCP GKE with defense-in-depth security and full-stack observability.',
       constraints: [
-        'Multi-cloud parity across AWS, Azure, and GCP',
+        'Multi-cloud architecture parity (AWS, Azure, GCP) with AWS-first end-to-end verification',
         'Self-service model deployment as the core workflow',
         'GPU cost optimization with spot/preemptible instances',
         'Production-grade security and auditability',
