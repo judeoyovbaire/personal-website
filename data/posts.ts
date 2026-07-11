@@ -12,6 +12,179 @@ export interface BlogPost {
 
 export const posts: BlogPost[] = [
   {
+    slug: 'kubernetes-limitrange-gpu-injection',
+    title: 'The LimitRange That Requested a GPU for Every Pod',
+    description: 'A KServe predictor sat Pending for three hours requesting a GPU that nothing in Git asked for. The injector was a Kubernetes defaulting rule most people have never read - and GitOps was structurally unable to show it.',
+    category: 'AI Infrastructure',
+    date: '2026-07-11',
+    readTime: '9 min read',
+    published: true,
+    technologies: ['Kubernetes', 'KServe', 'Karpenter', 'ArgoCD', 'EKS'],
+    content: `
+## The Symptom
+
+Mid-deployment on my MLOps platform (EKS, KServe, Karpenter, ArgoCD), a freshly applied InferenceService refused to come up. The CI gate timed out after five minutes; the predictor pod had been Pending for three hours.
+
+\`kubectl describe pod\` told me why the scheduler couldn't place it:
+
+\`\`\`
+Warning  FailedScheduling  0/4 nodes are available: 1 Insufficient cpu,
+  4 Insufficient nvidia.com/gpu.
+Warning  FailedScheduling  karpenter  Failed to schedule pod, no instance
+  type has enough resources ... resources={"cpu":"411m","memory":"1217Mi",
+  "nvidia.com/gpu":"1","pods":"10"}
+\`\`\`
+
+The pod wanted a GPU. Karpenter had even nominated a GPU node claim that never materialized - this account can't launch GPU instances at all.
+
+The problem: this was a scikit-learn iris classifier. A CPU workload. Nothing anywhere in the deployment asked for a GPU.
+
+## Nothing in Git Asks for a GPU
+
+The InferenceService manifest requests CPU and memory only:
+
+\`\`\`yaml
+resources:
+  requests:
+    cpu: 100m
+    memory: 512Mi
+  limits:
+    cpu: "1"
+    memory: 1Gi
+\`\`\`
+
+I rendered the entire kustomization and grepped it - no \`nvidia.com/gpu\` anywhere except an unrelated quota file. ArgoCD reported the app Synced. Yet the live pod spec showed:
+
+\`\`\`json
+{"limits":{"cpu":"1","memory":"1Gi","nvidia.com/gpu":"1"},
+ "requests":{"cpu":"100m","memory":"512Mi","nvidia.com/gpu":"1"}}
+\`\`\`
+
+Something between Git and the kubelet was injecting a GPU request into my pods.
+
+## Hunting the Injector
+
+The usual suspects, in the order I eliminated them:
+
+- **Kyverno mutate rules.** I dumped every ClusterPolicy and searched for GPU references in mutate rules: nothing.
+- **Mutating admission webhooks.** KServe, cert-manager, the ALB controller, the pod identity webhook - none of them touch device resources.
+- **The KServe ServingRuntime.** KServe merges the runtime's container spec into the predictor, so this was a strong candidate. The mlserver runtime requests CPU and memory only.
+- **Delete and recreate.** The pod came back Pending with the same phantom GPU.
+
+Then I noticed the neighbours: three pods from an unrelated Argo Rollouts example had been Pending in the same namespace for nineteen hours. Whatever was doing this was namespace-wide.
+
+## The Culprit
+
+The namespace had a LimitRange. In Git, it looked completely reasonable:
+
+\`\`\`yaml
+apiVersion: v1
+kind: LimitRange
+metadata:
+  name: mlops-limits
+spec:
+  limits:
+    - type: Container
+      default:
+        cpu: "1"
+        memory: 2Gi
+      defaultRequest:
+        cpu: 100m
+        memory: 256Mi
+      max:
+        cpu: "8"
+        memory: 32Gi
+        nvidia.com/gpu: "1"   # <- cap GPU use at one per container
+\`\`\`
+
+The intent reads clearly: containers may use *at most* one GPU. But the live object told a different story:
+
+\`\`\`
+default:        {cpu: "1", memory: "2Gi", nvidia.com/gpu: "1"}
+defaultRequest: {cpu: "100m", memory: "256Mi", nvidia.com/gpu: "1"}
+\`\`\`
+
+The API server had populated GPU **defaults** I never wrote. This is documented LimitRanger behaviour, buried in the Kubernetes API conventions: for any resource named in \`max\` that has no explicit \`default\`, **the default becomes the max**. And \`defaultRequest\` follows \`default\`.
+
+So \`max: nvidia.com/gpu: "1"\` does not mean "at most one GPU". It means:
+
+> Every container in this namespace that doesn't explicitly request a GPU gets exactly one GPU injected at admission.
+
+A ceiling had silently become an allocation.
+
+## Why GitOps Couldn't Show Me
+
+This is the part that makes the failure genuinely nasty for platform teams.
+
+The defaulting happens when the LimitRange object is **persisted** - the API server materializes \`default\` and \`defaultRequest\` onto the stored object at create time. Those fields end up attributed to whichever field manager created the object (in my case \`argocd-controller\`), so ArgoCD's server-side-apply diff considers them its own and reports the app Synced. \`kustomize build\` output is clean, the Git manifest is clean, the drift detector is happy - and every pod in the namespace is being mutated.
+
+Deleting the LimitRange doesn't help either. ArgoCD recreates it from the clean Git manifest, the LimitRanger defaulting runs again on create, and the phantom GPU is back. I watched this loop happen.
+
+The diagnosis only landed when I diffed the **live object** against the rendered manifest:
+
+\`\`\`bash
+kubectl get limitrange mlops-limits -o yaml   # live truth
+kustomize build . | grep -A12 LimitRange       # what Git thinks
+\`\`\`
+
+If those disagree on fields you never wrote, an admission-time defaulter is involved.
+
+## The Fix
+
+Remove extended resources from the LimitRange entirely, and enforce the GPU ceiling where it belongs - the namespace ResourceQuota, which caps *consumption* without ever *allocating*:
+
+\`\`\`yaml
+# LimitRange: CPU and memory only. Never name an extended resource in
+# max without an explicit default - the default BECOMES the max.
+max:
+  cpu: "8"
+  memory: 32Gi
+
+# ResourceQuota: the actual GPU ceiling for the namespace.
+hard:
+  requests.nvidia.com/gpu: "4"
+  limits.nvidia.com/gpu: "4"
+\`\`\`
+
+One deleted line, and the predictor scheduled in seconds on an existing CPU node.
+
+## Reproduce It in Two Minutes
+
+No GPUs required - the injection is visible on any cluster, including kind:
+
+\`\`\`bash
+kubectl create namespace lr-demo
+cat <<EOF | kubectl apply -f -
+apiVersion: v1
+kind: LimitRange
+metadata: {name: demo, namespace: lr-demo}
+spec:
+  limits:
+    - type: Container
+      max: {nvidia.com/gpu: "1"}
+EOF
+
+# The defaults you never wrote:
+kubectl get limitrange demo -n lr-demo -o yaml
+
+# And the injection in action:
+kubectl run test --image=nginx -n lr-demo
+kubectl get pod test -n lr-demo \\
+  -o jsonpath='{.spec.containers[0].resources}'
+# {"limits":{"nvidia.com/gpu":"1"},"requests":{"nvidia.com/gpu":"1"}}
+\`\`\`
+
+## Takeaways
+
+1. **In a LimitRange, \`max\` without \`default\` is an allocation, not a cap.** The LimitRanger back-fills \`default\` from \`max\` per resource. For CPU and memory the consequences are usually benign; for extended resources like GPUs, it converts a guard-rail into a scheduling poison pill for the whole namespace.
+2. **Cap extended resources with ResourceQuota, never LimitRange \`max\`.** Quotas bound aggregate consumption; they never inject anything into pods.
+3. **GitOps sync status can't see admission-time materialization.** Fields the API server writes onto your objects at persist time are invisible to manifest-vs-manifest reasoning. When behaviour contradicts Git, diff the live object - \`managedFields\` tells you who wrote what.
+4. **Debug scheduling from the pod spec backwards, not the manifest forwards.** The pod's actual \`resources\` block ended three hours of dead-end webhook hunting in one command.
+
+This came out of a longer end-to-end deployment exercise on my open MLOps platform - the full findings ledger, including this one as finding group 3, lives in the repo's [deployment retrospective](https://github.com/judeoyovbaire/mlops-platform/blob/main/docs/retros/aws-deploy-retro-2026-07.md).
+    `,
+  },
+  {
     slug: 'building-kubernetes-native-inference-gateway',
     title: 'Building Kortex: A Kubernetes-Native AI Inference Gateway',
     description: 'A technical deep dive into designing Kortex, a multi-provider inference gateway with intelligent routing, circuit breakers, OpenTelemetry tracing, and cost tracking.',
