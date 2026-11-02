@@ -194,6 +194,8 @@ This came out of a longer end-to-end deployment exercise on my open MLOps platfo
     published: true,
     technologies: ['Go', 'Kubernetes', 'Kubebuilder', 'KServe', 'OpenTelemetry'],
     content: `
+> **Update (November 2026):** Kortex was a learning project. It is archived, it never ran against production traffic, and its overhead was never benchmarked. For provider routing I run LiteLLM in production; for in-cluster model routing I would now use the Gateway API Inference Extension. The design notes below are kept as written, apart from removing roadmap claims.
+
 ## The Problem
 
 As organizations scale their AI/ML deployments, they encounter a common set of infrastructure challenges:
@@ -284,7 +286,7 @@ The controller watches these resources and reconciles the gateway's routing tabl
 
 ### Data Plane (Gateway Proxy)
 
-The data plane handles actual request routing with sub-millisecond overhead:
+The data plane handles actual request routing (designed to add little latency; not benchmarked):
 
 1. **Request Interception**: Receives inference requests via a unified API
 2. **Route Resolution**: Matches requests to configured routes
@@ -398,18 +400,13 @@ Building this as a Kubernetes operator (rather than a standalone service) provid
 3. **Operational Familiarity**: SREs manage it like any other Kubernetes workload
 4. **Scalability**: Leverages Kubernetes HPA and runs as a highly-available deployment
 
-## Current Status & Roadmap
+## Status
 
-Kortex has completed three major phases and is targeting CNCF Sandbox submission:
+Archived (December 2025). Core routing, CRDs, failover, A/B experiments, rate limiting, cost tracking, OpenTelemetry tracing and circuit breakers are implemented with unit tests. It was never deployed with real traffic, and there is no roadmap.
 
-**Phase 1 (Complete)**: Core routing, CRD design, basic failover, Prometheus metrics
-**Phase 2 (Complete)**: A/B testing, per-user rate limiting, cost tracking, health checks
-**Phase 3 (Complete)**: OpenTelemetry tracing, smart routing, circuit breakers with exponential backoff, configuration hot-reload
-**Phase 4 (In Progress)**: Multi-tenancy, semantic caching, multi-cluster federation, CNCF Sandbox submission
+## Source
 
-## Get Involved
-
-Kortex is open source and designed for CNCF contribution. If you're dealing with multi-model inference challenges, I'd love to hear your use cases.
+The code is open source if you want to read how the pieces fit together.
 
 **GitHub**: [github.com/judeoyovbaire/kortex](https://github.com/judeoyovbaire/kortex)
 
@@ -423,7 +420,7 @@ Kortex is open source and designed for CNCF contribution. If you're dealing with
     title: 'Migrating from ELK to AWS Managed OpenSearch: What I Learned at PVH',
     description: 'An opinionated take on migrating a TB-scale observability platform from the ELK stack to AWS Managed OpenSearch for 200+ microservices at PVH Europe, and when managed beats self-managed.',
     category: 'Data Platforms',
-    date: '2025-03-15',
+    date: '2026-05-17',
     readTime: '12 min read',
     published: true,
     technologies: ['OpenSearch', 'AWS', 'Terraform', 'Fluent Bit', 'Prometheus'],
@@ -517,7 +514,7 @@ These results came from the platform engineering work we built on top of the man
     title: 'Cost Attribution for AI Agents: Why Tool-Call-Level FinOps Is the Missing Layer',
     description: 'A thought leadership piece on why AI cost attribution needs to happen at the protocol level, not as an afterthought. References MCP, Kagenti, and the emerging need for agent-aware FinOps.',
     category: 'AI Infrastructure',
-    date: '2025-04-22',
+    date: '2026-05-17',
     readTime: '10 min read',
     published: true,
     technologies: ['FinOps', 'OpenCost', 'Prometheus', 'MCP', 'Kubernetes'],
@@ -562,7 +559,7 @@ Here is what this looks like concretely:
 
 ## The Architecture I Am Building Toward
 
-My work on Kortex (inference gateway) and the AI FinOps Platform converges on this problem. Here is how the pieces fit together:
+Two of my side projects explored this problem: Kortex, an LLM gateway prototype (now archived), and an AI FinOps prototype that has not yet run on a GPU. Neither is in production; here is the design they were reaching for:
 
 **Kortex** sits at the inference layer, tracking per-request costs with team and feature attribution. It knows the cost of every LLM call because it mediates between applications and inference backends. This is the data plane for cost tracking.
 
@@ -604,15 +601,15 @@ The organizations that treat AI costs as an undifferentiated cloud bill will fin
 
 ---
 
-*This post reflects my work building Kortex and the AI FinOps Platform. If you are tackling similar problems, I would like to compare notes on approaches to agent-level cost tracking.*
+*This post is a design argument, not a report of measured results. If you are tackling similar problems, I would like to compare notes on approaches to agent-level cost tracking.*
     `,
   },
   {
     slug: 'platform-infrastructure-llm-powered-products',
     title: 'Platform Infrastructure for LLM-Powered Products: Lessons from Building the Matching API at myTomorrows',
-    description: 'An opinionated take on building production infrastructure for LLM-powered healthcare products — dedicated clusters for medical data, CloudFront VPC Origins over API Gateway, and KEDA over HPA for async LLM workloads.',
+    description: 'An opinionated take on building production infrastructure for LLM-powered healthcare products — why I moved from a dedicated cluster to a shared one, CloudFront VPC Origins over API Gateway, and KEDA over HPA for async LLM workloads.',
     category: 'Platform Design',
-    date: '2026-05-10',
+    date: '2026-05-17',
     readTime: '15 min read',
     published: true,
     technologies: ['AWS EKS', 'Terraform', 'KEDA', 'CloudFront', 'LiteLLM', 'Karpenter'],
@@ -623,25 +620,21 @@ In early 2026, myTomorrows needed infrastructure for a new product: a clinical t
 
 There was no existing infrastructure for this. The matching API was a new product line, not an extension of an existing service. This meant every infrastructure decision was greenfield — and every decision would be hard to reverse once medical data started flowing.
 
-This post covers the architectural decisions I made, the alternatives I considered, and what I learned shipping this to production in five phases over two weeks.
+This post covers the architectural decisions I made, the alternatives I considered, and what I learned shipping it to production in March 2026.
 
-## Position 1: Dedicated Clusters for Medical Data, Even When Shared Is "Technically Fine"
+## Position 1: A Shared Cluster With Hard Boundaries (I Changed My Mind)
 
 The first decision was whether to run the matching API in the existing shared EKS cluster or provision a dedicated one.
 
-The shared cluster argument is compelling: lower cost, shared controller stack, existing observability, and the team already knows how to operate it. Namespace isolation with NetworkPolicies and RBAC is "technically fine" for most compliance requirements.
+My first ADR chose a dedicated cluster: blast-radius isolation for medical data, a simple answer to "where does the data flow?", and an independent upgrade cadence. Before production, I reversed it.
 
-I chose a dedicated cluster anyway. Here is why:
+**What changed my mind**:
 
-**Blast radius isolation**: If a noisy neighbor in the shared cluster causes node pressure or API server throttling, the matching API — which processes medical data with strict SLA requirements — is affected. A dedicated cluster means the only workloads competing for resources are matching-api workloads.
+- **The regulation does not ask for it.** GDPR Article 32 is risk-based. No regulator requires cluster-level separation for processing medical data; what matters is the controls you can show.
+- **The cost was not the $200-400 a month.** It was about two weeks of cluster and add-on setup, and seven duplicated add-ons to patch and upgrade for the life of the product. For a small platform team, that operational load is the real risk.
+- **The boundaries that matter can be drawn inside a cluster.** The matching API got its own namespace, a dedicated Karpenter node pool with taints (its pods share nodes only with each other), and per-service IAM scoped to its own queues, buckets and database. Partners reach it through CloudFront and WAF, never the cluster API.
 
-**Compliance simplicity**: When auditors ask "where does medical data flow?", the answer is "this cluster, these nodes, this VPC." Not "well, it's in a namespace with network policies that restrict egress to..." Compliance is easier to demonstrate when the boundary is physical, not logical.
-
-**Independent lifecycle management**: The matching API needs different upgrade cadences, different maintenance windows, and different scaling characteristics than the shared platform. A dedicated cluster means we can upgrade the control plane on our schedule without coordinating with other teams.
-
-The cost overhead is real: approximately $200-400/month for the duplicated control plane and controller stack. For a B2B healthcare API product, this is negligible compared to the risk reduction.
-
-**My position**: If your workload processes regulated data (medical, financial, PII) and has strict SLA requirements, default to a dedicated cluster. The cost overhead is almost always worth the blast radius isolation and compliance simplicity. Only share clusters for workloads with similar risk profiles and lifecycle requirements.
+**My position**: For regulated data, start from the controls you need to demonstrate, not from "dedicated by default". A dedicated cluster is the right answer when you need a different control plane, upgrade cadence or blast radius than the shared platform can give. Otherwise it is cost you pay forever for isolation you could have had for less.
 
 ## Position 2: CloudFront VPC Origins Over API Gateway for B2B APIs
 
@@ -678,7 +671,7 @@ The nuance for LLM workloads is in the KEDA configuration:
 - \`cooldownPeriod=7200s\`: Long-running LLM tasks mean workers should not scale down aggressively. A 2-hour cooldown prevents thrashing during sustained batch workloads.
 - Scale range 1-10: Minimum 1 worker for latency-sensitive requests, maximum 10 for batch processing spikes.
 
-The result: workers scale from 1 to 10 in approximately 30 seconds when a batch lands in the queue, and scale back down gracefully after the batch completes.
+In the pre-handover test, 15 messages on the search queue scaled the search workers from 1 to 3 within 30 seconds, and they scaled back down after the queue drained. The ceiling of 10 is configured headroom for batch spikes, not a measured result.
 
 **My position**: For any async workload where processing time is variable and CPU is not the bottleneck (LLM inference, video processing, ETL), KEDA with queue-depth triggers is strictly better than HPA with CPU metrics. The configuration requires understanding your workload's timing characteristics, but the scaling behavior is fundamentally more correct.
 
@@ -702,21 +695,19 @@ Infrastructure is not done when the Terraform applies cleanly. It is done when t
 - **Grafana dashboard with 18 panels**: Request rates, latency percentiles, error rates, queue depth, worker scaling, pod health, node utilization, and cost tracking.
 - **8 alert rules**: Queue depth exceeding threshold, worker pod restarts, error rate spikes, certificate expiry, node pressure, and budget alerts.
 - **Runbook**: How to deploy, how to scale manually, how to debug common issues, how to handle incidents.
-- **Stress test results**: Documenting the system's behavior under load (152 req/s with zero failures) so the team knows the performance envelope.
+- **Infrastructure test results**: Documenting how the ingress and autoscaling behaved under load, so the team knows the envelope and what was not tested.
 
 The handover document is not a formality. It is the artifact that determines whether the development team can own the infrastructure without calling me at 2am.
 
-## Stress Testing: Validating the Architecture
+## Infrastructure Testing: What Was and Was Not Validated
 
-Before handing over, I ran a comprehensive stress test to validate the architecture under load:
+Before handing over, I ran an infrastructure readiness test. It was deliberately not an application load test: the full path (API → SQS → worker → LLM gateway → models) needed an application API key provisioned in the database and was the product team's test to run.
 
-- **Target**: Sustained 150+ requests per second
-- **Result**: 152 req/s with zero failures
-- **KEDA behavior**: Workers scaled from 1 to 10 within 30 seconds of queue depth increasing
-- **Karpenter behavior**: New nodes provisioned within 60 seconds when pod scheduling failed
-- **CloudFront**: No origin errors, WAF passed all legitimate traffic, geo-restriction blocked test requests from outside EU
+- **Ingress**: through CloudFront and WAF to the internal ALB, about 150 requests per second at 50 concurrent connections (p50 304 ms, p99 427 ms), with zero failures. These requests hit a lightweight health endpoint, so they test the edge and ingress, not the application.
+- **Queue-driven scaling**: 15 messages on the search queue scaled the search workers from 1 to 3 replicas within 30 seconds. The match worker correctly stayed at 1, because it only scales on visible messages (scaleOnInFlight=false).
+- **Stability**: zero pod restarts across the whole run. Karpenter did not need new nodes; the existing nodes had headroom.
 
-The stress test validated two things: the architecture handles the expected load, and the autoscaling mechanisms respond correctly to load changes. Without this test, we would be discovering scaling issues in production.
+What it proved: the edge, ingress and autoscaling behave as designed. What it did not prove: how the system behaves under real LLM latency, which is where the timeout and retry tuning later mattered most.
 
 ## What I Would Do Differently
 

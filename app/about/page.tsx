@@ -56,10 +56,10 @@ const colorClasses: Record<string, string> = {
 }
 
 export const metadata: Metadata = {
-  title: 'About | Jude - Platform Architect',
-  description: 'Platform Architect from Nigeria, based in Amsterdam. 10+ years building AI-ready cloud platforms with 99.99% uptime and €900K+ in annual cost savings.',
+  title: 'About | Jude Oyovbaire',
+  description: 'Platform engineer from Nigeria, based in Amsterdam. I lead an infrastructure team, own a production LLM gateway in healthcare, and have 10+ years of platform engineering behind me.',
   openGraph: {
-    title: 'About Jude | Platform Architect',
+    title: 'About Jude Oyovbaire | Platform Engineer, AI Infrastructure',
     description: 'The journey from Nigeria to Amsterdam, building resilient platforms that transform infrastructure into competitive advantage.',
     url: '/about',
   },
@@ -82,8 +82,8 @@ export default function About() {
           <h1 className="text-5xl md:text-6xl font-bold text-gray-900 dark:text-white mb-6">About Me</h1>
 
           <p className="text-xl md:text-2xl text-gray-600 dark:text-gray-300 mb-12 leading-relaxed max-w-4xl">
-            I&apos;m Jude, a Platform Architect originally from Nigeria 🇳🇬, now building
-            AI-ready cloud platforms from Amsterdam 🇳🇱.
+            I&apos;m Jude, a platform engineer originally from Nigeria 🇳🇬, now leading an
+            infrastructure team from Amsterdam 🇳🇱.
           </p>
 
           <section className="mb-10">
@@ -130,15 +130,15 @@ export default function About() {
           <section className="mb-10">
             <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">What&apos;s Next</h2>
             <p className="text-lg text-gray-600 dark:text-gray-300 leading-relaxed">
-              At myTomorrows, I&apos;m building the infrastructure for LLM-powered healthcare products -
-              dedicated EKS clusters with defence-in-depth security for medical data, CloudFront VPC
-              Origins for zero-exposure production APIs, and KEDA-driven autoscaling for batch LLM
-              processing. Outside work, I built Kortex (a Kubernetes-native inference gateway) to
-              explore multi-model routing from first principles - learnings I&apos;m now taking upstream
-              to the Gateway API Inference Extension and llm-d communities - and the AI FinOps
-              Platform, because I believe cost attribution for AI workloads needs to be protocol-level,
-              not an afterthought. The thread connecting all of it: making AI infrastructure
-              observable, governable, and cost-transparent as a platform concern.
+              I lead the infrastructure team in a regulated healthcare environment and own our
+              production LLM gateway: EU-resident model endpoints with a cross-provider fallback,
+              and scoped per-service keys and budgets. Outside work, I am building a GPU inference
+              lab on AWS EKS, run in short burst sessions, to measure what self-hosted LLM serving
+              actually costs on spot A10Gs; the first GPU session is still to come. Earlier side projects (Kortex, an LLM API gateway operator, and an AI FinOps
+              prototype) taught me where to build and where to adopt: today I would use the Gateway
+              API Inference Extension for in-cluster model routing rather than my own router. The
+              thread connecting all of it: making AI infrastructure observable, governable, and
+              cost-transparent as a platform concern.
             </p>
           </section>
 

@@ -248,7 +248,7 @@ export default async function BlogPost({ params }: Props) {
                 Written by Jude
               </p>
               <p className="text-sm text-gray-500 dark:text-gray-400">
-                Platform Architect
+                Platform Engineer, AI Infrastructure
               </p>
             </div>
             <a

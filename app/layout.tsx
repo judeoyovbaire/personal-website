@@ -16,13 +16,13 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://judaire.io'),
-  title: 'Jude - Platform Architect | AI-Ready Cloud Platforms',
-  description: 'Platform Architect building AI-ready cloud platforms across Core, Data, ML, and GPU infrastructure. 10+ years architecting systems with 99.99% reliability.',
+  title: 'Jude Oyovbaire - Platform Engineer, AI Infrastructure',
+  description: 'Platform engineer leading an infrastructure team: a production LLM gateway in a regulated healthcare environment, Kubernetes platforms, and a spot-GPU inference lab on EKS. 10+ years of platform engineering.',
   keywords: 'Platform Engineer, AI Infrastructure, MLOps, DevOps Engineer, Kubernetes, AWS, Azure, GCP, Databricks, GPU, Amsterdam, FinOps, vLLM, KServe, LLM serving',
   authors: [{ name: 'Jude' }],
   openGraph: {
-    title: 'Jude - Platform Architect',
-    description: 'Building AI-ready cloud platforms across Core, Data, ML, and GPU infrastructure.',
+    title: 'Jude Oyovbaire - Platform Engineer, AI Infrastructure',
+    description: 'Platform engineer for AI infrastructure: a production LLM gateway in healthcare, Kubernetes platforms, and a spot-GPU inference lab on EKS.',
     type: 'website',
     locale: 'en_US',
     siteName: 'Jude Portfolio',
@@ -30,8 +30,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Jude - Platform Architect',
-    description: 'Building AI-ready cloud platforms across Core, Data, ML, and GPU infrastructure.',
+    title: 'Jude Oyovbaire - Platform Engineer, AI Infrastructure',
+    description: 'Platform engineer for AI infrastructure: a production LLM gateway in healthcare, Kubernetes platforms, and a spot-GPU inference lab on EKS.',
   },
 }
 

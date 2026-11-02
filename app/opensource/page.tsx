@@ -8,6 +8,8 @@ const statusConfig: Record<SideProject['status'], { label: string; icon: typeof 
   in_progress: { label: 'In Progress', icon: Rocket, color: 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200' },
   planned: { label: 'Planned', icon: Clock, color: 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200' },
   completed: { label: 'Completed', icon: CheckCircle, color: 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200' },
+  code_complete: { label: 'Code-complete, not yet run on a GPU', icon: Clock, color: 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200' },
+  archived: { label: 'Archived learning project', icon: Clock, color: 'bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-300' },
 }
 
 // Contributions to external projects - update this when you have PRs/issues to showcase
@@ -29,11 +31,11 @@ const contributions: Array<{
 ]
 
 export const metadata: Metadata = {
-  title: 'Open Source | Jude - Platform Architect',
-  description: 'Open source AI infrastructure tools: Kubernetes operators for LLM inference, GPU cost optimization with FinOps, and MLOps reference architectures.',
+  title: 'Open Source | Jude Oyovbaire',
+  description: 'Side projects in AI infrastructure: a GPU inference lab on AWS EKS, an LLM gateway prototype and a GPU FinOps prototype, each with its real status.',
   openGraph: {
     title: 'Open Source Projects | Jude',
-    description: 'Building AI infrastructure tools in the open, designed for CNCF contribution.',
+    description: 'Side projects and learning work in AI infrastructure, labelled with their real status.',
     url: '/opensource',
   },
 }
@@ -53,11 +55,11 @@ export default function OpenSource() {
 
         <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-3">Open Source</h1>
         <p className="text-xl text-gray-600 dark:text-gray-300 mb-8 max-w-3xl">
-          Building AI infrastructure tools in the open. These projects aim to solve real problems
-          in the ML/AI platform space and are designed for potential CNCF contribution.
+          Side projects in AI infrastructure, each labelled with its real status: what has run,
+          what is code-complete, and what was a learning project.
         </p>
 
-        {/* Featured Projects - CNCF Candidates */}
+        {/* Featured Projects */}
         <section className="mb-12">
           <div className="flex items-center gap-2 mb-6">
             <Star className="text-purple-600" size={20} />
@@ -191,10 +193,10 @@ export default function OpenSource() {
           ) : (
             <div className="p-6 bg-gray-50 dark:bg-gray-800/50 rounded-xl border border-dashed border-gray-300 dark:border-gray-600">
               <p className="text-gray-600 dark:text-gray-400 text-sm mb-2">
-                Currently focused on shipping Kortex, AI FinOps Platform, and MLOps Platform to production-grade quality.
+                No upstream contributions yet. My current focus is the GPU inference lab (vLLM on spot A10Gs) and publishing its measurements.
               </p>
               <p className="text-gray-500 dark:text-gray-500 text-xs">
-                Upstream contributions to CNCF projects (KServe, Karpenter, OpenCost) are planned as these projects mature and generate issues worth contributing back.
+                I will list upstream work here when there is some to show.
               </p>
             </div>
           )}
@@ -202,9 +204,9 @@ export default function OpenSource() {
 
         {/* Reference Architecture */}
         <section className="mb-12">
-          <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">Reference Architecture</h2>
+          <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">Earlier Projects</h2>
           <p className="text-gray-600 dark:text-gray-400 mb-6">
-            Complete MLOps platform showing how all the pieces fit together.
+            Learning projects and prototypes, kept for what they taught me.
           </p>
           <div className="grid gap-4">
             {otherProjects.map((project) => (
