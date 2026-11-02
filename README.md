@@ -1,20 +1,20 @@
 # Personal Portfolio Website
 
-A modern portfolio website showcasing my work as a **Senior Platform & DevOps Engineer** specializing in AI-ready cloud platforms.
+A portfolio website for my work as a **platform engineer for AI infrastructure**: I lead an infrastructure team, run a production LLM gateway in a regulated healthcare environment, and run a spot-GPU inference lab on AWS EKS.
 
 **Live:** [judaire.io](https://judaire.io)
 
 ## Overview
 
-This portfolio highlights 10+ years of experience building enterprise platforms across Core, Data, ML, and GPU infrastructure—delivering €2.5M+ in cost savings and 99.99% reliability.
+10+ years of platform engineering across core, data and AI infrastructure, including €900K+ in annual savings across two platform programmes (detailed in the case studies).
 
 ### Key Sections
 
 - **Home** — Professional summary, impact stats, certifications, and technical expertise
 - **Platforms** — Interactive visualization of the platform stack (Core → Data → ML → AI)
 - **Projects** — Featured case studies and side projects with milestone tracking
-- **Open Source** — CNCF-targeted projects (AI Inference Gateway, FinOps Platform, MLOps Platform)
-- **Blog** — Coming soon: articles on AI-ready platform design, MLOps, and SRE
+- **Open Source** — Side projects with their real status (GPU inference lab, Kortex, AI FinOps prototype)
+- **Blog** — Posts on platform decisions, GPU scheduling, and LLM infrastructure
 
 ## Tech Stack
 
@@ -68,7 +68,7 @@ personal-website/
 │   ├── projects/page.tsx         # Projects & case studies
 │   ├── platforms/page.tsx        # Platform capabilities
 │   ├── about/page.tsx            # Personal background
-│   ├── blog/page.tsx             # Blog (coming soon)
+│   ├── blog/page.tsx             # Blog index
 │   ├── opensource/page.tsx       # Open source projects
 │   ├── layout.tsx                # Root layout with metadata
 │   ├── globals.css               # Global styles & theme

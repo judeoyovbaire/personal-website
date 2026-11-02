@@ -4,7 +4,7 @@ import Link from 'next/link'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Platform Capabilities | Jude - Platform Architect',
+  title: 'Platform Capabilities | Jude Oyovbaire',
   description: 'AI-ready platform capabilities across Core (Kubernetes, IaC, GitOps), Data (Lakehouse, Streaming), ML (Pipelines, Serving), and AI Infrastructure (GPU clusters, LLM serving).',
   openGraph: {
     title: 'Platform Capabilities | Jude',
@@ -161,7 +161,7 @@ export default function Platforms() {
             </div>
             <div className="p-4 border border-gray-200 dark:border-gray-700 rounded-lg hover:border-purple-400 dark:hover:border-purple-600 hover:shadow-lg hover:shadow-purple-500/5 transition-all duration-300">
               <h3 className="font-semibold text-gray-900 dark:text-white mb-2">Model Serving</h3>
-              <p className="text-sm text-gray-600 dark:text-gray-400">Seldon Core, KServe for A/B testing, canary deployments, autoscaling</p>
+              <p className="text-sm text-gray-600 dark:text-gray-400">KServe (RawDeployment) with post-deploy verification and metric-gated rollback</p>
             </div>
             <div className="p-4 border border-gray-200 dark:border-gray-700 rounded-lg hover:border-purple-400 dark:hover:border-purple-600 hover:shadow-lg hover:shadow-purple-500/5 transition-all duration-300">
               <h3 className="font-semibold text-gray-900 dark:text-white mb-2">ML Observability</h3>
@@ -170,7 +170,7 @@ export default function Platforms() {
           </div>
           <div className="p-4 bg-purple-50/50 dark:bg-purple-900/10 rounded-lg border border-purple-100 dark:border-purple-900/30 mb-6">
             <p className="text-sm italic text-gray-700 dark:text-gray-300 leading-relaxed">
-              <span className="font-semibold not-italic">My Defaults:</span> KServe is my default for model serving on Kubernetes because of native scale-to-zero and canary deployment support. I avoid Seldon unless the team needs their specific inference graph abstraction. For experiment tracking, MLflow wins on simplicity and open-source portability; I&apos;d only consider Weights &amp; Biases for teams that need collaborative experiment visualization.
+              <span className="font-semibold not-italic">My Defaults:</span> KServe is my default for model serving on Kubernetes, in RawDeployment mode. I learned the hard way that canary traffic splitting is ignored in that mode, so I verify after deploy with metric-gated rollback instead of relying on a traffic split. I avoid Seldon unless the team needs their specific inference graph abstraction. For experiment tracking, MLflow wins on simplicity and open-source portability; I&apos;d only consider Weights &amp; Biases for teams that need collaborative experiment visualization.
             </p>
           </div>
           <Link href="/projects" className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 text-sm font-medium">
@@ -210,7 +210,7 @@ export default function Platforms() {
           </div>
           <div className="p-4 bg-orange-50/50 dark:bg-orange-900/10 rounded-lg border border-orange-100 dark:border-orange-900/30 mb-6">
             <p className="text-sm italic text-gray-700 dark:text-gray-300 leading-relaxed">
-              <span className="font-semibold not-italic">My Defaults:</span> I always start with spot/preemptible instances for training workloads and batch inference - the 60%+ savings justify the checkpointing complexity. For LLM inference, vLLM with continuous batching is my default engine; the throughput from PagedAttention consistently beats TGI in benchmarks I&apos;ve run. Cost attribution should happen at the inference gateway layer, not as an afterthought in billing dashboards.
+              <span className="font-semibold not-italic">My Defaults:</span> I always start with spot/preemptible instances for training workloads and batch inference - the 60%+ savings justify the checkpointing complexity. For LLM inference, vLLM with continuous batching is my default engine; I am measuring bf16 against AWQ on spot A10Gs and will publish the numbers rather than quote someone else&apos;s. Cost attribution should happen at the inference gateway layer, not as an afterthought in billing dashboards.
             </p>
           </div>
           <Link href="/projects" className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 text-sm font-medium">

@@ -30,22 +30,22 @@ export function Hero() {
             <motion.div variants={item} className="flex flex-col items-start gap-4 mb-4">
                 <div className="flex items-center gap-2 text-blue-600 dark:text-blue-400">
                     <div className="w-2 h-2 bg-blue-600 rounded-full animate-pulse"></div>
-                    <span className="text-sm font-medium">Open to Principal Roles</span>
+                    <span className="text-sm font-medium">Open to Staff roles in AI infrastructure</span>
                 </div>
                 <CurrentFocus />
             </motion.div>
 
             <motion.h1 variants={item} className="text-4xl md:text-6xl font-bold text-gray-900 dark:text-white mb-6">
-                Platform Architect<br />
+                Platform Engineer<br />
                 <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
                     for AI Infrastructure
                 </span>
             </motion.h1>
 
             <motion.p variants={item} className="text-xl text-gray-600 dark:text-gray-300 mb-6 max-w-3xl">
-                I design the platform decisions behind AI-ready infrastructure: which trade-offs to make,
-                which abstractions to build, and how to make GPU clusters, inference gateways, and data
-                platforms work as a coherent system.
+                I lead the infrastructure team in a regulated healthcare environment, where I own our
+                production LLM gateway. On my own time I am building a spot-GPU inference lab on EKS to
+                measure what self-hosted LLM serving actually costs.
             </motion.p>
 
             {/* Brand Proof Points */}
@@ -60,11 +60,11 @@ export function Hero() {
                 </div>
                 <div className="flex items-start gap-2">
                     <CheckCircle2 size={18} className="text-blue-600 mt-0.5 flex-shrink-0" />
-                    <span className="text-sm text-gray-700 dark:text-gray-300">Platform transformations driving 6-figure annual savings</span>
+                    <span className="text-sm text-gray-700 dark:text-gray-300">€900K+ in annual savings across two platform programmes</span>
                 </div>
                 <div className="flex items-start gap-2">
                     <CheckCircle2 size={18} className="text-blue-600 mt-0.5 flex-shrink-0" />
-                    <span className="text-sm text-gray-700 dark:text-gray-300">AI infrastructure & MLOps: inference gateways, GPU optimization, model serving</span>
+                    <span className="text-sm text-gray-700 dark:text-gray-300">Production LLM gateway: EU-resident model endpoints, scoped per-service keys and budgets</span>
                 </div>
             </motion.div>
 

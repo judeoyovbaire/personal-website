@@ -20,7 +20,7 @@ export interface Milestone {
 
 export interface SideProject {
   title: string
-  status: 'in_progress' | 'planned' | 'completed'
+  status: 'in_progress' | 'planned' | 'completed' | 'code_complete' | 'archived'
   description: string
   technologies: string[]
   goals: string[]
@@ -72,10 +72,10 @@ export const projects: Project[] = [
 export const sideProjects: SideProject[] = [
   {
     title: 'Kortex',
-    status: 'in_progress',
+    status: 'archived',
     featured: false,
     description:
-      'Kubernetes-native AI inference gateway built from scratch to explore the multi-model routing problem space: A/B testing, intelligent failover, circuit breakers with exponential backoff, OpenTelemetry tracing, and cost/latency/context-length-aware routing. The ecosystem has since standardized this layer (Gateway API Inference Extension, llm-d) — the learnings from building it independently now feed my upstream contributions there.',
+      'Learning project (Dec 2025): an LLM API gateway operator in Go (Kubebuilder) that routes OpenAI-compatible requests to hosted providers, with CRD-driven routes, A/B experiments, circuit breakers, retries, rate limiting and cost tracking. Never run against production traffic and not benchmarked. Building it taught me what an LLM gateway has to get right; in practice I run LiteLLM for provider routing, and for in-cluster model routing I would use the Gateway API Inference Extension rather than my own router.',
     technologies: ['Go', 'Kubebuilder', 'Kubernetes', 'KServe', 'OpenTelemetry', 'Prometheus'],
     goals: [
       'Multi-model routing with header/path/model-based rules',
@@ -102,10 +102,10 @@ export const sideProjects: SideProject[] = [
   },
   {
     title: 'AI Infrastructure FinOps Platform',
-    status: 'completed',
+    status: 'code_complete',
     featured: false,
     description:
-      'Reference implementation of a cost-optimization platform for AI/ML workloads: GPU utilization monitoring, budget forecasting with alerts, ML-based anomaly detection, automated right-sizing recommendations, and multi-cloud billing integration. Code-complete across all 3 phases; validation against live GPU clusters is the next milestone.',
+      'Prototype (Dec 2025 - Jan 2026) that joins OpenCost allocation with NVIDIA DCGM GPU metrics to attribute GPU cost, with budget alerts, anomaly detection and right-sizing on top. Code-complete with tests and CI, but its DCGM queries have not yet run against a real GPU. Next step: run it during the GPU inference lab sessions and publish measured GPU-hour cost and idle time.',
     technologies: ['NVIDIA DCGM', 'OpenCost', 'Prometheus', 'Grafana', 'Python/Flask', 'Thanos', 'Alertmanager'],
     goals: [
       'Real-time GPU utilization monitoring with idle resource alerts',
@@ -121,53 +121,42 @@ export const sideProjects: SideProject[] = [
       { name: 'Chargeback Reports', completed: true },
       { name: 'AWS Billing API', completed: true },
       { name: 'Right-Sizing Engine', completed: true },
+      { name: 'Run on a real GPU', completed: false },
     ],
     github: 'https://github.com/judeoyovbaire/ai-finops-platform',
   },
   {
-    title: 'MLOps Platform on Kubernetes',
+    title: 'GPU Inference Platform on AWS EKS',
     status: 'in_progress',
     featured: true,
     description:
-      'Multi-cloud MLOps reference platform on AWS EKS, Azure AKS, and GCP GKE with defense-in-depth security and full-stack observability. Designed around a 15-minute self-service path from experiment to production; end-to-end verification, LLM-serving benchmarks on real GPUs, and GitOps rollout are the current focus.',
+      'An LLM inference lab on AWS EKS that I am building to measure what serving costs and how it behaves on spot GPUs: Karpenter-provisioned A10G nodes, vLLM on KServe, GPU and request telemetry, and a signed, policy-enforced supply chain. It runs in short burst sessions on my own AWS account and is torn down the same day. Proven so far: an end-to-end sklearn/MLServer serving loop with metric-gated rollback (July 2026), and a clean build-and-teardown cycle on EKS 1.37 (November 2026). No GPU session has run yet, so there are no benchmark results.',
     technologies: [
-      'Terraform',
-      'KServe',
-      'MLflow',
-      'Argo Workflows',
-      'ArgoCD',
-      'Karpenter',
       'vLLM',
+      'KServe',
+      'Karpenter',
+      'AWS EKS',
+      'Terraform',
       'Kyverno',
+      'ArgoCD',
       'Prometheus',
     ],
     goals: [
-      'Self-service model deployment: git push to serving in 15 minutes (design target)',
-      'Multi-cloud parity: AWS EKS with Karpenter, Azure AKS with KEDA, GCP GKE with Node Auto-provisioning',
-      'Production serving with KServe: canary deployments and traffic splitting in RawDeployment mode',
-      'HuggingFace pretrained model pipeline with automated validation and MLflow registration',
-      'Defense-in-depth security: PSA, Kyverno policies, Tetragon eBPF runtime security, namespace-level NetworkPolicies',
-      'GPU cost optimization: spot/preemptible instances with Karpenter consolidation (~60% vs on-demand pricing)',
-      'Full-stack observability: Prometheus, Grafana, Loki, Tempo, and OpenTelemetry instrumentation',
-      'Supply-chain security: SHA-pinned CI, cosign signing, SBOM generation, SLSA provenance',
+      'Measure vLLM on spot A10G: bf16 vs AWQ, time to first token, throughput and $ per 1M tokens (pending)',
+      'Spot GPU capacity with Karpenter, cost guards and same-day teardown',
+      'GPU and inference telemetry: DCGM on the GPU pool, vLLM metrics, one Grafana board',
+      'Supply chain: SHA-pinned CI, cosign-signed images, Kyverno admission policies',
+      'Burst sessions: one clean cycle in Nov 2026, deploy from empty state in 33 minutes and teardown in 12.5',
     ],
     milestones: [
-      { name: 'Core', completed: true },
-      { name: 'MLflow', completed: true },
-      { name: 'KServe', completed: true },
-      { name: 'CI/CD', completed: true },
-      { name: 'GPU', completed: true },
-      { name: 'Security', completed: true },
-      { name: 'Azure Support', completed: true },
-      { name: 'GCP Support', completed: true },
-      { name: 'HuggingFace', completed: true },
-      { name: 'Observability', completed: true },
-      { name: 'Backup & DR', completed: true },
-      { name: 'Chaos Testing', completed: true },
-      { name: 'Docs', completed: true },
-      { name: 'GitOps', completed: false },
-      { name: 'LLM Inference (GPU-verified)', completed: false },
-      { name: 'E2E Verification', completed: false },
+      { name: 'EKS + Karpenter', completed: true },
+      { name: 'sklearn serving loop (July 2026)', completed: true },
+      { name: 'Metric-gated rollback', completed: true },
+      { name: 'Signed images + admission', completed: true },
+      { name: 'Burst-session cycle', completed: true },
+      { name: 'GPU telemetry', completed: false },
+      { name: 'vLLM benchmark', completed: false },
+      { name: 'Inference autoscaling', completed: false },
     ],
     github: 'https://github.com/judeoyovbaire/mlops-platform',
   },

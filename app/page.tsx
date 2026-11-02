@@ -3,7 +3,6 @@ import { ImpactStats } from '@/components/ImpactStats'
 import { Certifications } from '@/components/Certifications'
 import { TechStack } from '@/components/TechStack'
 import { Hero } from '@/components/Hero'
-import { ProjectThesis } from '@/components/ProjectThesis'
 
 export default function Home() {
   return (
@@ -14,9 +13,6 @@ export default function Home() {
 
         {/* Impact Stats */}
         <ImpactStats />
-
-        {/* Project Thesis */}
-        <ProjectThesis />
 
         {/* Tech Stack */}
         <TechStack />
