@@ -6,34 +6,46 @@
     "helpers:pinGitHubActionDigests",
     ":maintainLockFilesWeekly"
   ],
-  "labels": ["dependencies"],
+  "labels": [
+    "dependencies"
+  ],
   "timezone": "Europe/London",
-  "schedule": ["before 8am on Monday"],
+  "schedule": [
+    "before 8am on Monday"
+  ],
   "minimumReleaseAge": "3 days",
   "prConcurrentLimit": 5,
   "dependencyDashboard": true,
   "osvVulnerabilityAlerts": true,
   "vulnerabilityAlerts": {
     "enabled": true,
-    "labels": ["security"],
+    "labels": [
+      "security"
+    ],
     "minimumReleaseAge": null,
-    "schedule": ["at any time"]
+    "schedule": [
+      "at any time"
+    ]
   },
   "packageRules": [
     {
       "description": "Next.js and its ESLint config must move together.",
-      "matchPackageNames": ["next", "eslint-config-next", "@next/*"],
+      "matchPackageNames": [
+        "next",
+        "eslint-config-next",
+        "@next/*"
+      ],
       "groupName": "next"
     },
     {
       "description": "React runtime and types move together.",
-      "matchPackageNames": ["react", "react-dom", "@types/react", "@types/react-dom"],
+      "matchPackageNames": [
+        "react",
+        "react-dom",
+        "@types/react",
+        "@types/react-dom"
+      ],
       "groupName": "react"
-    },
-    {
-      "description": "Manual merge for everything while CI is new; revisit automerge for patches later.",
-      "matchUpdateTypes": ["major", "minor", "patch", "pin", "digest", "lockFileMaintenance"],
-      "automerge": false
     }
   ]
 }

@@ -301,10 +301,10 @@ export const caseStudies: CaseStudy[] = [
     },
     implementation: {
       technologies: ['AWS EKS', 'Karpenter', 'vLLM', 'KServe', 'Terraform', 'Kyverno', 'ArgoCD', 'Prometheus', 'Grafana'],
-      myRole: 'Designed and built it end to end: Terraform for EKS and the GPU pool, the serving path, CI/CD with OIDC, the admission policies, the teardown tooling, and the runbooks. The July 2026 deployment surfaced 34 defects, all fixed through the pipeline and written up as a retrospective.',
+      myRole: 'Designed and built it end to end: Terraform for EKS and the GPU pool, the serving path, CI/CD with OIDC, the admission policies, the teardown tooling, and the runbooks. The July 2026 deployment and its green rebuild surfaced 38 defects (34, then 4 more), all fixed through the pipeline and written up as a retrospective.',
     },
     impact: [
-      { metric: 'Serving Loop', value: 'sklearn/MLServer loop end to end on EKS, July 2026 (34 defects fixed)' },
+      { metric: 'Serving Loop', value: 'sklearn/MLServer loop end to end on EKS, July 2026 (38 defects fixed)' },
       { metric: 'Rollback', value: 'Metric-gated, demonstrated live' },
       { metric: 'Burst Session', value: 'One clean cycle, Nov 2026: deploy 33 min, teardown 12.5 min' },
       { metric: 'GPU Benchmarks', value: 'Not published yet' },

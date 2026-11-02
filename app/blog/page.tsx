@@ -18,7 +18,7 @@ export default function Blog() {
   // Newest first; data/posts.ts order is not chronological.
   const publishedPosts = posts
     .filter((post) => post.published)
-    .sort((a, b) => b.date.localeCompare(a.date))
+    .sort((a, b) => b.date.localeCompare(a.date) || a.slug.localeCompare(b.slug))
 
   return (
     <>

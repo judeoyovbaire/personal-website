@@ -7,19 +7,24 @@ import type { NextConfig } from 'next'
 // - Vercel Analytics loads from /_vercel/insights on the same origin.
 // - vercel.live is the preview-deployment toolbar (comments); it is harmless
 //   in production and keeps previews working.
+// - 'unsafe-eval' only in `next dev`, which React needs for debugging.
+// - upgrade-insecure-requests only in production (it breaks http://localhost
+//   in some browsers).
+const isDev = process.env.NODE_ENV === 'development'
+
 const csp = [
   "default-src 'self'",
-  "script-src 'self' 'unsafe-inline' https://vercel.live",
-  "style-src 'self' 'unsafe-inline'",
+  `script-src 'self' 'unsafe-inline'${isDev ? " 'unsafe-eval'" : ''} https://vercel.live`,
+  "style-src 'self' 'unsafe-inline' https://vercel.live",
   "img-src 'self' data: blob: https://vercel.live https://vercel.com",
-  "font-src 'self' https://vercel.live",
+  "font-src 'self' https://vercel.live https://assets.vercel.com",
   "connect-src 'self' https://vercel.live wss://ws-us3.pusher.com",
   "frame-src https://vercel.live",
   "frame-ancestors 'none'",
   "object-src 'none'",
   "base-uri 'self'",
   "form-action 'self'",
-  'upgrade-insecure-requests',
+  ...(isDev ? [] : ['upgrade-insecure-requests']),
 ].join('; ')
 
 const securityHeaders = [
