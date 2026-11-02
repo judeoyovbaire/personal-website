@@ -56,7 +56,6 @@ export const projects: Project[] = [
     impact: {
       cost: '€500K saved annually',
       performance: '85% faster deployments',
-      reliability: '99.99% uptime',
     },
     description:
       'Led migration of 200+ microservices from VMs to Kubernetes, transforming deployment frequency from weekly to 50+ times daily.',

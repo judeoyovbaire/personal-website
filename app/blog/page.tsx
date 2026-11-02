@@ -2,7 +2,7 @@ import { Navigation } from '@/components/Navigation'
 import { ArrowLeft, ArrowRight, Calendar, Clock } from 'lucide-react'
 import Link from 'next/link'
 import type { Metadata } from 'next'
-import { posts, categories } from '@/data/posts'
+import { posts } from '@/data/posts'
 
 export const metadata: Metadata = {
   title: 'Blog | Jude Oyovbaire',
@@ -15,7 +15,10 @@ export const metadata: Metadata = {
 }
 
 export default function Blog() {
-  const publishedPosts = posts.filter((post) => post.published)
+  // Newest first; data/posts.ts order is not chronological.
+  const publishedPosts = posts
+    .filter((post) => post.published)
+    .sort((a, b) => b.date.localeCompare(a.date) || a.slug.localeCompare(b.slug))
 
   return (
     <>
@@ -30,22 +33,6 @@ export default function Blog() {
         <p className="text-xl text-gray-600 dark:text-gray-300 mb-6 max-w-3xl">
           Thoughts on platform engineering, MLOps, and building reliable systems at scale.
         </p>
-
-        {/* Categories */}
-        <div className="flex flex-wrap gap-2 mb-8">
-          {categories.map((category) => (
-            <button
-              key={category}
-              className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
-                category === 'All'
-                  ? 'bg-blue-600 text-white'
-                  : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'
-              }`}
-            >
-              {category}
-            </button>
-          ))}
-        </div>
 
         {/* Published Posts */}
         {publishedPosts.length > 0 && (

@@ -6,7 +6,7 @@ import Link from 'next/link'
 export function ImpactStats() {
   const stats = [
     { label: "Annual Savings Delivered", value: "€900K+", href: "/projects" },
-    { label: "Platform Reliability", value: "99.99%" },
+    { label: "Production Services Migrated", value: "200+" },
     { label: "Engineers Mentored", value: "20+" },
     { label: "Clouds in Production", value: "3" }
   ]

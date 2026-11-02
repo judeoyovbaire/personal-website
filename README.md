@@ -1,137 +1,59 @@
-# Personal Portfolio Website
+# judaire.io
 
-A portfolio website for my work as a **platform engineer for AI infrastructure**: I lead an infrastructure team, run a production LLM gateway in a regulated healthcare environment, and run a spot-GPU inference lab on AWS EKS.
+Source for [judaire.io](https://judaire.io), the portfolio of Jude Oyovbaire: a platform
+engineer for AI infrastructure. I lead an infrastructure team in a regulated healthcare
+environment, own its production LLM gateway, and am building a spot-GPU inference lab on
+AWS EKS ([mlops-platform](https://github.com/judeoyovbaire/mlops-platform)).
 
-**Live:** [judaire.io](https://judaire.io)
+Content rule for this repo: every claim on the site is something I can evidence. Design
+targets are labelled as targets, and side projects carry their real status.
 
-## Overview
+## Pages
 
-10+ years of platform engineering across core, data and AI infrastructure, including €900K+ in annual savings across two platform programmes (detailed in the case studies).
+| Route | What it shows |
+|---|---|
+| `/` | Positioning, impact figures, tech stack, certifications |
+| `/projects` | Case studies (context, decisions with alternatives and trade-offs, measured impact) and side projects with status |
+| `/platforms` | How I think about core, data, ML and AI infrastructure layers |
+| `/opensource` | Side projects and their status |
+| `/blog` | Posts, newest first; one page per post under `/blog/<slug>` |
+| `/about` | Background and current focus |
 
-### Key Sections
+## Stack
 
-- **Home** — Professional summary, impact stats, certifications, and technical expertise
-- **Platforms** — Interactive visualization of the platform stack (Core → Data → ML → AI)
-- **Projects** — Featured case studies and side projects with milestone tracking
-- **Open Source** — Side projects with their real status (GPU inference lab, Kortex, AI FinOps prototype)
-- **Blog** — Posts on platform decisions, GPU scheduling, and LLM infrastructure
+Next.js 16 (App Router, statically rendered), React 19, TypeScript, Tailwind CSS 4,
+Framer Motion, Lucide icons, deployed on Vercel with Vercel Analytics.
 
-## Tech Stack
+Content lives in `data/*.ts` (posts, case studies, projects, certifications). Blog posts
+use a small markdown subset rendered by `app/blog/[slug]/page.tsx`; text is HTML-escaped
+before formatting.
 
-| Category | Technology |
-|----------|------------|
-| Framework | Next.js 16 (App Router) |
-| Language | TypeScript 5 |
-| Styling | Tailwind CSS 4 |
-| Animation | Framer Motion |
-| Icons | Lucide React |
-| Deployment | Vercel |
+## Develop
 
-## Getting Started
-
-### Prerequisites
-
-- Node.js 18+
-- npm or yarn
-
-### Installation
+Requires Node.js 24 (see `.nvmrc`).
 
 ```bash
-# Clone the repository
-git clone https://github.com/judeoyovbaire/personal-website.git
-cd personal-website
-
-# Install dependencies
-npm install
-
-# Run development server
-npm run dev
+npm ci
+npm run dev        # http://localhost:3000
+npm run lint
+npx tsc --noEmit
+npm run build
 ```
 
-Open [http://localhost:3000](http://localhost:3000) to view the site.
+## Quality and security
 
-### Available Scripts
-
-| Command | Description |
-|---------|-------------|
-| `npm run dev` | Start development server |
-| `npm run build` | Build for production |
-| `npm run start` | Start production server |
-| `npm run lint` | Run ESLint |
-
-## Project Structure
-
-```
-personal-website/
-├── app/                          # Next.js App Router pages
-│   ├── page.tsx                  # Home page
-│   ├── projects/page.tsx         # Projects & case studies
-│   ├── platforms/page.tsx        # Platform capabilities
-│   ├── about/page.tsx            # Personal background
-│   ├── blog/page.tsx             # Blog index
-│   ├── opensource/page.tsx       # Open source projects
-│   ├── layout.tsx                # Root layout with metadata
-│   ├── globals.css               # Global styles & theme
-│   ├── error.tsx                 # Error boundary
-│   ├── loading.tsx               # Loading state
-│   └── not-found.tsx             # 404 page
-│
-├── components/                   # React components
-│   ├── Navigation.tsx            # Header with mobile menu
-│   ├── Footer.tsx                # Site footer
-│   ├── ThemeToggle.tsx           # Dark/light mode toggle
-│   ├── ImpactStats.tsx           # Animated statistics
-│   ├── TechStack.tsx             # Technology grid
-│   └── Certifications.tsx        # Certification badges
-│
-├── data/                         # Static content data
-│   ├── projects.ts               # Professional & side projects
-│   ├── casestudies.ts            # Detailed case studies
-│   ├── techstack.ts              # Technology categories
-│   └── certifications.ts         # Professional certifications
-│
-├── public/                       # Static assets
-│   └── JudeOyovbaire-Platform-CV.pdf
-│
-├── package.json
-├── tsconfig.json
-├── tailwind.config.ts
-└── next.config.ts
-```
-
-## Features
-
-### User Experience
-- Responsive design with mobile-first approach
-- Dark/light theme toggle with system preference detection
-- Smooth animations with Framer Motion
-- SEO optimized with Open Graph metadata
-
-### Technical
-- Server components for optimal performance
-- Client components only where interactivity is required
-- TypeScript interfaces for type safety
-- Path aliases (`@/`) for clean imports
-
-### Content
-- 3 detailed case studies with impact metrics
-- 3 featured side projects with milestone tracking
-- 11 professional certifications displayed
-- Categorized tech stack (Cloud, K8s, IaC, GitOps, Observability, Data, ML/AI)
+- CI (`.github/workflows/ci.yaml`) runs lint, type-check, build and a production
+  dependency audit on every pull request and on `main`.
+- Renovate (`renovate.json`) proposes dependency updates weekly and security fixes at any
+  time; Next.js and React updates are grouped.
+- `next.config.ts` sets a Content Security Policy, `X-Frame-Options: DENY`,
+  `nosniff`, a strict Referrer-Policy and a restrictive Permissions-Policy.
 
 ## Deployment
 
-The site is deployed on Vercel with automatic deployments on push to `main`.
-
-```bash
-# Manual deploy (requires Vercel CLI)
-vercel --prod
-```
-
-### Environment Variables
-
-No environment variables are required for basic deployment.
+Vercel deploys every push to `main` to production and every pull request to a preview URL.
 
 ## License
 
-MIT
+Copyright Jude Oyovbaire. All rights reserved. The code is public for reference; the
+written content (posts, case studies, CV) may not be reused without permission.
