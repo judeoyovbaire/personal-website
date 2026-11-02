@@ -1,7 +1,7 @@
 import { CheckCircle, Clock, Rocket } from 'lucide-react'
 import type { SideProject } from '@/data/projects'
 
-// One label and colour per side-project status, shared by /projects and /opensource.
+// One label and colour per side-project status (rendered on /lab).
 export const statusConfig: Record<SideProject['status'], { label: string; icon: typeof Clock; color: string }> = {
   in_progress: { label: 'In Progress', icon: Rocket, color: 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200' },
   planned: { label: 'Planned', icon: Clock, color: 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200' },

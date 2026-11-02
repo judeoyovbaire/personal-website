@@ -37,6 +37,14 @@ const securityHeaders = [
 
 const nextConfig: NextConfig = {
   poweredByHeader: false,
+  // Pages merged in the November 2026 restructure; keep old links working.
+  async redirects() {
+    return [
+      { source: '/projects', destination: '/work', permanent: true },
+      { source: '/platforms', destination: '/work', permanent: true },
+      { source: '/opensource', destination: '/lab', permanent: true },
+    ]
+  },
   async headers() {
     return [{ source: '/:path*', headers: securityHeaders }]
   },

@@ -1,101 +1,74 @@
-'use client'
-
-import { MapPin, Building, Mail, ExternalLink, CheckCircle2 } from 'lucide-react'
-import { motion } from 'framer-motion'
-import { CurrentFocus } from './CurrentFocus'
+import { MapPin, Building, Mail, ExternalLink, FileText } from 'lucide-react'
+import { CV_PATH } from '@/components/siteLinks'
 
 export function Hero() {
-    const container = {
-        hidden: { opacity: 0 },
-        show: {
-            opacity: 1,
-            transition: {
-                staggerChildren: 0.1
-            }
-        }
-    }
+  return (
+    <section className="mb-12">
+      <div className="fade-in-up flex items-center gap-2 text-blue-700 dark:text-blue-400 mb-4">
+        <span className="w-2 h-2 bg-blue-600 rounded-full animate-pulse" aria-hidden="true" />
+        <span className="text-sm font-medium">Open to Staff roles in AI infrastructure</span>
+      </div>
 
-    const item = {
-        hidden: { opacity: 0, y: 20 },
-        show: { opacity: 1, y: 0 }
-    }
+      <h1
+        className="fade-in-up text-4xl md:text-6xl font-bold text-gray-900 dark:text-white mb-6"
+        style={{ animationDelay: '0.05s' }}
+      >
+        Platform Engineer
+        <br />
+        <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+          for AI Infrastructure
+        </span>
+      </h1>
 
-    return (
-        <motion.section
-            className="mb-16"
-            variants={container}
-            initial="hidden"
-            animate="show"
+      <p
+        className="fade-in-up text-xl text-gray-700 dark:text-gray-300 mb-6 max-w-3xl"
+        style={{ animationDelay: '0.1s' }}
+      >
+        I lead the infrastructure team in a regulated healthcare environment, where I own our
+        production LLM gateway. On my own time I am building a spot-GPU inference lab on EKS to
+        measure what self-hosted LLM serving actually costs.
+      </p>
+
+      <div
+        className="fade-in-up flex flex-wrap gap-4 text-sm text-gray-600 dark:text-gray-400 mb-8"
+        style={{ animationDelay: '0.15s' }}
+      >
+        <span className="flex items-center gap-2">
+          <MapPin size={16} aria-hidden="true" />
+          Amsterdam, Netherlands
+        </span>
+        <span className="flex items-center gap-2">
+          <Building size={16} aria-hidden="true" />
+          myTomorrows
+        </span>
+      </div>
+
+      <div className="fade-in-up flex flex-wrap gap-4" style={{ animationDelay: '0.2s' }}>
+        <a
+          href="mailto:judeoyovbaire@gmail.com"
+          className="px-6 py-3 bg-blue-700 text-white rounded-lg font-semibold hover:bg-blue-800 transition-colors flex items-center gap-2"
         >
-            <motion.div variants={item} className="flex flex-col items-start gap-4 mb-4">
-                <div className="flex items-center gap-2 text-blue-600 dark:text-blue-400">
-                    <div className="w-2 h-2 bg-blue-600 rounded-full animate-pulse"></div>
-                    <span className="text-sm font-medium">Open to Staff roles in AI infrastructure</span>
-                </div>
-                <CurrentFocus />
-            </motion.div>
-
-            <motion.h1 variants={item} className="text-4xl md:text-6xl font-bold text-gray-900 dark:text-white mb-6">
-                Platform Engineer<br />
-                <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-                    for AI Infrastructure
-                </span>
-            </motion.h1>
-
-            <motion.p variants={item} className="text-xl text-gray-600 dark:text-gray-300 mb-6 max-w-3xl">
-                I lead the infrastructure team in a regulated healthcare environment, where I own our
-                production LLM gateway. On my own time I am building a spot-GPU inference lab on EKS to
-                measure what self-hosted LLM serving actually costs.
-            </motion.p>
-
-            {/* Brand Proof Points */}
-            <motion.div variants={item} className="grid sm:grid-cols-2 gap-3 mb-8 max-w-3xl">
-                <div className="flex items-start gap-2">
-                    <CheckCircle2 size={18} className="text-blue-600 mt-0.5 flex-shrink-0" />
-                    <span className="text-sm text-gray-700 dark:text-gray-300">Multi-cloud Kubernetes platforms running 200+ production services</span>
-                </div>
-                <div className="flex items-start gap-2">
-                    <CheckCircle2 size={18} className="text-blue-600 mt-0.5 flex-shrink-0" />
-                    <span className="text-sm text-gray-700 dark:text-gray-300">Data platforms (Databricks, OpenSearch) powering ML workloads</span>
-                </div>
-                <div className="flex items-start gap-2">
-                    <CheckCircle2 size={18} className="text-blue-600 mt-0.5 flex-shrink-0" />
-                    <span className="text-sm text-gray-700 dark:text-gray-300">€900K+ in annual savings across two platform programmes</span>
-                </div>
-                <div className="flex items-start gap-2">
-                    <CheckCircle2 size={18} className="text-blue-600 mt-0.5 flex-shrink-0" />
-                    <span className="text-sm text-gray-700 dark:text-gray-300">Production LLM gateway: EU-resident model endpoints, scoped per-service keys and budgets</span>
-                </div>
-            </motion.div>
-
-            <motion.div variants={item} className="flex flex-wrap gap-4 text-sm text-gray-600 dark:text-gray-400 mb-8">
-                <div className="flex items-center gap-2">
-                    <MapPin size={16} />
-                    <span>Amsterdam, Netherlands 🇳🇱</span>
-                </div>
-                <div className="flex items-center gap-2">
-                    <Building size={16} />
-                    <span>myTomorrows</span>
-                </div>
-            </motion.div>
-
-            <motion.div variants={item} className="flex gap-4">
-                <a
-                    href="mailto:judeoyovbaire@gmail.com"
-                    className="px-6 py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition-colors flex items-center gap-2"
-                >
-                    <Mail size={18} />
-                    Get In Touch
-                </a>
-                <a
-                    href="https://www.linkedin.com/in/judeoyovbaire/"
-                    target="_blank"
-                    className="px-6 py-3 border border-gray-300 dark:border-gray-700 rounded-lg font-semibold hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors flex items-center gap-2"
-                >
-                    <ExternalLink size={18} />
-                    LinkedIn Profile
-                </a>
-            </motion.div>
-        </motion.section>
-    )
+          <Mail size={18} aria-hidden="true" />
+          Get in touch
+        </a>
+        <a
+          href={CV_PATH}
+          download
+          className="px-6 py-3 border border-gray-300 dark:border-gray-700 rounded-lg font-semibold text-gray-900 dark:text-white hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors flex items-center gap-2"
+        >
+          <FileText size={18} aria-hidden="true" />
+          Download CV
+        </a>
+        <a
+          href="https://www.linkedin.com/in/judeoyovbaire/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="px-6 py-3 border border-gray-300 dark:border-gray-700 rounded-lg font-semibold text-gray-900 dark:text-white hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors flex items-center gap-2"
+        >
+          <ExternalLink size={18} aria-hidden="true" />
+          LinkedIn
+        </a>
+      </div>
+    </section>
+  )
 }

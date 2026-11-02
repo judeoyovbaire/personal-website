@@ -1,55 +1,30 @@
-import { MetadataRoute } from 'next'
+import type { MetadataRoute } from 'next'
 import { posts } from '@/data/posts'
 
+const baseUrl = 'https://judaire.io'
+
+// Static pages carry the date their content last changed meaningfully, not
+// the build time, so crawlers are not told everything changed on every deploy.
+const PAGES_UPDATED = '2026-11-02'
+
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = 'https://judaire.io'
+  const published = posts.filter((post) => post.published)
+  const latestPost = published.map((post) => post.date).sort().at(-1) ?? PAGES_UPDATED
 
-  const blogPosts = posts
-    .filter((post) => post.published)
-    .map((post) => ({
-      url: `${baseUrl}/blog/${post.slug}`,
-      lastModified: new Date(post.date),
-      changeFrequency: 'monthly' as const,
-      priority: 0.7,
-    }))
-
-  return [
-    {
-      url: baseUrl,
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 1,
-    },
-    {
-      url: `${baseUrl}/platforms`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.8,
-    },
-    {
-      url: `${baseUrl}/projects`,
-      lastModified: new Date(),
-      changeFrequency: 'weekly',
-      priority: 0.9,
-    },
-    {
-      url: `${baseUrl}/blog`,
-      lastModified: new Date(),
-      changeFrequency: 'weekly',
-      priority: 0.7,
-    },
-    ...blogPosts,
-    {
-      url: `${baseUrl}/opensource`,
-      lastModified: new Date(),
-      changeFrequency: 'weekly',
-      priority: 0.8,
-    },
-    {
-      url: `${baseUrl}/about`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.6,
-    },
+  const pages: MetadataRoute.Sitemap = [
+    { url: baseUrl, lastModified: PAGES_UPDATED, changeFrequency: 'monthly', priority: 1 },
+    { url: `${baseUrl}/work`, lastModified: PAGES_UPDATED, changeFrequency: 'monthly', priority: 0.9 },
+    { url: `${baseUrl}/lab`, lastModified: PAGES_UPDATED, changeFrequency: 'monthly', priority: 0.9 },
+    { url: `${baseUrl}/blog`, lastModified: latestPost, changeFrequency: 'weekly', priority: 0.8 },
+    { url: `${baseUrl}/about`, lastModified: PAGES_UPDATED, changeFrequency: 'monthly', priority: 0.6 },
   ]
+
+  const blogPosts: MetadataRoute.Sitemap = published.map((post) => ({
+    url: `${baseUrl}/blog/${post.slug}`,
+    lastModified: post.date,
+    changeFrequency: 'yearly',
+    priority: 0.7,
+  }))
+
+  return [...pages, ...blogPosts]
 }

@@ -19,13 +19,14 @@ export const metadata: Metadata = {
   title: 'Jude Oyovbaire - Platform Engineer, AI Infrastructure',
   description: 'Platform engineer leading an infrastructure team: a production LLM gateway in a regulated healthcare environment, Kubernetes platforms, and a spot-GPU inference lab on EKS. 10+ years of platform engineering.',
   keywords: 'Platform Engineer, AI Infrastructure, MLOps, DevOps Engineer, Kubernetes, AWS, Azure, GCP, Databricks, GPU, Amsterdam, FinOps, vLLM, KServe, LLM serving',
-  authors: [{ name: 'Jude' }],
+  authors: [{ name: 'Jude Oyovbaire', url: 'https://judaire.io' }],
+  creator: 'Jude Oyovbaire',
   openGraph: {
     title: 'Jude Oyovbaire - Platform Engineer, AI Infrastructure',
     description: 'Platform engineer for AI infrastructure: a production LLM gateway in healthcare, Kubernetes platforms, and a spot-GPU inference lab on EKS.',
     type: 'website',
     locale: 'en_US',
-    siteName: 'Jude Portfolio',
+    siteName: 'Jude Oyovbaire',
     url: '/',
   },
   twitter: {
@@ -50,12 +51,14 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: THEME_SCRIPT }} />
+        <link rel="alternate" type="application/rss+xml" title="Jude Oyovbaire: writing" href="/feed.xml" />
       </head>
       <body className={`${inter.variable} ${spaceGrotesk.variable} font-sans antialiased min-h-screen bg-white dark:bg-gray-900 flex flex-col selection:bg-blue-100 dark:selection:bg-blue-900`}>
+        <a href="#content" className="skip-link">
+          Skip to content
+        </a>
         <div className="fixed inset-0 -z-10 h-full w-full bg-white dark:bg-gray-950 [background:radial-gradient(125%_125%_at_50%_10%,#fff_40%,#63e_100%)] dark:[background:radial-gradient(125%_125%_at_50%_10%,#000_40%,#63e_100%)] opacity-20"></div>
-        <main className="flex-1">
-          {children}
-        </main>
+        <div className="flex-1">{children}</div>
         <Footer />
         <Analytics />
       </body>

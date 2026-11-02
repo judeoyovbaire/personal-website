@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { Github, Linkedin, Mail } from 'lucide-react'
+import { siteLinks } from './siteLinks'
 
 export function Footer() {
   const currentYear = new Date().getFullYear()
@@ -19,45 +20,27 @@ export function Footer() {
           </div>
 
           {/* Quick Links */}
-          <div>
-            <h3 className="font-semibold text-gray-900 dark:text-white mb-3">Quick Links</h3>
+          <nav aria-label="Footer">
+            <h2 className="font-semibold text-gray-900 dark:text-white mb-3">Pages</h2>
             <ul className="space-y-2">
+              {siteLinks.map((link) => (
+                <li key={link.href}>
+                  <Link href={link.href} className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white text-sm transition-colors">
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
               <li>
-                <Link href="/" className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white text-sm transition-colors">
-                  Home
-                </Link>
-              </li>
-              <li>
-                <Link href="/platforms" className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white text-sm transition-colors">
-                  Platforms
-                </Link>
-              </li>
-              <li>
-                <Link href="/projects" className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white text-sm transition-colors">
-                  Projects
-                </Link>
-              </li>
-              <li>
-                <Link href="/blog" className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white text-sm transition-colors">
-                  Blog
-                </Link>
-              </li>
-              <li>
-                <Link href="/opensource" className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white text-sm transition-colors">
-                  Open Source
-                </Link>
-              </li>
-              <li>
-                <Link href="/about" className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white text-sm transition-colors">
-                  About
-                </Link>
+                <a href="/feed.xml" className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white text-sm transition-colors">
+                  RSS feed
+                </a>
               </li>
             </ul>
-          </div>
+          </nav>
 
           {/* Connect */}
           <div>
-            <h3 className="font-semibold text-gray-900 dark:text-white mb-3">Connect</h3>
+            <h2 className="font-semibold text-gray-900 dark:text-white mb-3">Connect</h2>
             <div className="flex space-x-4">
               <a
                 href="https://github.com/judeoyovbaire"
@@ -90,7 +73,7 @@ export function Footer() {
 
         {/* Copyright */}
         <div className="mt-8 pt-8 border-t border-gray-200 dark:border-gray-800">
-          <p className="text-center text-gray-500 dark:text-gray-500 text-sm">
+          <p className="text-center text-gray-600 dark:text-gray-400 text-sm">
             © {currentYear} Jude Oyovbaire. All rights reserved.
           </p>
         </div>
