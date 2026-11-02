@@ -1,34 +1,39 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useSyncExternalStore } from 'react'
 import { Sun, Moon } from 'lucide-react'
 
+type Theme = 'light' | 'dark'
+
+// The theme class is set on <html> before first paint by the inline script in
+// app/layout.tsx, so this component only reads it (no state set in an effect,
+// no flash of the wrong theme).
+function subscribe(onChange: () => void) {
+  const observer = new MutationObserver(onChange)
+  observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] })
+  return () => observer.disconnect()
+}
+
+const getSnapshot = (): Theme =>
+  document.documentElement.classList.contains('light') ? 'light' : 'dark'
+
+const getServerSnapshot = (): Theme | null => null
+
 export function ThemeToggle() {
-  const [theme, setTheme] = useState<'light' | 'dark'>('dark')
-  const [mounted, setMounted] = useState(false)
-
-  useEffect(() => {
-    setMounted(true)
-    const stored = localStorage.getItem('theme')
-    if (stored === 'dark' || stored === 'light') {
-      setTheme(stored)
-    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-      setTheme('dark')
-    }
-  }, [])
-
-  useEffect(() => {
-    if (!mounted) return
-    document.documentElement.classList.remove('light', 'dark')
-    document.documentElement.classList.add(theme)
-    localStorage.setItem('theme', theme)
-  }, [theme, mounted])
+  const theme = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot)
 
   const toggleTheme = () => {
-    setTheme(theme === 'dark' ? 'light' : 'dark')
+    const next: Theme = theme === 'dark' ? 'light' : 'dark'
+    document.documentElement.classList.remove('light', 'dark')
+    document.documentElement.classList.add(next)
+    try {
+      localStorage.setItem('theme', next)
+    } catch {
+      // Storage can be unavailable (private mode); the toggle still works for this page.
+    }
   }
 
-  if (!mounted) {
+  if (theme === null) {
     return (
       <button
         className="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors"
