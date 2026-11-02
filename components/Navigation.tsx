@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
-import { Home, User, Briefcase, Github, Linkedin, FileText, Menu, X, Layers, BookOpen, Code2 } from 'lucide-react'
+import { User, Briefcase, Github, Linkedin, FileText, Menu, X, Layers, BookOpen, Code2 } from 'lucide-react'
 import { ThemeToggle } from './ThemeToggle'
 
 export function Navigation() {

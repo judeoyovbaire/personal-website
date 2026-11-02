@@ -1,5 +1,5 @@
 import { Navigation } from '@/components/Navigation'
-import { ArrowLeft, Cloud, Container, Code, Database, Brain, GitBranch, BarChart3, Wrench } from 'lucide-react'
+import { ArrowLeft, Cloud, Container, Code, GitBranch, BarChart3, Wrench } from 'lucide-react'
 import Link from 'next/link'
 import type { Metadata } from 'next'
 
