@@ -2,20 +2,15 @@ import { Navigation } from '@/components/Navigation'
 import { ArrowRight, Calendar, Clock } from 'lucide-react'
 import Link from 'next/link'
 import type { Metadata } from 'next'
+import { pageMetadata } from '@/components/siteMetadata'
 import { posts } from '@/data/posts'
 import { formatDate } from '@/components/formatDate'
 
-export const metadata: Metadata = {
-  title: 'Writing | Jude Oyovbaire',
-  description: 'Posts on platform decisions, GPU scheduling and LLM infrastructure, written from work I have done.',
-  alternates: { canonical: '/blog' },
-  openGraph: {
-    title: 'Writing | Jude Oyovbaire',
-    description: 'Posts on platform decisions, GPU scheduling and LLM infrastructure.',
-    url: '/blog',
-    images: [{ url: '/opengraph-image', width: 1200, height: 630, alt: 'Jude Oyovbaire: Platform Engineer for AI Infrastructure' }],
-  },
-}
+export const metadata: Metadata = pageMetadata(
+  '/blog',
+  'Writing | Jude Oyovbaire',
+  'Posts on platform decisions, GPU scheduling and LLM infrastructure, written from work I have done.',
+)
 
 export default function Blog() {
   // Newest first; data/posts.ts order is not chronological.
@@ -42,7 +37,7 @@ export default function Blog() {
                 <Link
                   key={post.slug}
                   href={`/blog/${post.slug}`}
-                  className="block bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6 hover:border-blue-300 dark:hover:border-blue-700 hover:shadow-md transition-all"
+                  className="group block bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6 hover:border-blue-300 dark:hover:border-blue-700 hover:shadow-md transition-all"
                 >
                   <article>
                     <div className="flex flex-wrap items-center gap-3 mb-3">
@@ -58,7 +53,7 @@ export default function Blog() {
                         {post.readTime}
                       </span>
                     </div>
-                    <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2 group-hover:text-blue-600">
+                    <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2 group-hover:text-blue-700 dark:group-hover:text-blue-400">
                       {post.title}
                     </h3>
                     <p className="text-gray-600 dark:text-gray-400 mb-4">
@@ -69,7 +64,7 @@ export default function Blog() {
                         {post.technologies.slice(0, 4).map((tech) => (
                           <span
                             key={tech}
-                            className="px-2 py-0.5 bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-400 rounded text-xs"
+                            className="px-2 py-0.5 bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 rounded text-xs"
                           >
                             {tech}
                           </span>

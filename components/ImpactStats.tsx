@@ -2,7 +2,7 @@ import Link from 'next/link'
 
 const stats = [
   { label: 'Annual savings across two platform programmes', value: '€900K+', href: '/work' },
-  { label: 'Production services migrated to Kubernetes', value: '200+', href: '/work#kubernetes-platform-modernization' },
+  { label: 'Microservices on the platform I led (PVH)', value: '200+', href: '/work#kubernetes-platform-modernization' },
   { label: 'Engineers mentored', value: '20+' },
   { label: 'Clouds run in production (AWS, Azure, GCP)', value: '3' },
 ] as const

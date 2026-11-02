@@ -49,22 +49,6 @@ h6 {
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.animate-number {
-  animation: countUp 2s ease-out forwards;
-}
-
-@keyframes countUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
 /* Custom scrollbar */
 ::-webkit-scrollbar {
   width: 10px;
@@ -102,7 +86,6 @@ h6 {
 
 @media (prefers-reduced-motion: reduce) {
   .fade-in-up,
-  .animate-number,
   .animate-pulse,
   .animate-ping,
   .animate-spin {

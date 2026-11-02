@@ -1,26 +1,20 @@
 import type { Metadata } from 'next'
+import { pageMetadata } from '@/components/siteMetadata'
 import { Navigation } from '@/components/Navigation'
 import { CaseStudyCard } from '@/components/CaseStudyCard'
 import { SideProjectCard } from '@/components/SideProjectCard'
 import { caseStudies } from '@/data/casestudies'
 import { sideProjects } from '@/data/projects'
 
-export const metadata: Metadata = {
-  title: 'Lab | Jude Oyovbaire',
-  description:
-    'Personal AI-infrastructure work: a spot-GPU LLM inference lab on AWS EKS, plus earlier learning projects with their real status.',
-  alternates: { canonical: '/lab' },
-  openGraph: {
-    title: 'Lab | Jude Oyovbaire',
-    description: 'A spot-GPU LLM inference lab on AWS EKS, and earlier learning projects.',
-    url: '/lab',
-    images: [{ url: '/opengraph-image', width: 1200, height: 630, alt: 'Jude Oyovbaire: Platform Engineer for AI Infrastructure' }],
-  },
-}
+export const metadata: Metadata = pageMetadata(
+  '/lab',
+  'Lab | Jude Oyovbaire',
+  'Personal AI-infrastructure work: a spot-GPU LLM inference lab on AWS EKS, plus earlier learning projects with their real status.',
+)
 
 export default function Lab() {
   const lab = caseStudies.filter((study) => study.kind === 'lab')
-  const earlier = sideProjects.filter((project) => !project.featured)
+  const earlier = sideProjects
   return (
     <>
       <Navigation />

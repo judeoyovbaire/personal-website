@@ -34,6 +34,7 @@ export function BlogPostingJsonLd({ post }: { post: BlogPost }) {
     description: post.description,
     datePublished: post.date,
     url: `${SITE_URL}/blog/${post.slug}`,
+    image: `${SITE_URL}/blog/${post.slug}/opengraph-image`,
     mainEntityOfPage: `${SITE_URL}/blog/${post.slug}`,
     author: person,
     keywords: post.technologies?.join(', '),

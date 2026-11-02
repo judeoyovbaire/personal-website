@@ -1,21 +1,14 @@
 import type { Metadata } from 'next'
+import { pageMetadata } from '@/components/siteMetadata'
 import { Navigation } from '@/components/Navigation'
 import { PersonJsonLd } from '@/components/JsonLd'
 import { certifications } from '@/data/certifications'
 
-export const metadata: Metadata = {
-  title: 'About | Jude Oyovbaire',
-  description:
-    'Platform engineer from Nigeria, based in Amsterdam. I lead an infrastructure team, own a production LLM gateway in healthcare, and have 10+ years of platform engineering behind me.',
-  alternates: { canonical: '/about' },
-  openGraph: {
-    title: 'About Jude Oyovbaire | Platform Engineer, AI Infrastructure',
-    description:
-      'Leading an infrastructure team, owning a production LLM gateway in healthcare, and building a spot-GPU inference lab.',
-    url: '/about',
-    images: [{ url: '/opengraph-image', width: 1200, height: 630, alt: 'Jude Oyovbaire: Platform Engineer for AI Infrastructure' }],
-  },
-}
+export const metadata: Metadata = pageMetadata(
+  '/about',
+  'About | Jude Oyovbaire',
+  'Platform engineer from Nigeria, based in Amsterdam. I lead an infrastructure team, own a production LLM gateway in healthcare, and have 10+ years of platform engineering behind me.',
+)
 
 const toolbox = [
   { area: 'Cloud and orchestration', items: 'AWS (EKS), GCP, Azure (AKS), Kubernetes, Karpenter, KEDA' },

@@ -102,12 +102,12 @@ export function Navigation() {
         </div>
       </div>
 
-      {isMenuOpen && (
-        <div
-          id="mobile-menu"
-          ref={menuRef}
-          className="md:hidden border-t border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900"
-        >
+      <div
+        id="mobile-menu"
+        ref={menuRef}
+        hidden={!isMenuOpen}
+        className="md:hidden border-t border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900"
+      >
           <ul className="px-4 py-3 space-y-1">
             {siteLinks.map((link) => (
               <li key={link.href}>
@@ -122,8 +122,7 @@ export function Navigation() {
               </li>
             ))}
           </ul>
-        </div>
-      )}
+      </div>
     </nav>
   )
 }

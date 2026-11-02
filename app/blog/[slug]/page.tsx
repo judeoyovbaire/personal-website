@@ -6,6 +6,7 @@ import { posts } from '@/data/posts'
 import type { Metadata } from 'next'
 import { formatDate } from '@/components/formatDate'
 import { BlogPostingJsonLd } from '@/components/JsonLd'
+import { baseOpenGraph } from '@/components/siteMetadata'
 
 type Props = {
   params: Promise<{ slug: string }>
@@ -26,9 +27,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     description: post.description,
     alternates: { canonical: `/blog/${post.slug}` },
     openGraph: {
+      ...baseOpenGraph,
+      type: 'article',
       title: post.title,
       description: post.description,
-      type: 'article',
       publishedTime: post.date,
       authors: ['Jude Oyovbaire'],
       url: `/blog/${post.slug}`,
@@ -231,7 +233,7 @@ export default async function BlogPost({ params }: Props) {
       <main id="content" className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <Link href="/blog" className="inline-flex items-center gap-2 text-blue-700 dark:text-blue-400 hover:underline mb-6">
           <ArrowLeft size={16} />
-          Back to Blog
+          Back to Writing
         </Link>
 
         <article>

@@ -145,6 +145,7 @@ export const caseStudies: CaseStudy[] = [
       { metric: 'Deployment Frequency', value: 'Weekly → 50+/day' },
       { metric: 'Self-Service Adoption', value: '85% of teams' },
       { metric: 'Log Licence Costs', value: '60%+ lower (ELK → OpenSearch)' },
+      { metric: 'Log Query Latency', value: '40% faster' },
       { metric: 'Golden Path Coverage', value: '90%+ services' },
     ],
   },
@@ -263,13 +264,6 @@ export const caseStudies: CaseStudy[] = [
     link: { href: 'https://github.com/judeoyovbaire/mlops-platform', label: 'Source and runbooks' },
   },
 ]
-
-export const pillarColors = {
-  core: 'blue',
-  data: 'green',
-  ml: 'purple',
-  ai: 'orange',
-} as const
 
 export const pillarLabels = {
   core: 'Core Platform',

@@ -1,20 +1,14 @@
 import type { Metadata } from 'next'
+import { pageMetadata } from '@/components/siteMetadata'
 import { Navigation } from '@/components/Navigation'
 import { CaseStudyCard } from '@/components/CaseStudyCard'
 import { caseStudies } from '@/data/casestudies'
 
-export const metadata: Metadata = {
-  title: 'Work | Jude Oyovbaire',
-  description:
-    'Production platform work: the context, the decisions with their alternatives and trade-offs, and measured impact.',
-  alternates: { canonical: '/work' },
-  openGraph: {
-    title: 'Work | Jude Oyovbaire',
-    description: 'Production platform work: decisions, trade-offs and measured impact.',
-    url: '/work',
-    images: [{ url: '/opengraph-image', width: 1200, height: 630, alt: 'Jude Oyovbaire: Platform Engineer for AI Infrastructure' }],
-  },
-}
+export const metadata: Metadata = pageMetadata(
+  '/work',
+  'Work | Jude Oyovbaire',
+  'Production platform work: the context, the decisions with their alternatives and trade-offs, and measured impact.',
+)
 
 export default function Work() {
   const work = caseStudies.filter((study) => study.kind === 'work')

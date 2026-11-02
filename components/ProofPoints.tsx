@@ -5,7 +5,7 @@ const proofPoints = [
   {
     icon: Network,
     title: 'Production LLM gateway in healthcare',
-    body: 'I own the LLM gateway our production AI services run through: EU-resident model endpoints, a cross-provider fallback, and scoped per-service keys and budgets.',
+    body: 'I own the LLM gateway our production AI services run through, with EU-resident model endpoints and a cross-provider fallback, in a regulated healthcare environment.',
     href: '/work#matching-api-healthcare',
     cta: 'See the work',
   },
