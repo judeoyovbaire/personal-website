@@ -138,7 +138,6 @@ export const caseStudies: CaseStudy[] = [
       { metric: 'Annual Savings', value: '€500K+' },
       { metric: 'Deployment Time', value: '2 hours → 15 min (85% faster)' },
       { metric: 'Deployment Frequency', value: 'Weekly → 50+/day' },
-      { metric: 'Platform Uptime', value: '99.99%' },
       { metric: 'Self-Service Adoption', value: '85% of teams' },
       { metric: 'Team Onboarding', value: '< 2 days' },
       { metric: 'Golden Path Coverage', value: '90%+ services' },

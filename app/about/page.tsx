@@ -91,8 +91,8 @@ export default function About() {
             <p className="text-lg text-gray-600 dark:text-gray-300 leading-relaxed">
               Growing up in Nigeria, frequent power outages weren&apos;t just inconveniences - they were
               lessons in resilience and reliability. This early experience shaped my obsession with
-              building systems that never go down. Today, I architect platforms that achieve 99.99%
-              uptime, turning infrastructure from a cost center into a competitive advantage.
+              building systems that keep working when the things underneath them fail. Today that means
+              platforms designed for failure: redundancy, fast recovery, and alerts that point at causes.
             </p>
           </section>
 
