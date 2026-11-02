@@ -727,5 +727,3 @@ Good platform engineering is boundary engineering. The tools are interchangeable
     `,
   },
 ]
-
-export const categories = ['All', 'Platform Design', 'Data Platforms', 'AI Infrastructure']

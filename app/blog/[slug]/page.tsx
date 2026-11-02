@@ -32,6 +32,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 }
 
+// Only the posts in data/posts.ts exist: any other slug is a real 404,
+// not an on-demand render of the "Post Not Found" page with HTTP 200.
+export const dynamicParams = false
+
 export async function generateStaticParams() {
   return posts
     .filter((post) => post.published)
@@ -64,7 +68,7 @@ function parseMarkdown(content: string): React.ReactNode[] {
           key={key++}
           className="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto my-6 text-sm border border-gray-700"
         >
-          <code className="font-mono">{codeLines.join('\n')}</code>
+          <code className={lang ? `font-mono language-${lang}` : 'font-mono'}>{codeLines.join('\n')}</code>
         </pre>
       )
       i++
@@ -89,6 +93,23 @@ function parseMarkdown(content: string): React.ReactNode[] {
         </h3>
       )
       i++
+      continue
+    }
+
+    // Handle blockquotes (consecutive lines starting with "> ")
+    if (line.startsWith('> ') || line === '>') {
+      const quoteLines: string[] = []
+      while (i < lines.length && (lines[i].startsWith('> ') || lines[i] === '>')) {
+        quoteLines.push(lines[i].replace(/^>\s?/, ''))
+        i++
+      }
+      elements.push(
+        <blockquote
+          key={key++}
+          className="border-l-4 border-blue-500 pl-4 my-6 text-gray-700 dark:text-gray-300 italic"
+          dangerouslySetInnerHTML={{ __html: formatInline(quoteLines.join(' ')) }}
+        />
+      )
       continue
     }
 
@@ -166,9 +187,19 @@ function parseMarkdown(content: string): React.ReactNode[] {
   return elements
 }
 
+// Escape HTML first so post text renders literally (e.g. "<5ms", "<pod>"),
+// then apply the small inline markdown subset below.
+function escapeHtml(text: string): string {
+  return text
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+}
+
 // Format inline elements (bold, code, links)
 function formatInline(text: string): string {
-  return text
+  return escapeHtml(text)
     .replace(/\*\*(.*?)\*\*/g, '<strong class="font-semibold text-gray-900 dark:text-white">$1</strong>')
     .replace(/`([^`]+)`/g, '<code class="bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded text-sm font-mono">$1</code>')
     .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" class="text-blue-600 dark:text-blue-400 hover:underline" target="_blank" rel="noopener noreferrer">$1</a>')
