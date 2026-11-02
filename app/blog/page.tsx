@@ -1,16 +1,19 @@
 import { Navigation } from '@/components/Navigation'
-import { ArrowLeft, ArrowRight, Calendar, Clock } from 'lucide-react'
+import { ArrowRight, Calendar, Clock } from 'lucide-react'
 import Link from 'next/link'
 import type { Metadata } from 'next'
 import { posts } from '@/data/posts'
+import { formatDate } from '@/components/formatDate'
 
 export const metadata: Metadata = {
-  title: 'Blog | Jude Oyovbaire',
-  description: 'Technical blog on platform engineering, MLOps, and SRE practices for AI systems. Deep dives into Kubernetes, data platforms, and ML infrastructure.',
+  title: 'Writing | Jude Oyovbaire',
+  description: 'Posts on platform decisions, GPU scheduling and LLM infrastructure, written from work I have done.',
+  alternates: { canonical: '/blog' },
   openGraph: {
-    title: 'Blog | Jude',
-    description: 'Thoughts on platform engineering, MLOps, and building reliable systems at scale.',
+    title: 'Writing | Jude Oyovbaire',
+    description: 'Posts on platform decisions, GPU scheduling and LLM infrastructure.',
     url: '/blog',
+    images: [{ url: '/opengraph-image', width: 1200, height: 630, alt: 'Jude Oyovbaire: Platform Engineer for AI Infrastructure' }],
   },
 }
 
@@ -23,21 +26,17 @@ export default function Blog() {
   return (
     <>
       <Navigation />
-      <main className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <Link href="/" className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 mb-4">
-          <ArrowLeft size={16} />
-          Back to Home
-        </Link>
-
-        <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-3">Blog</h1>
-        <p className="text-xl text-gray-600 dark:text-gray-300 mb-6 max-w-3xl">
-          Thoughts on platform engineering, MLOps, and building reliable systems at scale.
+      <main id="content" className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <h1 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4">Writing</h1>
+        <p className="text-lg text-gray-600 dark:text-gray-300 mb-10 max-w-3xl">
+          Posts on platform decisions, GPU scheduling and LLM infrastructure, written from work I
+          have done. Also available as an <a href="/feed.xml" className="text-blue-700 dark:text-blue-400 underline underline-offset-2">RSS feed</a>.
         </p>
 
         {/* Published Posts */}
         {publishedPosts.length > 0 && (
           <section className="mb-12">
-            <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-6">Latest Posts</h2>
+            <h2 className="sr-only">All posts, newest first</h2>
             <div className="space-y-6">
               {publishedPosts.map((post) => (
                 <Link
@@ -50,15 +49,11 @@ export default function Blog() {
                       <span className="px-2.5 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded-full text-xs font-medium">
                         {post.category}
                       </span>
-                      <span className="flex items-center gap-1 text-sm text-gray-500 dark:text-gray-400">
+                      <span className="flex items-center gap-1 text-sm text-gray-600 dark:text-gray-400">
                         <Calendar size={14} />
-                        {new Date(post.date).toLocaleDateString('en-US', {
-                          year: 'numeric',
-                          month: 'short',
-                          day: 'numeric',
-                        })}
+                        <time dateTime={post.date}>{formatDate(post.date)}</time>
                       </span>
-                      <span className="flex items-center gap-1 text-sm text-gray-500 dark:text-gray-400">
+                      <span className="flex items-center gap-1 text-sm text-gray-600 dark:text-gray-400">
                         <Clock size={14} />
                         {post.readTime}
                       </span>
@@ -80,7 +75,7 @@ export default function Blog() {
                           </span>
                         ))}
                       </div>
-                      <span className="inline-flex items-center gap-1 text-blue-600 dark:text-blue-400 text-sm font-medium">
+                      <span className="inline-flex items-center gap-1 text-blue-700 dark:text-blue-400 text-sm font-medium">
                         Read more <ArrowRight size={14} />
                       </span>
                     </div>
@@ -91,30 +86,6 @@ export default function Blog() {
           </section>
         )}
 
-        {/* Content Themes */}
-        <section>
-          <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-6">Content Themes</h2>
-          <div className="grid md:grid-cols-3 gap-4">
-            <div className="p-4 border border-gray-200 dark:border-gray-700 rounded-lg">
-              <h3 className="font-semibold text-gray-900 dark:text-white mb-2">Platform Design</h3>
-              <p className="text-sm text-gray-600 dark:text-gray-400">
-                Architecture decisions, trade-offs, and patterns for AI-ready platforms
-              </p>
-            </div>
-            <div className="p-4 border border-gray-200 dark:border-gray-700 rounded-lg">
-              <h3 className="font-semibold text-gray-900 dark:text-white mb-2">MLOps in Practice</h3>
-              <p className="text-sm text-gray-600 dark:text-gray-400">
-                Real-world ML platform implementation, not theoretical ideals
-              </p>
-            </div>
-            <div className="p-4 border border-gray-200 dark:border-gray-700 rounded-lg">
-              <h3 className="font-semibold text-gray-900 dark:text-white mb-2">SRE for Data/ML</h3>
-              <p className="text-sm text-gray-600 dark:text-gray-400">
-                Reliability engineering for data pipelines and ML inference
-              </p>
-            </div>
-          </div>
-        </section>
       </main>
     </>
   )

@@ -5,7 +5,7 @@ import Link from 'next/link'
 
 export default function NotFound() {
   return (
-    <div className="min-h-screen flex items-center justify-center px-4">
+    <main id="content" className="min-h-screen flex items-center justify-center px-4">
       <div className="text-center">
         <h1 className="text-8xl font-bold text-gray-900 dark:text-white mb-4">
           404
@@ -19,7 +19,7 @@ export default function NotFound() {
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <Link
             href="/"
-            className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+            className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-blue-700 text-white rounded-lg hover:bg-blue-800 transition-colors"
           >
             <Home size={18} />
             Go Home
@@ -33,6 +33,6 @@ export default function NotFound() {
           </button>
         </div>
       </div>
-    </div>
+    </main>
   )
 }

@@ -12,17 +12,19 @@ targets are labelled as targets, and side projects carry their real status.
 
 | Route | What it shows |
 |---|---|
-| `/` | Positioning, impact figures, tech stack, certifications |
-| `/projects` | Case studies (context, decisions with alternatives and trade-offs, measured impact) and side projects with status |
-| `/platforms` | How I think about core, data, ML and AI infrastructure layers |
-| `/opensource` | Side projects and their status |
-| `/blog` | Posts, newest first; one page per post under `/blog/<slug>` |
-| `/about` | Background and current focus |
+| `/` | Positioning, three proof points, impact figures, latest writing |
+| `/work` | Production case studies: context, decisions with alternatives and trade-offs, measured impact |
+| `/lab` | The GPU inference lab, plus earlier learning projects with their real status |
+| `/blog` | Writing, newest first; one page per post under `/blog/<slug>`; RSS at `/feed.xml` |
+| `/about` | Current focus, background, toolbox, certifications |
+
+`/projects`, `/platforms` and `/opensource` redirect permanently to `/work` or `/lab`.
 
 ## Stack
 
 Next.js 16 (App Router, statically rendered), React 19, TypeScript, Tailwind CSS 4,
-Framer Motion, Lucide icons, deployed on Vercel with Vercel Analytics.
+Lucide icons, deployed on Vercel with Vercel Analytics. Animations are CSS only and
+respect `prefers-reduced-motion`; content is in the HTML and visible without JavaScript.
 
 Content lives in `data/*.ts` (posts, case studies, projects, certifications). Blog posts
 use a small markdown subset rendered by `app/blog/[slug]/page.tsx`; text is HTML-escaped
@@ -46,6 +48,8 @@ npm run build
   dependency audit on every pull request and on `main`.
 - Renovate (`renovate.json`) proposes dependency updates weekly and security fixes at any
   time; Next.js and React updates are grouped.
+- Open Graph and Twitter images are generated at build time (`opengraph-image.tsx`), with
+  JSON-LD (Person, BlogPosting), canonical URLs and a sitemap with real dates.
 - `next.config.ts` sets a Content Security Policy, `X-Frame-Options: DENY`,
   `nosniff`, a strict Referrer-Policy and a restrictive Permissions-Policy.
 

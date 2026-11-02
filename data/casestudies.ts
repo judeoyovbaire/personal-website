@@ -4,6 +4,8 @@ export interface CaseStudy {
   company: string
   period: string
   pillar: 'core' | 'data' | 'ml' | 'ai'
+  // 'work' = production work for an employer (/work); 'lab' = personal project (/lab)
+  kind: 'work' | 'lab'
   context: {
     description: string
     constraints: string[]
@@ -26,6 +28,7 @@ export interface CaseStudy {
     metric: string
     value: string
   }[]
+  link?: { href: string; label: string }
 }
 
 export const caseStudies: CaseStudy[] = [
@@ -35,6 +38,7 @@ export const caseStudies: CaseStudy[] = [
     company: 'Datenna B.V.',
     period: 'Jan 2025 - Jan 2026',
     pillar: 'data',
+    kind: 'work',
     context: {
       description: 'Data-intensive analytics company processing intelligence data across multiple regions, requiring a modern data platform to handle 50TB+ daily data with strict governance requirements.',
       constraints: [
@@ -87,10 +91,11 @@ export const caseStudies: CaseStudy[] = [
   },
   {
     id: 'kubernetes-platform-modernization',
-    title: 'Kubernetes Platform Modernization',
+    title: 'Kubernetes Platform Modernization and Observability Migration',
     company: 'PVH Europe',
     period: '2022 - 2024',
     pillar: 'core',
+    kind: 'work',
     context: {
       description: 'Global fashion retailer (Calvin Klein, Tommy Hilfiger) running 200+ microservices on legacy VM infrastructure, facing scaling challenges and slow deployment velocity.',
       constraints: [
@@ -118,9 +123,9 @@ export const caseStudies: CaseStudy[] = [
         },
         {
           area: 'Observability',
-          detail: 'Prometheus + Grafana for metrics, OpenSearch for logs, distributed tracing with custom dashboards per team',
-          alternative: 'Datadog',
-          tradeoff: 'Avoids per-host pricing that explodes at 200+ services scale; accepted higher operational overhead for self-managed stack',
+          detail: 'Prometheus + Grafana for metrics; logs migrated from a self-managed ELK stack to AWS Managed OpenSearch with UltraWarm and cold tiers, automated index lifecycle policies, and Terraform modules so teams provision their own index patterns and dashboards',
+          alternative: 'Datadog, or self-managed OpenSearch on Kubernetes',
+          tradeoff: 'Avoids per-host pricing at 200+ services and the upgrade and patching burden of self-managed search; accepted less granular tiering control and a higher per-node cost',
         },
         {
           area: 'Migration Strategy',
@@ -131,72 +136,16 @@ export const caseStudies: CaseStudy[] = [
       ],
     },
     implementation: {
-      technologies: ['AWS', 'EKS', 'Terraform', 'ArgoCD', 'Prometheus', 'Grafana', 'OpenSearch', 'Helm', 'Karpenter'],
-      myRole: 'Led the platform team through the migration. Designed the target architecture, built the observability stack, created migration runbooks, and mentored teams on Kubernetes adoption. Personally migrated critical checkout services.',
+      technologies: ['AWS', 'EKS', 'Terraform', 'ArgoCD', 'Prometheus', 'Grafana', 'AWS OpenSearch', 'Fluent Bit', 'Helm', 'Karpenter'],
+      myRole: 'Led the platform team through the migration. Designed the target architecture, built the observability stack and led the ELK to OpenSearch migration, created migration runbooks, and mentored teams on Kubernetes adoption. Personally migrated critical checkout services.',
     },
     impact: [
       { metric: 'Annual Savings', value: '€500K+' },
       { metric: 'Deployment Time', value: '2 hours → 15 min (85% faster)' },
       { metric: 'Deployment Frequency', value: 'Weekly → 50+/day' },
       { metric: 'Self-Service Adoption', value: '85% of teams' },
-      { metric: 'Team Onboarding', value: '< 2 days' },
+      { metric: 'Log Licence Costs', value: '60%+ lower (ELK → OpenSearch)' },
       { metric: 'Golden Path Coverage', value: '90%+ services' },
-    ],
-  },
-  {
-    id: 'opensearch-observability',
-    title: 'Enterprise OpenSearch Observability Platform',
-    company: 'PVH Europe',
-    period: '2023 - 2024',
-    pillar: 'data',
-    context: {
-      description: 'Large-scale observability requirements for 200+ services generating terabytes of logs daily, with existing Elasticsearch clusters becoming increasingly expensive and difficult to manage.',
-      constraints: [
-        'Terabytes of logs per day from 200+ services',
-        'Sub-second search latency requirements',
-        'Cost optimization without sacrificing capability',
-        'Seamless migration from existing Elasticsearch',
-      ],
-    },
-    problem: 'Elasticsearch licensing costs were escalating rapidly. Cluster management was manual and error-prone. Index lifecycle management was inconsistent, leading to storage bloat. Teams lacked self-service capabilities for creating dashboards and alerts.',
-    approach: {
-      description: 'Migrated from the ELK stack to AWS Managed OpenSearch with a focus on cost reduction and operational efficiency, implementing automated index lifecycle management and self-service patterns for development teams.',
-      decisions: [
-        {
-          area: 'Platform',
-          detail: 'AWS Managed OpenSearch Service with UltraWarm and cold storage tiers for cost-efficient data lifecycle',
-          alternative: 'Self-managed OpenSearch on Kubernetes',
-          tradeoff: 'Eliminated operational burden of cluster upgrades, patching, and backup management; accepted less granular tiering control and higher per-node cost in exchange for managed reliability',
-        },
-        {
-          area: 'Data Management',
-          detail: 'Automated ISM policies, index templates with optimized mappings, snapshot lifecycle management to S3',
-          alternative: 'Manual curator scripts',
-          tradeoff: 'Consistent lifecycle management across all indices; requires per-index tuning for retention and rollover thresholds',
-        },
-        {
-          area: 'Self-Service',
-          detail: 'Terraform modules for teams to provision their own index patterns, dashboards as code with version control',
-          alternative: 'Centralized platform team management',
-          tradeoff: 'Reduces platform team as bottleneck; mitigated risk of poor mappings with sensible defaults and validation in the modules',
-        },
-        {
-          area: 'Performance',
-          detail: 'Query optimization, shard sizing based on data patterns, caching strategies for common queries',
-          alternative: 'Vertical scaling with larger instance types',
-          tradeoff: '40% query performance improvement without upsizing instances; required deeper investment in understanding per-index access patterns',
-        },
-      ],
-    },
-    implementation: {
-      technologies: ['AWS OpenSearch', 'Terraform', 'Fluent Bit', 'S3', 'Prometheus', 'Python'],
-      myRole: 'Designed and executed the migration strategy from ELK to AWS Managed OpenSearch. Configured tiering policies, implemented ISM automation, and created the self-service Terraform modules. Trained teams on OpenSearch best practices.',
-    },
-    impact: [
-      { metric: 'License Cost Savings', value: '60%+' },
-      { metric: 'Query Performance', value: '40% faster' },
-      { metric: 'Storage Efficiency', value: '50% reduction' },
-      { metric: 'Time to Dashboard', value: 'Days → Hours' },
     ],
   },
   {
@@ -205,6 +154,7 @@ export const caseStudies: CaseStudy[] = [
     company: 'myTomorrows',
     period: 'Feb 2026 - Present',
     pillar: 'ai',
+    kind: 'work',
     context: {
       description: 'Healthcare SaaS needing a secure, EU-compliant platform for an LLM-powered clinical trial matching API. B2B API product processing de-identified medical records through multi-model LLM inference.',
       constraints: [
@@ -260,6 +210,7 @@ export const caseStudies: CaseStudy[] = [
     company: 'Personal Project: GPU Inference Lab',
     period: 'Nov 2025 - Present',
     pillar: 'ai',
+    kind: 'lab',
     context: {
       description: 'An LLM inference lab on AWS EKS that I am building to measure what self-hosted serving costs and how it behaves on spot GPUs. The first GPU session is still to come. It runs in short burst sessions on my own AWS account and is torn down the same day. It started as a multi-cloud MLOps platform; I cut it back to AWS and LLM inference when the multi-cloud surface turned out to be unverified (ADR-017).',
       constraints: [
@@ -309,6 +260,7 @@ export const caseStudies: CaseStudy[] = [
       { metric: 'Burst Session', value: 'One clean cycle, Nov 2026: deploy 33 min, teardown 12.5 min' },
       { metric: 'GPU Benchmarks', value: 'Not published yet' },
     ],
+    link: { href: 'https://github.com/judeoyovbaire/mlops-platform', label: 'Source and runbooks' },
   },
 ]
 

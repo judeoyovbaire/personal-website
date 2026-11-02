@@ -4,6 +4,8 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { posts } from '@/data/posts'
 import type { Metadata } from 'next'
+import { formatDate } from '@/components/formatDate'
+import { BlogPostingJsonLd } from '@/components/JsonLd'
 
 type Props = {
   params: Promise<{ slug: string }>
@@ -15,19 +17,26 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   if (!post) {
     return {
-      title: 'Post Not Found | Jude',
+      title: 'Post not found | Jude Oyovbaire',
     }
   }
 
   return {
-    title: `${post.title} | Jude`,
+    title: `${post.title} | Jude Oyovbaire`,
     description: post.description,
+    alternates: { canonical: `/blog/${post.slug}` },
     openGraph: {
       title: post.title,
       description: post.description,
       type: 'article',
       publishedTime: post.date,
+      authors: ['Jude Oyovbaire'],
       url: `/blog/${post.slug}`,
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: post.title,
+      description: post.description,
     },
   }
 }
@@ -202,7 +211,7 @@ function formatInline(text: string): string {
   return escapeHtml(text)
     .replace(/\*\*(.*?)\*\*/g, '<strong class="font-semibold text-gray-900 dark:text-white">$1</strong>')
     .replace(/`([^`]+)`/g, '<code class="bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded text-sm font-mono">$1</code>')
-    .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" class="text-blue-600 dark:text-blue-400 hover:underline" target="_blank" rel="noopener noreferrer">$1</a>')
+    .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" class="text-blue-700 dark:text-blue-400 underline underline-offset-2" target="_blank" rel="noopener noreferrer">$1</a>')
 }
 
 export default async function BlogPost({ params }: Props) {
@@ -218,8 +227,9 @@ export default async function BlogPost({ params }: Props) {
   return (
     <>
       <Navigation />
-      <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <Link href="/blog" className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 mb-6">
+      <BlogPostingJsonLd post={post} />
+      <main id="content" className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <Link href="/blog" className="inline-flex items-center gap-2 text-blue-700 dark:text-blue-400 hover:underline mb-6">
           <ArrowLeft size={16} />
           Back to Blog
         </Link>
@@ -230,15 +240,11 @@ export default async function BlogPost({ params }: Props) {
               <span className="px-3 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded-full text-sm font-medium">
                 {post.category}
               </span>
-              <span className="flex items-center gap-1.5 text-sm text-gray-500 dark:text-gray-400">
+              <span className="flex items-center gap-1.5 text-sm text-gray-600 dark:text-gray-400">
                 <Calendar size={14} />
-                {new Date(post.date).toLocaleDateString('en-US', {
-                  year: 'numeric',
-                  month: 'long',
-                  day: 'numeric',
-                })}
+                <time dateTime={post.date}>{formatDate(post.date)}</time>
               </span>
-              <span className="flex items-center gap-1.5 text-sm text-gray-500 dark:text-gray-400">
+              <span className="flex items-center gap-1.5 text-sm text-gray-600 dark:text-gray-400">
                 <Clock size={14} />
                 {post.readTime}
               </span>
@@ -275,10 +281,10 @@ export default async function BlogPost({ params }: Props) {
         <footer className="mt-12 pt-8 border-t border-gray-200 dark:border-gray-700">
           <div className="flex flex-wrap items-center justify-between gap-4">
             <div>
-              <p className="text-sm text-gray-500 dark:text-gray-400">
-                Written by Jude
+              <p className="text-sm text-gray-600 dark:text-gray-400">
+                Written by Jude Oyovbaire
               </p>
-              <p className="text-sm text-gray-500 dark:text-gray-400">
+              <p className="text-sm text-gray-600 dark:text-gray-400">
                 Platform Engineer, AI Infrastructure
               </p>
             </div>
