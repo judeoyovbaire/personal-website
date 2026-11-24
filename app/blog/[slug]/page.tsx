@@ -1,5 +1,6 @@
 import { Navigation } from '@/components/Navigation'
-import { ArrowLeft, Calendar, Clock, Github } from 'lucide-react'
+import { ArrowLeft, Calendar, Clock } from 'lucide-react'
+import { Github } from '@/components/icons/brand'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { posts } from '@/data/posts'

@@ -1,4 +1,5 @@
-import { Server, Database, Brain, Cpu, Github } from 'lucide-react'
+import { Server, Database, Brain, Cpu } from 'lucide-react'
+import { Github } from '@/components/icons/brand'
 import { pillarLabels, type CaseStudy } from '@/data/casestudies'
 
 const pillarIcons = { core: Server, data: Database, ml: Brain, ai: Cpu } as const

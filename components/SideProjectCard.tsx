@@ -1,4 +1,5 @@
-import { Check, Github } from 'lucide-react'
+import { Check } from 'lucide-react'
+import { Github } from '@/components/icons/brand'
 import type { SideProject } from '@/data/projects'
 import { statusConfig } from '@/components/projectStatus'
 
