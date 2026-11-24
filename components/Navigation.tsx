@@ -3,7 +3,8 @@
 import { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { Github, Linkedin, FileText, Menu, X } from 'lucide-react'
+import { FileText, Menu, X } from 'lucide-react'
+import { Github, Linkedin } from '@/components/icons/brand'
 import { ThemeToggle } from './ThemeToggle'
 import { siteLinks, CV_PATH } from './siteLinks'
 
