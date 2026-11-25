@@ -6,35 +6,25 @@
     "helpers:pinGitHubActionDigests",
     ":maintainLockFilesWeekly"
   ],
-  "labels": [
-    "dependencies"
-  ],
+  "labels": ["dependencies"],
   "timezone": "Europe/London",
-  "schedule": [
-    "before 8am on Monday"
-  ],
+  "schedule": ["before 8am on Monday"],
   "minimumReleaseAge": "3 days",
   "prConcurrentLimit": 5,
-  "dependencyDashboard": true,
+  "dependencyDashboard": {
+    "enabled": true
+  },
   "osvVulnerabilityAlerts": true,
   "vulnerabilityAlerts": {
     "enabled": true,
-    "labels": [
-      "security"
-    ],
+    "labels": ["security"],
     "minimumReleaseAge": null,
-    "schedule": [
-      "at any time"
-    ]
+    "schedule": ["at any time"]
   },
   "packageRules": [
     {
       "description": "Next.js and its ESLint config must move together.",
-      "matchPackageNames": [
-        "next",
-        "eslint-config-next",
-        "@next/*"
-      ],
+      "matchPackageNames": ["next", "eslint-config-next", "@next/*"],
       "groupName": "next"
     },
     {
@@ -46,6 +36,11 @@
         "@types/react-dom"
       ],
       "groupName": "react"
+    },
+    {
+      "description": "typescript-eslint (via eslint-config-next) rejects the TypeScript 7 API, so lint fails on TS 7. Hold until https://github.com/typescript-eslint/typescript-eslint/issues/10940 lands.",
+      "matchPackageNames": ["typescript"],
+      "allowedVersions": "<7"
     }
   ]
 }
